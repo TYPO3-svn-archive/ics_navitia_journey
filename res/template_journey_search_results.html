@@ -1,0 +1,89 @@
+<!DOCTYPE html> 
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<base href="http://keomobile.ic-s.org/">
+
+
+<meta name="generator" content="TYPO3 4.5 CMS">
+<meta name="revisit" content="7">
+<meta name="viewport" content="width=device-width, minimum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="/typo3temp/stylesheet_6c301ff27c.css?1310476606" media="all">
+<link rel="stylesheet" type="text/css" href="/typo3conf/ext/ics_default_stylesheet/res/style.css?1310464808" media="all">
+<link rel="stylesheet" type="text/css" href="/fileadmin/kusm/templates/css/style-base.css?1313054084" media="all">
+<link rel="stylesheet" type="text/css" href="/fileadmin/kusm/templates/css/style-base-swatch.css?1311838275" media="all">
+<link rel="stylesheet" type="text/css" href="typo3temp/kusm_editor_2099567c907a9a0dab5d63f2581cb680.css?1312989415" media="all">
+
+<script src="http://code.jquery.com/jquery-1.6.1.min.js" type="text/javascript"></script> 
+<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js" type="text/javascript"></script> 
+
+</head>
+
+<body style="background-color:#333;">
+
+
+<!-- ###TEMPLATE_JOURNEY_SEARCH_RESULTS### begin -->
+	<div class="###PREFIXID###_journeyResults">
+		<ul class="###PREFIXID###_state">
+			<li class="current">###SEARCH###</li>
+			<li>###RESULTS###</li>
+			<li>###DETAILS###</li>
+		</ul>
+		<div class="###PREFIXID###_resultForm">
+			<form action="###ACTION_URL###"  method="post">
+				<fieldset class="###PREFIXID###_recap">
+					<p class="###PREFIXID###_startInfo">###FROM### : ###CITY_START### (###ZIP_START###) - ###STOPPOINT_START###</p>
+					<p class="###PREFIXID###_arrivalInfo">###AT### : ###CITY_ARRIVAL### (###ZIP_ARRIVAL###) - ###STOPPOINT_ARRIVAL###</p>
+					<div data-role="fieldcontain">
+						<select name="###PREFIXID###_searchType" data-role="slider">
+							<option value="startAt">###START_AT###</option>
+							<option value="arrivalAt">###ARRIVAL_AT###</option> 
+						</select>
+					</div>
+					<input value="###DATE_SEL###" name="dateSel" type="date" data-role="datebox"
+   data-options='{"mode": "calbox"}'>
+					<input value="###HOUR_SEL###" name="hourSel" type="date" data-role="datebox"
+   data-options='{"mode": "timebox"}'>
+				</fieldset>
+				
+				<fieldset class="###PREFIXID###_options">
+					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
+					<div data-role="collapsible-set">
+						<div data-role="collapsible">
+							<h3>###MODES###</h3>
+							<!-- ###MODES_LIST### begin -->
+								<input id="###PREFIXID##_mode_list_###MODE_VALUE###" type="checkbox" name="###PREFIXID###[mode]" value="###MODE_VALUE###" ###SELECTED_###MODE_VALUE###### />
+								<label for="###PREFIXID##_mode_list_###MODE_VALUE###">###MODE_NAME###</label>
+							<!-- ###MODES_LIST### end -->
+						</div>
+						<div data-role="collapsible" data-collapsed="true">
+							<h3>###CRITERIA###</h3>
+							<!-- ###CRITERIA_LIST### begin -->
+								<input id="###PREFIXID##_criteria_list_###CRITERIA_VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###CRITERIA_VALUE###" ###SELECTED_###CRITERIA_VALUE###### />
+								<label for="###PREFIXID##_criteria_list_###CRITERIA_VALUE###">###CRITERIA_NAME###</label>
+							<!-- ###CRITERIA_LIST### end -->
+						</div>
+					</div>
+				</fieldset>
+			</form>
+			<p class="###PREFIXID###_resultHours">###RESULT_HOURS_START### ###FIRST_HOUR### ###AND### ###LAST_HOUR###</p>
+			<ul class="###PREFIXID###_resultsList ui-listview"  data-role="listview">
+				<!-- ###RESULTS_LIST### begin -->
+					<li>
+						<a href="###DETAILS_URL###">
+							###START_HOUR###
+							###PICTOS###
+							###ARRIVAL_HOUR###
+							<span class="###PREFIXID###_duration">###DURATION###</span>
+						</a>
+					</li>
+				<!-- ###RESULTS_LIST### end -->
+			</ul>
+			<a href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
+			<a href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
+		</div>
+	</div>
+<!-- ###TEMPLATE_JOURNEY_SEARCH_RESULTS### end -->
+
+</body>
+</html>

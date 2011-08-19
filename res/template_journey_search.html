@@ -1,0 +1,66 @@
+<!DOCTYPE html> 
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml"> 
+<head>
+<base href="http://keomobile.ic-s.org/">
+
+
+<meta name="generator" content="TYPO3 4.5 CMS">
+<meta name="revisit" content="7">
+<meta name="viewport" content="width=device-width, minimum-scale=1">
+
+<link rel="stylesheet" type="text/css" href="/typo3temp/stylesheet_6c301ff27c.css?1310476606" media="all">
+<link rel="stylesheet" type="text/css" href="/typo3conf/ext/ics_default_stylesheet/res/style.css?1310464808" media="all">
+<link rel="stylesheet" type="text/css" href="/fileadmin/kusm/templates/css/style-base.css?1313054084" media="all">
+<link rel="stylesheet" type="text/css" href="/fileadmin/kusm/templates/css/style-base-swatch.css?1311838275" media="all">
+<link rel="stylesheet" type="text/css" href="typo3temp/kusm_editor_2099567c907a9a0dab5d63f2581cb680.css?1312989415" media="all">
+
+<script src="http://code.jquery.com/jquery-1.6.1.min.js" type="text/javascript"></script> 
+<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js" type="text/javascript"></script> 
+
+</head>
+
+<body style="background-color:#333;">
+
+
+<!-- ###TEMPLATE_JOURNEY_SEARCH### begin -->
+	<div class="###PREFIXID###_journeySearch">
+		<ul class="###PREFIXID###_state">
+			<li class="current">###SEARCH###</li>
+			<li>###RESULTS###</li>
+			<li>###DETAILS###</li>
+		</ul>
+		<div class="###PREFIXID###_searchForm">
+			<form action="###ACTION_URL###"  method="post">
+				<fieldset>
+					<p class="###PREFIXID###_startAddress">###START_ADDRESS###</p>
+					<p class="###PREFIXID###_myposition"><a href="###MY_POSITION_URL###">###MY_POSITION_TEXT###</a></p>
+					<input type="text" placeholder="###NAME###" name="###PREFIXID###[startName]" />
+					<input type="text" placeholder="###CITY###" name="###PREFIXID###[startCity]" />
+				</fieldset>
+				<fieldset>
+					<p class="###PREFIXID###_arrivalAddress">###ARRIVAL_ADDRESS###</p>
+					<p class="###PREFIXID###_myposition"><a href="###MY_POSITION_URL###">###MY_POSITION_TEXT###</a></p>
+					<input type="text" placeholder="###NAME###" name="###PREFIXID###[arrivalName]" />
+					<input type="text" placeholder="###CITY###" name="###PREFIXID###[arrivalCity]" />
+				</fieldset>
+				
+				<fieldset class="###PREFIXID###_search">
+					<p class="###PREFIXID###_journeyDate">###JOURNEY_DATE###</p>
+					<div data-role="fieldcontain">
+						<select name="###PREFIXID###_searchType" data-role="slider">
+							<option value="startAt">###START_AT###</option>
+							<option value="arrivalAt">###ARRIVAL_AT###</option> 
+						</select>
+					</div>
+					<input value="###DATE_SEL###" name="dateSel" type="date" data-role="datebox"
+   data-options='{"mode": "calbox"}'>
+					<input value="###HOUR_SEL###" name="hourSel" type="date" data-role="datebox"
+   data-options='{"mode": "timebox"}'>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+<!-- ###TEMPLATE_JOURNEY_SEARCH### end -->
+
+</body>
+</html>
