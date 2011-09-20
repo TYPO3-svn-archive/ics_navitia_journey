@@ -1,0 +1,15 @@
+plugin.tx_icsnavitiajourney_pi1 {
+	url =
+	login = 
+	view {
+		search {
+			templateFile = EXT:ics_navitia_journey/res/template_journey_search.html
+		}
+		results {
+			templateFile = EXT:ics_navitia_journey/res/template_journey_results.html
+		}
+		details {
+			templateFile = EXT:ics_navitia_journey/res/template_journey_details.html
+		}
+	}
+}

@@ -22,12 +22,12 @@
 <body style="background-color:#333;">
 
 
-<!-- ###TEMPLATE_JOURNEY_SEARCH_RESULTS### begin -->
-	<div class="###PREFIXID###_journeyResults">
+<!-- ###TEMPLATE_JOURNEY_SEARCH_DETAILS### begin -->
+	<div class="###PREFIXID###_journeyDetails">
 		<ul class="###PREFIXID###_state">
-			<li class="current">###SEARCH###</li>
+			<li>###SEARCH###</li>
 			<li>###RESULTS###</li>
-			<li>###DETAILS###</li>
+			<li class="current">###DETAILS###</li>
 		</ul>
 		<div class="###PREFIXID###_detailsForm">
 			<ul class="###PREFIXID###_steps" data-role="listview">
@@ -47,9 +47,9 @@
 							###STEP_DURATION###
 						</div>
 						<div class="cold">
-							###DIRECTION_LABEL### #DIRECTION###
+							###DIRECTION_LABEL### : ###DIRECTION###
 							###FROM### : ###STOP_START###
-							###AT### : ###STOP_ARRIVAL###
+							###TO### : ###STOP_ARRIVAL###
 						</div>
 						<a href="###PLAN_URL###" class="###PREFIXID###_planLink">###PLAN###</a>
 					</li>
@@ -60,7 +60,7 @@
 			<a href="###BACKWARD_JOURNEY_LINK###" class="###PREFIXID###_backwardLink">###BACKWARD_JOURNEY###</a>
 		</div>
 	</div>
-<!-- ###TEMPLATE_JOURNEY_SEARCH_RESULTS### end -->
+<!-- ###TEMPLATE_JOURNEY_SEARCH_DETAILS### end -->
 
 </body>
 </html>

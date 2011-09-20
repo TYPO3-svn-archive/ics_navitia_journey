@@ -55,22 +55,110 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		$this->pi_loadLL();
 		$this->pi_USER_INT_obj = 1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 	
-		$content='
-			<strong>This is a few paragraphs:</strong><br />
-			<p>This is line 1</p>
-			<p>This is line 2</p>
-	
-			<h3>This is a form:</h3>
-			<form action="'.$this->pi_getPageLink($GLOBALS['TSFE']->id).'" method="POST">
-				<input type="text" name="'.$this->prefixId.'[input_field]" value="'.htmlspecialchars($this->piVars['input_field']).'">
-				<input type="submit" name="'.$this->prefixId.'[submit_button]" value="'.htmlspecialchars($this->pi_getLL('submit_button_label')).'">
-			</form>
-			<br />
-			<p>You can click here to '.$this->pi_linkToPage('get to this page again',$GLOBALS['TSFE']->id).'</p>
-		';
-	
+		$this->init();
+		ini_set('display_errors', 1);
+		
+		if(is_numeric($this->piVars['entryPointStart']) && is_numeric($this->piVars['entryPointArrival'])) {
+			$entryPointStart = $this->dataProvider->getEntryPointListByNameAndCity(($this->piVars['startName']), ($this->piVars['startCity']));
+			$entryPointArrival = $this->dataProvider->getEntryPointListByNameAndCity(($this->piVars['arrivalName']), ($this->piVars['arrivalCity']));
+			
+			$entryPointFinalStart = $entryPointStart->Get(intval($this->piVars['entryPointStart']));
+			$entryPointFinalArrival = $entryPointArrival->Get(intval($this->piVars['entryPointArrival']));
+			
+			$entryPointDefinitionStart = tx_icslibnavitia_EntryPointDefinition::fromEntryPoint($entryPointFinalStart);
+			$entryPointDefinitionArrival = tx_icslibnavitia_EntryPointDefinition::fromEntryPoint($entryPointFinalArrival);
+			
+			t3lib_div::devlog('Appel pi1 journey results', 'ics_navitia_journey', 0, array(intval($this->piVars['entryPointStart']), intval($this->piVars['entryPointArrival'])));
+			
+			$params = array(
+				'startName' => $entryPointFinalStart->name,
+				'startCity' => $entryPointFinalStart->cityName,
+				'arrivalName' => $entryPointFinalArrival->name,
+				'arrivalCity' => $entryPointFinalArrival->cityName,
+			);
+			
+			$aDate = explode('/', $this->piVars['date']);
+			$aTime = explode(':', $this->piVars['hour']);
+			
+			$date = new DateTime;
+			$date->setDate($aDate[2], $aDate[1], $aDate[0]);
+			$date->setTime($aTime[0], $aTime[1]);
+			
+			if($this->piVars['isStartTime']) {
+				$isStartTime = true;
+			}
+			else {
+				$isStartTime = false;
+			}
+			
+			$planJourney = $this->dataProvider->getPlanJourney($entryPointDefinitionStart, $entryPointDefinitionArrival, $isStartTime, $date, $this->piVars['criteria'], $this->nbBefore, $this->nbAfter);
+			
+			$planJourneyResults = t3lib_div::makeInstance('tx_icsnavitiajourney_results', $this);
+			
+			if(intval($this->nbBefore) > 0 && intval($this->nbAfter) > 0) {
+				$planJourneyResults = t3lib_div::makeInstance('tx_icsnavitiajourney_results', $this);
+				$content = $planJourneyResults->getPlanJourneyResults($planJourney, $params);
+			}
+			else {
+				$planJourneyDetails = t3lib_div::makeInstance('tx_icsnavitiajourney_details', $this);
+				$content = $planJourneyDetails->getPlanJourneyDetails($planJourney, $params);	
+			}
+		}
+		elseif($this->piVars['searchSubmit']) {
+			$entryPointStart = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['startName'], $this->piVars['startCity']);
+			$entryPointArrival = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['arrivalName'], $this->piVars['arrivalCity']);
+			
+			$search = t3lib_div::makeInstance('tx_icsnavitiajourney_search', $this);
+			$content = $search->getSearchForm($this->dataProvider, $entryPointStart, $entryPointArrival);
+			//$entryPoint = $this->dataProvider->getEntryPointListByNameAndCity('gares', 'rennes');
+		}
+		else {
+			$search = t3lib_div::makeInstance('tx_icsnavitiajourney_search', $this);
+			$content = $search->getSearchForm($this->dataProvider);
+		}
+		
 		return $this->pi_wrapInBaseClass($content);
 	}
+	
+	function init() {
+		$this->login = $this->conf['login'];
+		$this->url = $this->conf['url'];
+		
+		$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_APIService', $this->url, $this->login);
+		$this->pictoLine = t3lib_div::makeInstance('tx_icslinepicto_getlines');
+		$templateflex_file = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 'configuration');
+		$this->templates = array(
+			'search' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiajourney/' . $templateflex_file:$this->conf['view.']['search.']['templateFile']),
+			'results' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiajourney/' . $templateflex_file:$this->conf['view.']['results.']['templateFile']),
+			'details' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiajourney/' . $templateflex_file:$this->conf['view.']['details.']['templateFile'])
+		);
+		
+		$libnavitia_conf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['ics_libnavitia']);
+		$this->debug = $libnavitia_conf['debug'];
+		$this->debug_param = $libnavitia_conf['debug_param'];
+		
+		if(isset($this->piVars['nbBefore'])) {
+			$this->nbBefore = $this->piVars['nbBefore'];
+		}
+		elseif(isset($this->conf['nbBefore'])) {
+			$this->nbBefore = $this->conf['nbBefore'];
+		}
+		else {
+			$this->nbBefore = 1;
+		}
+		
+		if(isset($this->piVars['nbAfter'])) {
+			$this->nbAfter = $this->piVars['nbAfter'];
+		}
+		elseif(isset($this->conf['nbBefore'])) {
+			$this->nbAfter = $this->conf['nbAfter'];
+		}
+		else {
+			$this->nbAfter = 1;
+		}
+		
+	}
+	
 }
 
 

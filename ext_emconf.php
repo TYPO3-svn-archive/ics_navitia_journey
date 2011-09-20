@@ -12,12 +12,12 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'NAViTiA Journey display',
-	'description' => 'This extension display a journey module using Navitia.',
+	'description' => 'This extension display a journey module using NAViTiA.',
 	'category' => 'plugin',
 	'author' => 'In Cité Solution',
 	'author_email' => 'technique@in-cite.net',
 	'shy' => '',
-	'dependencies' => '',
+	'dependencies' => 'ics_libnavitia',
 	'conflicts' => '',
 	'priority' => '',
 	'module' => '',
@@ -32,6 +32,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '0.0.0',
 	'constraints' => array(
 		'depends' => array(
+			'ics_libnavitia' => '',
 		),
 		'conflicts' => array(
 		),

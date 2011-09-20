@@ -1,4 +1,7 @@
-2011-08-19 Loïc  <loic@in-cite.net>
+2011-09-20 Pierrick Caillon <pierrick@in-cite.net>
+	* Integrated all done code with little refactoring.
+
+2011-08-19 Loïc Stephan <loic@in-cite.net>
 
 	* initial code generated with kickstarter
 	* Added: Template files for each view
