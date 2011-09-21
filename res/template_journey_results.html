@@ -30,58 +30,49 @@
 			<li>###DETAILS###</li>
 		</ul>
 		<div class="###PREFIXID###_resultForm">
-			<form action="###ACTION_URL###"  method="post">
+			<form action="###ACTION_URL###" method="post">###HIDDEN_FIELDS###
 				<fieldset class="###PREFIXID###_recap">
 					<p class="###PREFIXID###_startInfo">###FROM### : ###CITY_START### - ###STOP_START###</p>
 					<p class="###PREFIXID###_arrivalInfo">###TO### : ###CITY_ARRIVAL### - ###STOP_ARRIVAL###</p>
 					<div data-role="fieldcontain">	
 						<select name="###PREFIXID###[isStartTime]" data-role="slider">
-							<option value="1" ###SELECTED_1###>###START_TO###</option>
-							<option value="0" ###SELECTED_0###>###ARRIVAL_TO###</option> 
+							<option value="1"###SELECTED_1###>###START_TO###</option>
+							<option value="0"###SELECTED_0###>###ARRIVAL_TO###</option> 
 						</select>
 					</div>
-					<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox"
-   data-options='{"mode": "calbox"}'>
-					<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox"
-   data-options='{"mode": "timebox"}'>
+					<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
+					<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
 				</fieldset>
-				
 				<fieldset class="###PREFIXID###_options">
 					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
 						<div data-role="collapsible">
-							<h3>###MODE_TYPE###</h3>
-							<!-- ###MODE_TYPE_LIST### begin -->
-								<div data-role="fieldcontain">
-									<input id="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###" type="checkbox" name="###PREFIXID###[mode]" value="###MODE_TYPE_VALUE###" ###SELECTED_###MODE_TYPE_VALUE###### />
-									<label for="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###">###MODE_TYPE_NAME###</label>
-								</div>
-							<!-- ###MODE_TYPE_LIST### end -->
+							<h3>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
+							<div data-role="fieldcontain">
+								<input id="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###" type="checkbox" name="###PREFIXID###[mode][]" value="###MODE_TYPE_VALUE###"###SELECTED_###MODE_TYPE_VALUE###### />
+								<label for="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###">###MODE_TYPE_NAME###</label>
+							</div><!-- ###MODE_TYPE_LIST### end -->
 						</div>
 						<div data-role="collapsible" data-collapsed="true">
-							<h3>###CRITERIA###</h3>
-							<!-- ###CRITERIA_LIST### begin -->
-								<div data-role="fieldcontain">
-									<input id="###PREFIXID###_criteria_list_###CRITERIA_VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###CRITERIA_VALUE###" ###SELECTED_criteria_###CRITERIA_VALUE###### />
-									<label for="###PREFIXID###_criteria_list_###CRITERIA_VALUE###">###CRITERIA_NAME###</label>
-								</div>
-							<!-- ###CRITERIA_LIST### end -->
+							<h3>###CRITERIA###</h3><!-- ###CRITERIA_LIST### begin -->
+							<div data-role="fieldcontain">
+								<input id="###PREFIXID###_criteria_list_###CRITERIA_VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###CRITERIA_VALUE###"###SELECTED_criteria_###CRITERIA_VALUE###### />
+								<label for="###PREFIXID###_criteria_list_###CRITERIA_VALUE###">###CRITERIA_NAME###</label>
+							</div><!-- ###CRITERIA_LIST### end -->
 						</div>
 					</div>
 				</fieldset>
 			</form>
 			<p class="###PREFIXID###_resultHours">###RESULT_HOURS_START### ###FIRST_HOUR### ###AND### ###LAST_HOUR###</p>
-			<ul class="###PREFIXID###_resultsList ui-listview"  data-role="listview">
-				<!-- ###RESULTS_LIST### begin -->
-					<li>
-						<a href="###DETAILS_URL###">
-							###START_HOUR###
-							###PICTOS###
-							###ARRIVAL_HOUR###
-							<span class="###PREFIXID###_duration">###DURATION###</span>
-						</a>
-					</li>
-				<!-- ###RESULTS_LIST### end -->
+			<ul class="###PREFIXID###_resultsList ui-listview"  data-role="listview"><!-- ###RESULTS_LIST### begin -->
+				<li>
+					<a href="###DETAILS_URL###">
+						###START_HOUR###
+						###PICTOS###
+						###ARRIVAL_HOUR###
+						<span class="###PREFIXID###_duration">###DURATION###</span>
+					</a>
+				</li><!-- ###RESULTS_LIST### end -->
 			</ul>
 			<a href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
 			<a href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>

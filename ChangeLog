@@ -1,5 +1,12 @@
+2011-09-21 Pierrick Caillon <pierrick@in-cite.net>
+	* Review templates and code for search form and resuts page.
+	* Refactored list rendering for these pages. Better isolation.
+	* Added hidden fields to keep arguments when submiting forms with GET method.
+
 2011-09-20 Pierrick Caillon <pierrick@in-cite.net>
 	* Integrated all done code with little refactoring.
+	* Added global arguments hidden fields generation to pi1. Support for not rewrited Urls. Needs usage of the original query string.
+	* Started code and templates review.
 
 2011-08-19 Loïc Stephan <loic@in-cite.net>
 

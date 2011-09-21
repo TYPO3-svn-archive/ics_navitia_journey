@@ -30,7 +30,7 @@
 			<li>###DETAILS###</li>
 		</ul>
 		<div class="###PREFIXID###_searchForm">
-			<form action="###ACTION_URL###"  method="get">
+			<form action="###ACTION_URL###"  method="get">###HIDDEN_FIELDS###
 				<fieldset>
 					<p class="###PREFIXID###_startAddress">###START_ADDRESS###</p>
 					<p class="###PREFIXID###_myposition"><a href="###MY_POSITION_URL###">###MY_POSITION_TEXT###</a></p>
@@ -42,112 +42,71 @@
 						<input type="text" placeholder="###CITY###" name="###PREFIXID###[startCity]" value="###START_CITY_VALUE###" id="###PREFIXID###_startCity" />
 						<label for="###PREFIXID###_startCity" style="display:none;">###CITY###</label>
 					</div>
-				</fieldset>
-				
-				<!-- ###CONFIRM_MORE_SOLUTIONS_START### begin -->
-					<fieldset>
-						<p class="###PREFIXID###_confirmMoreSolutions">###START_MORE_SOLUTIONS###</p>
-						<!-- ###LIST_MORE_SOLUTIONS_START### begin -->
-							<div data-role="fieldcontain">
-								<input id="###PREFIXID###_startPointId_###RECORDNUMBER###" type="radio" name="###PREFIXID###[entryPointStart]" value="###ENTRYPOINT_START###" />
-								<label for="###PREFIXID###_startPointId_###RECORDNUMBER###">###ENTRYPOINT_TYPE_START### - ###CITY_START### - ###STOPPOINT_START###</label>
-							</div>
-						<!-- ###LIST_MORE_SOLUTIONS_START### end -->
-					</fieldset>
-				<!-- ###CONFIRM_MORE_SOLUTIONS_START### end -->
-				
-				<!-- ###CONFIRM_ONE_SOLUTION_START### begin -->
-					<fieldset>
-						<p class="###PREFIXID###_confirmOneSolution">###START_ONE_SOLUTION###</p>
-						<p class="###PREFIXID###_startPointId_found">###CITY_START### - ###STOPPOINT_START###</label>
-						<input type="hidden" name="###PREFIXID###[entryPointStart]" value="0" />
-					</fieldset>
-				<!-- ###CONFIRM_ONE_SOLUTION_START### end -->
-				
-				<!-- ###CONFIRM_NO_SOLUTION_START### begin -->
-					<fieldset>
-						<p class="###PREFIXID###_confirmMoreSolutions">###START_NO_SOLUTION###</p>
-					</fieldset>
-					<!--<a href="###JOURNEY_URL###">###BACK###</a>-->
-				<!-- ###CONFIRM_NO_SOLUTION_START### end -->
-				
+				</fieldset><!-- ###CONFIRM_SOLUTIONS_START### --><!-- ###CONFIRM_SOLUTIONS_START### -->
 				<fieldset>
 					<p class="###PREFIXID###_arrivalAddress">###ARRIVAL_ADDRESS###</p>
 					<p class="###PREFIXID###_myposition"><a href="###MY_POSITION_URL###">###MY_POSITION_TEXT###</a></p>
 					<input type="text" placeholder="###NAME###" name="###PREFIXID###[arrivalName]" value="###ARRIVAL_NAME_VALUE###" />
 					<input type="text" placeholder="###CITY###" name="###PREFIXID###[arrivalCity]" value="###ARRIVAL_CITY_VALUE###" />
-				</fieldset>
-				
-				<!-- ###CONFIRM_MORE_SOLUTIONS_ARRIVAL### begin -->
-					<fieldset>
-						<p class="###PREFIXID###_confirmMoreSolutions">###ARRIVAL_MORE_SOLUTIONS###</p>
-						<!-- ###LIST_MORE_SOLUTIONS_ARRIVAL### begin -->
-							<div data-role="fieldcontain">
-								<input id="###PREFIXID###_arrivalPointId_###RECORDNUMBER###" type="radio" name="###PREFIXID###[entryPointArrival]" value="###ENTRYPOINT_ARRIVAL###" />
-								<label for="###PREFIXID###_arrivalPointId_###RECORDNUMBER###">###ENTRYPOINT_TYPE_ARRIVAL### - ###CITY_ARRIVAL### - ###STOPPOINT_ARRIVAL###</label>
-							</div>
-						<!-- ###LIST_MORE_SOLUTIONS_ARRIVAL### end -->
-					</fieldset>
-				<!-- ###CONFIRM_MORE_SOLUTIONS_ARRIVAL### end -->
-				
-				<!-- ###CONFIRM_ONE_SOLUTION_ARRIVAL### begin -->
-					<fieldset>
-						<p class="###PREFIXID###_confirmOneSolution">###ARRIVAL_ONE_SOLUTION###</p>
-						<div data-role="fieldcontain">
-							<p class="###PREFIXID###_confirmOneSolution">###ARRIVAL_ONE_SOLUTION###</p>
-							<p class="###PREFIXID###_startPointId_found">###CITY_ARRIVAL### - ###STOPPOINT_ARRIVAL###</label>
-							<input type="hidden" name="###PREFIXID###[entryPointArrival]" value="0" />
-						</div>
-					</fieldset>
-				<!-- ###CONFIRM_ONE_SOLUTION_ARRIVAL### end -->
-				
-				<!-- ###CONFIRM_NO_SOLUTION_ARRIVAL### begin -->
-					<p class="###PREFIXID###_confirmNoSolution">###ARRIVAL_NO_SOLUTION###</p>
-				<!-- ###CONFIRM_NO_SOLUTION_ARRIVAL### end -->
-				
+				</fieldset><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### --><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### -->
 				<fieldset class="###PREFIXID###_search">
 					<p class="###PREFIXID###_journeyDate">###JOURNEY_DATE###</p>
 					<div data-role="fieldcontain">
 						<select name="###PREFIXID###[isStartTime]" data-role="slider">
-							<option value="1" ###SELECTED_1###>###START_AT###</option>
-							<option value="0" ###SELECTED_0###>###ARRIVAL_AT###</option> 
+							<option value="1"###SELECTED_1###>###START_AT###</option>
+							<option value="0"###SELECTED_0###>###ARRIVAL_AT###</option> 
 						</select>
 					</div>
-					<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox"
-   data-options='{"mode": "calbox"}'>
-					<input value="###TIME_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox"
-   data-options='{"mode": "timebox"}'>
+					<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
+					<input value="###TIME_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
 				</fieldset>
 				<fieldset class="###PREFIXID###_options">
 					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
 						<div data-role="collapsible">
-							<h3>###MODE_TYPE###</h3>
-							<!-- ###MODE_TYPE_LIST### begin -->
-								<div data-role="fieldcontain">
-									<input id="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###" type="checkbox" name="###PREFIXID###[mode]" value="###MODE_TYPE_VALUE###" ###SELECTED_###MODE_TYPE_VALUE###### />
-									<label for="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###">###MODE_TYPE_NAME###</label>
-								</div>
-							<!-- ###MODE_TYPE_LIST### end -->
+							<h3>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
+							<div data-role="fieldcontain">
+								<input id="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###" type="checkbox" name="###PREFIXID###[mode][]" value="###MODE_TYPE_VALUE###"###SELECTED_###MODE_TYPE_VALUE###### />
+								<label for="###PREFIXID###_mode_list_###MODE_TYPE_VALUE###">###MODE_TYPE_NAME###</label>
+							</div><!-- ###MODE_TYPE_LIST### end -->
 						</div>
 						<div data-role="collapsible" data-collapsed="true">
-							<h3>###CRITERIA###</h3>
-							<!-- ###CRITERIA_LIST### begin -->
-								<div data-role="fieldcontain">
-									<input id="###PREFIXID###_criteria_list_###CRITERIA_VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###CRITERIA_VALUE###" ###SELECTED_criteria_###CRITERIA_VALUE###### />
-									<label for="###PREFIXID###_criteria_list_###CRITERIA_VALUE###">###CRITERIA_NAME###</label>
-								</div>
-							<!-- ###CRITERIA_LIST### end -->
+							<h3>###CRITERIA###</h3>	<!-- ###CRITERIA_LIST### begin -->
+							<div data-role="fieldcontain">
+								<input id="###PREFIXID###_criteria_list_###CRITERIA_VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###CRITERIA_VALUE###"###SELECTED_criteria_###CRITERIA_VALUE###### />
+								<label for="###PREFIXID###_criteria_list_###CRITERIA_VALUE###">###CRITERIA_NAME###</label>
+							</div><!-- ###CRITERIA_LIST### end -->
 						</div>
 					</div>
 				</fieldset>
 				<fieldset>
-					<input name="###PREFIXID###[searchSubmit]" type="submit" value="###SUBMIT###" />
+					<input type="submit" value="###SUBMIT###" />
 				</fieldset>
 			</form>
 		</div>
 	</div>
 <!-- ###TEMPLATE_JOURNEY_SEARCH### end -->
+				
+<!-- ###CONFIRM_MORE_SOLUTIONS### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_confirmMoreSolutions">###MORE_SOLUTIONS###</p><!-- ###LIST_MORE_SOLUTIONS### begin -->
+					<div data-role="fieldcontain">
+						<input id="###PREFIXID###_pointId###NAME_SUFFIX###_###RECORDNUMBER###" type="radio" name="###PREFIXID###[entryPoint###NAME_SUFFIX###]" value="###ENTRYPOINT###" />
+						<label for="###PREFIXID###_pointId###NAME_SUFFIX###_###RECORDNUMBER###">###ENTRYPOINT_TYPE### - ###CITY### - ###STOPPOINT###</label>
+					</div><!-- ###LIST_MORE_SOLUTIONS### end -->
+				</fieldset><!-- ###CONFIRM_MORE_SOLUTIONS### end -->
+				
+<!-- ###CONFIRM_ONE_SOLUTION### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_confirmOneSolution">###ONE_SOLUTION###</p>
+					<p class="###PREFIXID###_pointId_found">###CITY### - ###STOPPOINT###</label>
+					<input type="hidden" name="###PREFIXID###[entryPoint###NAME_SUFFIX###]" value="0" />
+				</fieldset><!-- ###CONFIRM_ONE_SOLUTION### end -->
+				
+<!-- ###CONFIRM_NO_SOLUTION### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_confirmMoreSolutions">###NO_SOLUTION###</p>
+				</fieldset><!-- ###CONFIRM_NO_SOLUTION### end -->
 
 </body>
 </html>

@@ -37,112 +37,84 @@ class tx_icsnavitiajourney_results {
 		$templatePart = $this->pObj->templates['results'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_RESULTS###');
 		
-		//var_dump($params);
-		//t3lib_div::devlog('Appel pi1 journey results', 'ics_navitia_journey', 0, $params);
-		ini_set('display_errors', 1);
-		
 		$markers = array(
-			'###PREFIXID###' => $this->pObj->prefixId,
-			'###FROM###' => $this->pObj->pi_getLL('from'),
-			'###TO###' => $this->pObj->pi_getLL('to'),
-			'###SEARCH###' => $this->pObj->pi_getLL('menu.search'),
-			'###RESULTS###' => $this->pObj->pi_getLL('menu.results'),
-			'###DETAILS###' => $this->pObj->pi_getLL('menu.details'),
-			'###STOP_START###' => $params['startName'],
-			'###CITY_START###' => $params['startCity'],
-			'###STOP_ARRIVAL###' => $params['arrivalName'],
-			'###CITY_ARRIVAL###' => $params['arrivalCity'],
-			'###START_TO###' => $this->pObj->pi_getLL('startAt'),
-			'###ARRIVAL_TO###' => $this->pObj->pi_getLL('arrivalAt'),
-			'###PREFERENCES###' => $this->pObj->pi_getLL('preference'),
-			'###MODE_TYPE###' => $this->pObj->pi_getLL('preference.mode'),
-			'###CRITERIA###' => $this->pObj->pi_getLL('preference.criteria'),
-			'###RESULT_HOURS_START###' => $this->pObj->pi_getLL('result_hour_start'),
-			'###AND###' => $this->pObj->pi_getLL('and'),
-			'###FIRST_HOUR###' => '',
-			'###LAST_HOUR###' => '',
-			'###START_HOUR###' => '',
-			'###ARRIVAL_HOUR###' => '',
-			'###PREVIOUS_JOURNEY###' => $this->pObj->pi_getLL('results.previous'),
-			'###NEXT_JOURNEY###' => $this->pObj->pi_getLL('results.next'),
-			'###SELECTED_0###' => '',
-			'###SELECTED_1###' => '',
-			'###ACTION_URL###' => $this->pObj->pi_linkTP_keepPIvars_url(),
+			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
+			'FROM' => htmlspecialchars($this->pObj->pi_getLL('from')),
+			'TO' => htmlspecialchars($this->pObj->pi_getLL('to')),
+			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu.search')),
+			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu.results')),
+			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu.details')),
+			'STOP_START' => htmlspecialchars($params['startName']),
+			'CITY_START' => htmlspecialchars($params['startCity']),
+			'STOP_ARRIVAL' => htmlspecialchars($params['arrivalName']),
+			'CITY_ARRIVAL' => htmlspecialchars($params['arrivalCity']),
+			'START_TO' => htmlspecialchars($this->pObj->pi_getLL('startAt')),
+			'ARRIVAL_TO' => htmlspecialchars($this->pObj->pi_getLL('arrivalAt')),
+			'PREFERENCES' => htmlspecialchars($this->pObj->pi_getLL('preference')),
+			'MODE_TYPE' => htmlspecialchars($this->pObj->pi_getLL('preference.mode')),
+			'CRITERIA' => htmlspecialchars($this->pObj->pi_getLL('preference.criteria')),
+			'RESULT_HOURS_START' => htmlspecialchars($this->pObj->pi_getLL('result_hour_start')),
+			'AND' => htmlspecialchars($this->pObj->pi_getLL('and')),
+			'FIRST_HOUR' => '',
+			'LAST_HOUR' => '',
+			'START_HOUR' => '',
+			'ARRIVAL_HOUR' => '',
+			'PREVIOUS_JOURNEY' => htmlspecialchars($this->pObj->pi_getLL('results.previous')),
+			'NEXT_JOURNEY' => htmlspecialchars($this->pObj->pi_getLL('results.next')),
+			'SELECTED_0' => '',
+			'SELECTED_1' => '',
+			'ACTION_URL' => htmlspecialchars($this->pObj->pi_linkTP_keepPIvars_url()),
+			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
 		);
-		
-		$markers['###SELECTED_' . $this->pObj->piVars['isStartTime'] . '###'] = 'selected="selected"';
-		
-		$markers['###DATE_SEL###'] = $this->pObj->piVars['date'];
-		$markers['###HOUR_SEL###'] = $this->pObj->piVars['hour'];
-		
-		$aModesType = array(
-			0 => array('ModeTypeExternalCode' => 'Bus', 'ModeTypeName' => 'Bus'),
-			1 => array('ModeTypeExternalCode' => 'métro', 'ModeTypeName' => 'métro')
-		); // A remplacer par la méthode qui récupère les types de mode.
-		
-		$modeTypeListTemplate = $this->pObj->cObj->getSubpart($template, '###MODE_TYPE_LIST###');
-		foreach($aModesType as $mode)  {
-			$markers['###MODE_TYPE_VALUE###'] = $mode['ModeTypeExternalCode'];
-			$markers['###MODE_TYPE_NAME###'] = $mode['ModeTypeName'];
-			$markers['###SELECTED_' . $mode['ModeTypeExternalCode'] . '###'] = 'checked'; // à modifier si on ne veut pas que tous les modes soient actifs par défaut
-			$modeTypeListContent .= $this->pObj->cObj->substituteMarkerArray($modeTypeListTemplate, $markers);
+		$params = t3lib_div::_GET($this->pObj->prefixId);
+		foreach ($params as $name => $value) {
+			if (is_array($value))
+				continue;
+			if (in_array($name, array('isStartTime', 'date', 'hour', 'mode', 'criteria')))
+				continue;
+			$markers['HIDDEN_FIELDS'] .= '<input type="hidden" name="' . htmlspecialchars($this->pObj->prefixId) . '[' . htmlspecialchars($name) . ']" value="' . htmlspecialchars($value) . '" />';
 		}
 		
-		$aCriteria = array(
-			0 => array(
-				'criteriaValue' => 1,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.1'),
-			),
-			1 => array(
-				'criteriaValue' => 2,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.2'),
-			),
-			2 => array(
-				'criteriaValue' => 3,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.3'),
-			),
-			3 => array(
-				'criteriaValue' => 4,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.4'),
-			)
-		); // A modifier
+		$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' selected="selected"';
 		
-		$criteriaListTemplate = $this->pObj->cObj->getSubpart($template, '###CRITERIA_LIST###');
-		foreach($aCriteria as $criteria)  {
-			$markers['###CRITERIA_VALUE###'] = $criteria['criteriaValue'];
-			$markers['###CRITERIA_NAME###'] = $criteria['criteriaName'];
-			
-			if($criteria['criteriaValue'] == 1) {
-				$markers['###SELECTED_criteria_' . $criteria['criteriaValue'] . '###'] = 'checked'; // à modifier
-			}
-			else {
-				$markers['###SELECTED_criteria_' . $criteria['criteriaValue'] . '###'] = '';
-			}
-			$criteriaListContent .= $this->pObj->cObj->substituteMarkerArray($criteriaListTemplate, $markers);
-		}
+		$markers['DATE_SEL'] = $this->pObj->piVars['date'];
+		$markers['HOUR_SEL'] = $this->pObj->piVars['hour'];
 
-		if(!is_null($journeyPlan['JourneyResultList']->Get(0)->summary)) {
-			$markers['###FIRST_HOUR###'] = $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i');
-			$markers['###LAST_HOUR###'] = $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count()-1))->summary->departure->format('H:i');
+		$template = $this->pObj->replaceModes($template);
+		$template = $this->pObj->replaceCriteria($template);
+
+		if (!is_null($journeyPlan['JourneyResultList']->Get(0)->summary)) {
+			$markers['FIRST_HOUR'] = $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i'); // TODO: Hour format as config.
+			$markers['LAST_HOUR'] = $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count()-1))->summary->departure->format('H:i');
 			
-			$markers['###PREVIOUS_JOURNEY_LINK###'] = $this->pObj->pi_linkTP_keepPIvars_url(
+			$markers['PREVIOUS_JOURNEY_LINK'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
-					'date' 		=> $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('d/m/Y'), 
+					'date' 		=> $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('d/m/Y'),  // TODO: Use Call.
 					'hour' 		=> $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i')
 				)
 			);
 			
-			$markers['###NEXT_JOURNEY_LINK###'] = $this->pObj->pi_linkTP_keepPIvars_url(
+			$markers['NEXT_JOURNEY_LINK'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
-					'date' 		=> $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count()-1)->summary->departure->format('d/m/Y'), 
+					'date' 		=> $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count()-1)->summary->departure->format('d/m/Y'),  // TODO: Use Call.
 					'hour' 		=> $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count()-1)->summary->departure->format('H:i')
 				)
 			);
 		}
+		
+		$template = $this->pObj->cObj->substituteSubpart($template, '###RESULTS_LIST###', $this->renderResults($template, $journeyPlan['JourneyResultList']));
+		
+		$content = $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		return $content;
+	}
+	
+	private function renderResults($template, tx_icslibnavitia_INodeList $results) {
 		$linePicto = t3lib_div::makeInstance('tx_icslinepicto_getlines');
 		$resultListTemplate = $this->pObj->cObj->getSubpart($template, '###RESULTS_LIST###');
-		foreach($journeyPlan['JourneyResultList']->ToArray() as $journeyResult) {
-			$markers['###DETAILS_URL###'] = $this->pObj->pi_linkTP_keepPIvars_url(
+		$resultListContent = '';
+		foreach ($results->ToArray() as $journeyResult) {
+			$markers = array();
+			$markers['DETAILS_URL'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
 					'nbBefore' 	=> '0',
 					'nbAfter' 	=> '0',
@@ -151,11 +123,11 @@ class tx_icsnavitiajourney_results {
 				)
 			);
 		
-			if(!is_null($journeyResult->summary)) {
-				$markers['###START_HOUR###'] = $journeyResult->summary->departure->format('H:i');
-				$markers['###ARRIVAL_HOUR###'] = $journeyResult->summary->arrival->format('H:i');
+			if (!is_null($journeyResult->summary)) {
+				$markers['START_HOUR'] = $journeyResult->summary->departure->format('H:i');
+				$markers['ARRIVAL_HOUR'] = $journeyResult->summary->arrival->format('H:i');
 			}
-			foreach($journeyResult->sections->ToArray() as $section) {
+			foreach ($journeyResult->sections->ToArray() as $section) {
 				$duration = '';
 				
 				if($journeyResult->summary->duration->day) {
@@ -170,25 +142,14 @@ class tx_icsnavitiajourney_results {
 					$duration .= $journeyResult->summary->duration->minute . ' ' . $this->pObj->pi_getLL('minute');
 				}
 				
-				$markers['###DURATION###'] = $duration;
-				$markers['###PICTOS###'] = $linePicto->getlinepicto($section->vehicleJourney->route->line->externalCode, 'Navitia');
+				$markers['DURATION'] = $duration;
+				$markers['PICTOS'] = $linePicto->getlinepicto($section->vehicleJourney->route->line->externalCode, 'Navitia');
 			}
 			
-			$resultListContent .= $this->pObj->cObj->substituteMarkerArray($resultListTemplate, $markers);
+			$resultListContent .= $this->pObj->cObj->substituteMarkerArray($resultListTemplate, $markers, '###|###');
 		}
-		
-		//var_dump($this->pObj->dataProvider->getLastParams());
-		
-		//t3lib_div::devlog('Appel pi1 journey results', 'ics_navitia_journey', 0, $params);
-		//var_dump(html_entity_decode('http://rennes.prod.navitia.com/cgi-bin/gwnavitia.dll/API?Action=PlanJourney&amp;Departure=StopArea%7C949%7CR%E9publique%7CRennes%7C%7C%7C301043.51%7C2353261.36%7C2268%210%2114%3B2270%210%2114%3B2255%210%2114%3B2258%210%2114%3B2257%210%2114%3B2256%210%2114%3B2259%210%2114%3B2261%210%2114%3B2269%210%2114%3B2264%210%2114%3B2262%210%2114%3B2267%210%2114%3B2265%210%2114%3B2266%210%2114%3B2260%210%2114%3B2263%210%2114&amp;Arrival=StopArea%7C810%7CGares%7CRennes%7C%7C%7C301546.45%7C2352622.69%7C1893%210%2114%3B1892%210%2114%3B1891%210%2114&amp;Sens=1&amp;Time=11%7C52&amp;Date=2011%7C09%7C02&amp;Criteria=&amp;NbBefore=1&amp;NbAfter=1&amp;Interface=1_16&amp;login=StarWeb&amp;RequestUrl=http%3A%2F%2Fkeomobile.ic-s.org%2Findex.php%3Fid%3D108%2526tx_icsnavitiajourney_pi1%5BstartName%5D%3Drepublique%2526tx_icsnavitiajourney_pi1%5BstartCity%5D%3Drennes%2526tx_icsnavitiajourney_pi1%5BentryPointStart%5D%3D0%2526tx_icsnavitiajourney_pi1%5BarrivalName%5D%3Dgares%2526tx_icsnavitiajourney_pi1%5BarrivalCity%5D%3Drennes%2526tx_icsnavitiajourney_pi1%5BentryPointArrival%5D%3D3%2526tx_icsnavitiajourney_pi1%5BisStartTime%5D%3D1%2526tx_icsnavitiajourney_pi1%5Bdate%5D%3D02%252F09%252F2011%2526tx_icsnavitiajourney_pi1%5Bhour%5D%3D11%253A52%2526tx_icsnavitiajourney_pi1%5Bmode%5D%3DBus%2526tx_icsnavitiajourney_pi1%5Bmode%5D%3Dm%25E9tro%2526tx_icsnavitiajourney_pi1%5Bcriteria%5D%3D1%2526tx_icsnavitiajourney_pi1%5BsearchSubmit%5D%3DValider%2526navitia_debug%3D1'));
-		
-		$template = $this->pObj->cObj->substituteSubpart($template, '###RESULTS_LIST###', $resultListContent);
-		$template = $this->pObj->cObj->substituteSubpart($template, '###CRITERIA_LIST###', $criteriaListContent);
-		$template = $this->pObj->cObj->substituteSubpart($template, '###MODE_TYPE_LIST###', $modeTypeListContent);
-		$content = $this->pObj->cObj->substituteMarkerArray($template, $markers);
-		return $content;
+		return $resultListContent;
 	}
-	
 }
 
 if (!function_exists('lcfirst')) {

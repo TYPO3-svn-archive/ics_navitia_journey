@@ -36,214 +36,101 @@ class tx_icsnavitiajourney_search {
 	function getSearchForm($dataProvider = null, $entryPointStart = null, $entryPointArrival = null) {
 		$templatePart = $this->pObj->templates['search'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_SEARCH###');
-
-		if($this->pObj->debug) {
-			$this->debugParam = t3lib_div::_GP($this->pObj->debug_param);
-		}
-		
-		ini_set('display_errors', 1);
-		
-		//t3lib_div::devlog('Appel pi1 journey', 'ics_navitia_journey', 0, $this->pObj->piVars);
 		
 		$markers = array(
-			'###PREFIXID###' => $this->pObj->prefixId,
-			'###SEARCH###' => $this->pObj->pi_getLL('menu.search'),
-			'###RESULTS###' => $this->pObj->pi_getLL('menu.results'),
-			'###DETAILS###' => $this->pObj->pi_getLL('menu.details'),
-			'###ACTION_URL###' => $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id),//$this->pObj->pi_linkTP_keepPIvars_url(),
-			'###START_ADDRESS###' => $this->pObj->pi_getLL('search.startAddress'),
-			'###ARRIVAL_ADDRESS###' => $this->pObj->pi_getLL('search.arrivalAddress'),
-			'###MY_POSITION_TEXT###' => $this->pObj->pi_getLL('search.myPosition'),
-			'###NAME###' => $this->pObj->pi_getLL('search.name'),
-			'###CITY###' => $this->pObj->pi_getLL('search.city'),
-			'###JOURNEY_DATE###' => $this->pObj->pi_getLL('search.journeyDate'),
-			'###START_AT###' => $this->pObj->pi_getLL('startAt'),
-			'###ARRIVAL_AT###' => $this->pObj->pi_getLL('arrivalAt'),
-			'###PREFERENCES###' => $this->pObj->pi_getLL('preference'),
-			'###MODE_TYPE###' => $this->pObj->pi_getLL('preference.mode'),
-			'###CRITERIA###' => $this->pObj->pi_getLL('preference.criteria'),
-			'###SUBMIT###' => $this->pObj->pi_getLL('search.submit'),
-			'###START_NAME_VALUE###' => $this->pObj->piVars['startName'],
-			'###ARRIVAL_NAME_VALUE###' => $this->pObj->piVars['arrivalName'],
-			'###START_CITY_VALUE###' => $this->pObj->piVars['startCity'],
-			'###ARRIVAL_CITY_VALUE###' => $this->pObj->piVars['arrivalCity'],
-			'###SELECTED_0###' => '',
-			'###SELECTED_1###' => '',
+			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
+			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu.search')),
+			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu.results')),
+			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu.details')),
+			'ACTION_URL' => htmlspecialchars($this->pObj->pi_getPageLink($GLOBALS['TSFE']->id)),
+			'START_ADDRESS' => htmlspecialchars($this->pObj->pi_getLL('search.startAddress')),
+			'ARRIVAL_ADDRESS' => htmlspecialchars($this->pObj->pi_getLL('search.arrivalAddress')),
+			'MY_POSITION_TEXT' => htmlspecialchars($this->pObj->pi_getLL('search.myPosition')),
+			'NAME' => htmlspecialchars($this->pObj->pi_getLL('search.name')),
+			'CITY' => htmlspecialchars($this->pObj->pi_getLL('search.city')),
+			'JOURNEY_DATE' => htmlspecialchars($this->pObj->pi_getLL('search.journeyDate')),
+			'START_AT' => htmlspecialchars($this->pObj->pi_getLL('startAt')),
+			'ARRIVAL_AT' => htmlspecialchars($this->pObj->pi_getLL('arrivalAt')),
+			'PREFERENCES' => htmlspecialchars($this->pObj->pi_getLL('preference')),
+			'MODE_TYPE' => htmlspecialchars($this->pObj->pi_getLL('preference.mode')),
+			'CRITERIA' => htmlspecialchars($this->pObj->pi_getLL('preference.criteria')),
+			'SUBMIT' => htmlspecialchars($this->pObj->pi_getLL('search.submit')),
+			'START_NAME_VALUE' => htmlspecialchars($this->pObj->piVars['startName']),
+			'ARRIVAL_NAME_VALUE' => htmlspecialchars($this->pObj->piVars['arrivalName']),
+			'START_CITY_VALUE' => htmlspecialchars($this->pObj->piVars['startCity']),
+			'ARRIVAL_CITY_VALUE' => htmlspecialchars($this->pObj->piVars['arrivalCity']),
+			'SELECTED_0' => '',
+			'SELECTED_1' => '',
+			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
 		);
 		
-		$markers['###SELECTED_' . $this->pObj->piVars['isStartTime'] . '###'] = 'selected="selected"';
+		$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' selected="selected"';
 		
-		if($entryPointStart && $entryPointArrival) {
-			if($entryPointStart->Count() == 0) {
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_START###', '');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_START###', '');
-				$noSolutionTemplate = $this->pObj->cObj->getSubpart($template, '###CONFIRM_NO_SOLUTION_START###');
-				$markers['###START_NO_SOLUTION###'] = $this->pObj->pi_getLL('nosolution');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_START###', $noSolutionTemplate);
-			}
-			elseif($entryPointStart->Count() == 1) {
-				$entryPoint = $entryPointStart->Get(0);
+		$template = $this->pObj->cObj->substituteSubpart(
+			$template, 
+			'###CONFIRM_SOLUTIONS_START###',
+			$this->makeSolutionPart($entryPointStart, true)
+		);
+		$template = $this->pObj->cObj->substituteSubpart(
+			$template, 
+			'###CONFIRM_SOLUTIONS_ARRIVAL###',
+			$this->makeSolutionPart($entryPointArrival, false)
+		);
+		
+		$markers['DATE_SEL'] = htmlspecialchars(date('d/m/Y'));
+		$markers['TIME_SEL'] = htmlspecialchars(date('H:i'));
 
-				$oneSolutionTemplate = $this->pObj->cObj->getSubpart($template, '###CONFIRM_ONE_SOLUTION_START###');
+		$template = $this->pObj->replaceModes($template);
+		$template = $this->pObj->replaceCriteria($template);
+
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		return $content;
+	}
+	
+	private function makeSolutionPart($entryPoint, $isStart) {
+		$content = '';
+		$markers = array(
+			'NAME_SUFFIX' => ($isStart ? 'Start' : 'Arrival')
+		);
+		if ($entryPoint != null) {
+			if ($entryPoint->Count() == 0) {
+				$noSolutionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###CONFIRM_NO_SOLUTION###');
+				$markers['NO_SOLUTION'] = $this->pObj->pi_getLL('nosolution');
+				$content = $this->pObj->cObj->substituteMarkerArray($noSolutionTemplate, $markers, '###|###');
+			}
+			elseif ($entryPoint->Count() == 1) {
+				$entryPoint = $entryPoint->Get(0);
+				$oneSolutionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###CONFIRM_ONE_SOLUTION###');
 				
-				$markers['###START_ONE_SOLUTION###'] = $this->pObj->pi_getLL('onesolution');
-				$markers['###CITY_START###'] = $entryPoint->cityName;
+				$markers['ONE_SOLUTION'] = $this->pObj->pi_getLL('onesolution');
+				$markers['CITY'] = $entryPoint->cityName;
 				
 				$stop = $entryPoint->{lcfirst($entryPoint->type)};
-				$markers['###STOPPOINT_START###'] = $stop->name;
+				$markers['STOPPOINT'] = $stop->name;
 				
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_START###', $oneSolutionTemplate);
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_START###', '');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_START###', '');
+				$content = $this->pObj->cObj->substituteMarkerArray($oneSolutionTemplate, $markers, '###|###');
 			}
 			else {
-				$moreSolutionsTemplate = $this->pObj->cObj->getSubpart($template, '###CONFIRM_MORE_SOLUTIONS_START###');
-				$markers['###START_MORE_SOLUTIONS###'] = $this->pObj->pi_getLL('moresolutions');
+				$moreSolutionsTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###CONFIRM_MORE_SOLUTIONS###');
+				$markers['MORE_SOLUTIONS'] = $this->pObj->pi_getLL('moresolutions');
 				$index = 0;
-				foreach($entryPointStart->ToArray() as $entryPoint) {
-					$solutionsItemTemplate = $this->pObj->cObj->getSubpart($template, '###LIST_MORE_SOLUTIONS_START###');
+				$solutionItem = '';
+				foreach ($entryPoint->ToArray() as $entryPoint) {
+					$solutionsItemTemplate = $this->pObj->cObj->getSubpart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS###');
 					$stop = $entryPoint->{lcfirst($entryPoint->type)};
-					$markers['###ENTRYPOINT_START###'] = $index;
-					$markers['###CITY_START###'] = $entryPoint->cityName;
-					$markers['###STOPPOINT_START###'] = $stop->name;
-					$markers['###RECORDNUMBER###'] = $index;
-					$markers['###ENTRYPOINT_TYPE_START###'] = $this->pObj->pi_getLL('entryPointType.' . strtolower($entryPoint->type));
+					$locMarkers = array();
+					$locMarkers['ENTRYPOINT'] = $index;
+					$locMarkers['CITY'] = $entryPoint->cityName;
+					$locMarkers['STOPPOINT'] = $stop->name;
+					$locMarkers['RECORDNUMBER'] = $index;
+					$locMarkers['ENTRYPOINT_TYPE'] = $this->pObj->pi_getLL('entryPointType.' . strtolower($entryPoint->type));
 					$index++;
-					$solutionItem .= $this->pObj->cObj->substituteMarkerArray($solutionsItemTemplate, $markers);
+					$solutionItem .= $this->pObj->cObj->substituteMarkerArray($solutionsItemTemplate, $locMarkers, '###|###');
 				}
-				
-				$moreSolutionsTemplate = $this->pObj->cObj->substituteSubpart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS_START###', $solutionItem);
-				$moreSolutionContent = $this->pObj->cObj->substituteMarkerArray($moreSolutionsTemplate, $markers);
-				
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_START###', $moreSolutionContent);
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_START###', '');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_START###', '');
+				$moreSolutionsTemplate = $this->pObj->cObj->substituteSubPart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS###', $solutionItem);
+				$content = $this->pObj->cObj->substituteMarkerArray($moreSolutionsTemplate, $markers, '###|###');
 			}
-			
-			if($entryPointArrival->Count() == 0) {
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_ARRIVAL###', '');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_ARRIVAL###', '');
-				$noSolutionTemplate = $this->pObj->cObj->getSubpart($template, '###CONFIRM_NO_SOLUTION_ARRIVAL###');
-				$markers['###ARRIVAL_NO_SOLUTION###'] = $this->pObj->pi_getLL('nosolution');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_ARRIVAL###', $noSolutionTemplate);
-			}
-			elseif($entryPointArrival->Count() == 1) {
-				$entryPoint = $entryPointArrival->Get(0);
-
-				$oneSolutionTemplate = $this->pObj->cObj->getSubpart($template, '###CONFIRM_ONE_SOLUTION_ARRIVAL###');
-				
-				$markers['###ARRIVAL_ONE_SOLUTION###'] = $this->pObj->pi_getLL('onesolution');
-				$markers['###CITY_ARRIVAL###'] = $entryPoint->cityName;
-				
-				$stop = $entryPoint->{lcfirst($entryPoint->type)};
-				$markers['###STOPPOINT_ARRIVAL###'] = $stop->name;
-				
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_ARRIVAL###', $oneSolutionTemplate);
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_ARRIVAL###', '');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_ARRIVAL###', '');
-			}
-			else {
-				$moreSolutionsTemplate = $this->pObj->cObj->getSubpart($template, '###CONFIRM_MORE_SOLUTIONS_ARRIVAL###');
-				$markers['###ARRIVAL_MORE_SOLUTIONS###'] = $this->pObj->pi_getLL('moresolutions');
-				$index = 0;
-				foreach($entryPointArrival->ToArray() as $entryPoint) {
-					$solutionsItemTemplate = $this->pObj->cObj->getSubpart($template, '###LIST_MORE_SOLUTIONS_ARRIVAL###');
-					$stop = $entryPoint->{lcfirst($entryPoint->type)};
-					$markers['###ENTRYPOINT_ARRIVAL###'] = $index;
-					$markers['###CITY_ARRIVAL###'] = $entryPoint->cityName;
-					$markers['###STOPPOINT_ARRIVAL###'] = $stop->name;
-					$markers['###RECORDNUMBER###'] = $index;
-					
-					$markers['###ENTRYPOINT_TYPE_ARRIVAL###'] = $this->pObj->pi_getLL('entryPointType.' . strtolower($entryPoint->type));
-					$index++;
-					$solutionItemArrival .= $this->pObj->cObj->substituteMarkerArray($solutionsItemTemplate, $markers);
-				}
-				
-				$moreSolutionsTemplate = $this->pObj->cObj->substituteSubpart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS_ARRIVAL###', $solutionItemArrival);
-				$moreSolutionContent = $this->pObj->cObj->substituteMarkerArray($moreSolutionsTemplate, $markers);
-				
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_ARRIVAL###', $moreSolutionContent);
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_ARRIVAL###', '');
-				$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_ARRIVAL###', '');
-			}
-			
 		}
-		else {
-			$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_START###', '');
-			$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_START###', '');
-			$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_START###', '');
-			
-			$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_MORE_SOLUTIONS_ARRIVAL###', '');
-			$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_ONE_SOLUTION_ARRIVAL###', '');
-			$template = $this->pObj->cObj->substituteSubpart($template, '###CONFIRM_NO_SOLUTION_ARRIVAL###', '');
-		}
-		
-		$markers['###DATE_SEL###'] = date('d/m/Y');
-		$markers['###TIME_SEL###'] = date('H:i');
-		
-		if(!is_null($this->debugParam)) {
-			$markers['###ACTION_URL###'] .= '&' . $this->pObj->debug_param . '=' . $this->debugParam;
-		}
-		
-		if($this->pObj->debug) {
-			$this->debugParam = t3lib_div::_GP($this->pObj->debug_param);
-		}
-		
-		$markers['###URL###'] .= '&' . $this->pObj->debug_param . '=' . $this->debugParam;
-		
-		$aModesType = array(
-			0 => array('ModeTypeExternalCode' => 'Bus', 'ModeTypeName' => 'Bus'),
-			1 => array('ModeTypeExternalCode' => 'métro', 'ModeTypeName' => 'métro')
-		); // A remplacer par la méthode qui récupère les types de mode.
-		
-		$modeTypeListTemplate = $this->pObj->cObj->getSubpart($template, '###MODE_TYPE_LIST###');
-		foreach($aModesType as $mode)  {
-			$markers['###MODE_TYPE_VALUE###'] = $mode['ModeTypeExternalCode'];
-			$markers['###MODE_TYPE_NAME###'] = $mode['ModeTypeName'];
-			$markers['###SELECTED_' . $mode['ModeTypeExternalCode'] . '###'] = 'checked'; // à modifier si on ne veut pas que tous les modes soient actifs par défaut
-			$modeTypeListContent .= $this->pObj->cObj->substituteMarkerArray($modeTypeListTemplate, $markers);
-		}
-		
-		$aCriteria = array(
-			0 => array(
-				'criteriaValue' => 1,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.1'),
-			),
-			1 => array(
-				'criteriaValue' => 2,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.2'),
-			),
-			2 => array(
-				'criteriaValue' => 3,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.3'),
-			),
-			3 => array(
-				'criteriaValue' => 4,
-				'criteriaName' => $this->pObj->pi_getLL('preference.criteria.4'),
-			)
-		); // A modifier
-		
-		
-
-		$criteriaListTemplate = $this->pObj->cObj->getSubpart($template, '###CRITERIA_LIST###');
-		foreach($aCriteria as $criteria)  {
-			$markers['###CRITERIA_VALUE###'] = $criteria['criteriaValue'];
-			$markers['###CRITERIA_NAME###'] = $criteria['criteriaName'];
-			
-			if($criteria['criteriaValue'] == 1) {
-				$markers['###SELECTED_criteria_' . $criteria['criteriaValue'] . '###'] = 'checked'; // à modifier
-			}
-			else {
-				$markers['###SELECTED_criteria_' . $criteria['criteriaValue'] . '###'] = '';
-			}
-			$criteriaListContent .= $this->pObj->cObj->substituteMarkerArray($criteriaListTemplate, $markers);
-		}
-		
-		//var_dump($criteriaListContent);
-		
-		$template = $this->pObj->cObj->substituteSubpart($template, '###CRITERIA_LIST###', $criteriaListContent);
-		$template = $this->pObj->cObj->substituteSubpart($template, '###MODE_TYPE_LIST###', $modeTypeListContent);
-		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers);
 		return $content;
 	}
 }
