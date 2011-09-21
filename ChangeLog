@@ -2,6 +2,8 @@
 	* Review templates and code for search form and resuts page.
 	* Refactored list rendering for these pages. Better isolation.
 	* Added hidden fields to keep arguments when submiting forms with GET method.
+	* Refactored mode type and criteria sources.
+	* Changed resource organization.
 
 2011-09-20 Pierrick Caillon <pierrick@in-cite.net>
 	* Integrated all done code with little refactoring.

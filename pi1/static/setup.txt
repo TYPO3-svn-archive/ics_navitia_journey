@@ -3,13 +3,31 @@ plugin.tx_icsnavitiajourney_pi1 {
 	login = 
 	view {
 		search {
-			templateFile = EXT:ics_navitia_journey/res/template_journey_search.html
+			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_search.html
 		}
 		results {
-			templateFile = EXT:ics_navitia_journey/res/template_journey_results.html
+			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_results.html
 		}
 		details {
-			templateFile = EXT:ics_navitia_journey/res/template_journey_details.html
+			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_details.html
 		}
+	}
+	icons {
+		AddressConnection = {$plugin.tx_icsnavitiajourney_pi1.icons.walk}
+		AddressConnection.onlyBounds = 1
+		SiteConnection < AddressConnection
+		StopAreaConnection < AddressConnection
+		VehicleJourneyConnection = SUB:vehicleJourney|route|line|modeType|externalCode
+		VehicleJourneyConnection.Bus = {$plugin.tx_icsnavitiajourney_pi1.icons.bus}
+		VehicleJourneyConnection.Metro = {$plugin.tx_icsnavitiajourney_pi1.icons.metro}
+		LinkConnection < AddressConnection
+		StopPointConnection < AddressConnection
+		WalkConnection < AddressConnection
+		ProlongationConnection =
+		PersonnalCarConnection =
+		Undefined =
+		BicycleConnection =
+		CabConnection =
+		ODTConnection =
 	}
 }

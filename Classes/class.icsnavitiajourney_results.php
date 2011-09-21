@@ -33,7 +33,7 @@ class tx_icsnavitiajourney_results {
 		$this->pObj = $pObj;
 	}
 
-	function getPlanJourneyResults($journeyPlan, $params) {
+	function getPlanJourneyResults($journeyPlan, $callParams) {
 		$templatePart = $this->pObj->templates['results'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_RESULTS###');
 		
@@ -44,10 +44,10 @@ class tx_icsnavitiajourney_results {
 			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu.search')),
 			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu.results')),
 			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu.details')),
-			'STOP_START' => htmlspecialchars($params['startName']),
-			'CITY_START' => htmlspecialchars($params['startCity']),
-			'STOP_ARRIVAL' => htmlspecialchars($params['arrivalName']),
-			'CITY_ARRIVAL' => htmlspecialchars($params['arrivalCity']),
+			'STOP_START' => htmlspecialchars($callParams['startName']),
+			'CITY_START' => htmlspecialchars($callParams['startCity']),
+			'STOP_ARRIVAL' => htmlspecialchars($callParams['arrivalName']),
+			'CITY_ARRIVAL' => htmlspecialchars($callParams['arrivalCity']),
 			'START_TO' => htmlspecialchars($this->pObj->pi_getLL('startAt')),
 			'ARRIVAL_TO' => htmlspecialchars($this->pObj->pi_getLL('arrivalAt')),
 			'PREFERENCES' => htmlspecialchars($this->pObj->pi_getLL('preference')),

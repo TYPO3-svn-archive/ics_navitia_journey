@@ -1,0 +1,7 @@
+plugin.tx_icsnavitiajourney_pi1 {
+	icons {
+		walk = EXT:ics_navitia_journey/res/icons/walk.png
+		bus = EXT:ics_navitia_journey/res/icons/bus.png
+		metro = EXT:ics_navitia_journey/res/icons/metro.png
+	}
+}

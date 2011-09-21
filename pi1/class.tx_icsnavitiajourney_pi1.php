@@ -29,7 +29,6 @@
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
 
-
 /**
  * Plugin 'Journey' for the 'ics_navitia_journey' extension.
  *
@@ -63,17 +62,17 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 	
 		$this->init();
 		
+		if (!empty($this->piVars['startName']) || !empty($this->piVars['startCity']))
+			$entryPointStart = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['startName'], $this->piVars['startCity']);
+		if (!empty($this->piVars['arrivalName']) || !empty($this->piVars['arrivalCity']))
+			$entryPointArrival = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['arrivalName'], $this->piVars['arrivalCity']);
+
 		if (is_numeric($this->piVars['entryPointStart']) && is_numeric($this->piVars['entryPointArrival'])) {
-			$entryPointStart = $this->dataProvider->getEntryPointListByNameAndCity(($this->piVars['startName']), ($this->piVars['startCity']));
-			$entryPointArrival = $this->dataProvider->getEntryPointListByNameAndCity(($this->piVars['arrivalName']), ($this->piVars['arrivalCity']));
-			
 			$entryPointFinalStart = $entryPointStart->Get(intval($this->piVars['entryPointStart']));
 			$entryPointFinalArrival = $entryPointArrival->Get(intval($this->piVars['entryPointArrival']));
 			
 			$entryPointDefinitionStart = tx_icslibnavitia_EntryPointDefinition::fromEntryPoint($entryPointFinalStart);
 			$entryPointDefinitionArrival = tx_icslibnavitia_EntryPointDefinition::fromEntryPoint($entryPointFinalArrival);
-			
-			t3lib_div::devlog('Appel pi1 journey results', 'ics_navitia_journey', 0, array(intval($this->piVars['entryPointStart']), intval($this->piVars['entryPointArrival'])));
 			
 			$params = array(
 				'startName' => $entryPointFinalStart->name,
@@ -96,7 +95,9 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 				$isStartTime = false;
 			}
 			
-			$planJourney = $this->dataProvider->getPlanJourney($entryPointDefinitionStart, $entryPointDefinitionArrival, $isStartTime, $date, $this->piVars['criteria'], $this->nbBefore, $this->nbAfter);
+			$binaryCriteria = $this->dataProvider->getBinaryCriteria($this->piVars['mode']);
+			
+			$planJourney = $this->dataProvider->getPlanJourney($entryPointDefinitionStart, $entryPointDefinitionArrival, $isStartTime, $date, $this->piVars['criteria'], $this->nbBefore, $this->nbAfter, $binaryCriteria);
 			
 			$planJourneyResults = t3lib_div::makeInstance('tx_icsnavitiajourney_results', $this);
 			
@@ -109,16 +110,9 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 				$content = $planJourneyDetails->getPlanJourneyDetails($planJourney, $params);	
 			}
 		}
-		elseif ($this->piVars['searchSubmit']) {
-			$entryPointStart = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['startName'], $this->piVars['startCity']);
-			$entryPointArrival = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['arrivalName'], $this->piVars['arrivalCity']);
-			
-			$search = t3lib_div::makeInstance('tx_icsnavitiajourney_search', $this);
-			$content = $search->getSearchForm($this->dataProvider, $entryPointStart, $entryPointArrival);
-		}
 		else {
 			$search = t3lib_div::makeInstance('tx_icsnavitiajourney_search', $this);
-			$content = $search->getSearchForm($this->dataProvider);
+			$content = $search->getSearchForm($this->dataProvider, $entryPointStart, $entryPointArrival);
 		}
 		
 		return $this->pi_wrapInBaseClass($content);
@@ -179,53 +173,44 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 	}
 	
 	public function replaceModes($template) {
-		$aModesType = array(
-			0 => array('ModeTypeExternalCode' => 'Bus', 'ModeTypeName' => 'Bus'),
-			1 => array('ModeTypeExternalCode' => 'métro', 'ModeTypeName' => 'métro')
-		); // TODO: ModeType retrieval from API. Create the necessary API method.
+		$modes = $this->dataProvider->getModeTypeList();
 		
 		$modeTypeListTemplate = $this->cObj->getSubpart($template, '###MODE_TYPE_LIST###');
 		$modeTypeListContent = '';
-		foreach ($aModesType as $mode) {
+		$idx = 0;
+		foreach ($modes->ToArray() as $mode) {
+			if (empty($mode->externalCode))
+				continue;
 			$markers = array();
-			$markers['MODE_TYPE_VALUE'] = $mode['ModeTypeExternalCode'];
-			$markers['MODE_TYPE_NAME'] = $mode['ModeTypeName'];
-			$markers['SELECTED_' . $mode['ModeTypeExternalCode']] = ' checked="checked"'; // TODO: Default value and read from parameters.
+			$markers['VALUE'] = $mode->externalCode;
+			$markers['NAME'] = $mode->name;
+			$markers['IDX'] = $idx++;
+			$markers['SELECTED'] = (!isset($this->piVars['mode']) || in_array($mode->externalCode, $this->piVars['mode'])) ? ' checked="checked"' : '';
 			$modeTypeListContent .= $this->cObj->substituteMarkerArray($modeTypeListTemplate, $markers, '###|###');
 		}
 		return $this->cObj->substituteSubpart($template, '###MODE_TYPE_LIST###', $modeTypeListContent);
 	}
 	
 	public function replaceCriteria($template) {
-		$aCriteria = array(
-			0 => array(
-				'criteriaValue' => 1,
-				'criteriaName' => $this->pi_getLL('preference.criteria.1'),
-			),
-			1 => array(
-				'criteriaValue' => 2,
-				'criteriaName' => $this->pi_getLL('preference.criteria.2'),
-			),
-			2 => array(
-				'criteriaValue' => 3,
-				'criteriaName' => $this->pi_getLL('preference.criteria.3'),
-			),
-			3 => array(
-				'criteriaValue' => 4,
-				'criteriaName' => $this->pi_getLL('preference.criteria.4'),
-			)
-		); // TODO: Loop from 1 to 4.
+		$criterias = array();
+		for ($i = 1; $i < 5; $i++)
+			$criterias[] = array(
+				'value' => $i,
+				'name' => $this->pi_getLL('preference.criteria.' . $i),
+			);
 
 		$criteriaListTemplate = $this->cObj->getSubpart($template, '###CRITERIA_LIST###');
 		$criteriaListContent = '';
-		foreach ($aCriteria as $criteria)  {
-			$markers['CRITERIA_VALUE'] = $criteria['criteriaValue'];
-			$markers['CRITERIA_NAME'] = $criteria['criteriaName'];
-			if ($criteria['criteriaValue'] == 1) {
-				$markers['SELECTED_criteria_' . $criteria['criteriaValue']] = ' checked="checked"'; // TODO: Default value and read from parameters.
+		foreach ($criterias as $criteria)  {
+			$markers = array();
+			$markers['VALUE'] = $criteria['value'];
+			$markers['NAME'] = $criteria['name'];
+			if (($criteria['value'] == $this->piVars['criteria']) ||
+				(!isset($this->piVars['criteria']) && ($criteria['value'] == 1))) {
+				$markers['SELECTED'] = ' checked="checked"';
 			}
 			else {
-				$markers['SELECTED_criteria_' . $criteria['criteriaValue']] = '';
+				$markers['SELECTED'] = '';
 			}
 			$criteriaListContent .= $this->cObj->substituteMarkerArray($criteriaListTemplate, $markers, '###|###');
 		}
