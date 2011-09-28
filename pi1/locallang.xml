@@ -46,8 +46,8 @@
 			<label index="details.previous">Previous journey</label>
 			<label index="details.next">Next journey</label>
 			<label index="details.localize.stoparea">Localize stoparea on google map</label>
-			<label index="details.departure">From :</label>
-			<label index="details.arrival">To :</label>
+			<label index="details.departure">From:</label>
+			<label index="details.arrival">To:</label>
 			<label index="details.linkConnection">Walk to stoppoint</label>
 			<label index="details.correspondence">Correspondence</label>
 			<label index="details.from.site">From site</label>
