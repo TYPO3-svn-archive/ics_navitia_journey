@@ -1,6 +1,6 @@
 2011-09-28 Pierrick Caillon <pierrick@in-cite.net>
 	* Changed key value used to tell the system the computation depends on another parameter.
-	  The new value is CASE instead of SUB: followed by the value path
+	  The new value is CASE instead of SUB: followed by the value path. The value path now goes in the key property.
 
 2011-09-27 Loïc Stephan <loic@in-cite.net>
 	* Remove some static texts.
