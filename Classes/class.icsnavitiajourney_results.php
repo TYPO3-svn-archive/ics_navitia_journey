@@ -126,16 +126,16 @@ class tx_icsnavitiajourney_results {
 		$linePicto = t3lib_div::makeInstance('tx_icslinepicto_getlines');
 		$resultListTemplate = $this->pObj->cObj->getSubpart($template, '###RESULTS_LIST###');
 		$resultListContent = '';
-
-		$markers = array(
-			'DETAILS_URL' => '',
-			'START_HOUR' => '',
-			'ARRIVAL_HOUR' => '',
-			'DURATION' => '',
-			'PICTOS' => ''
-		);
 		
 		foreach ($results->ToArray() as $journeyResult) {
+			$markers = array(
+				'DETAILS_URL' => '',
+				'START_HOUR' => '',
+				'ARRIVAL_HOUR' => '',
+				'DURATION' => '',
+				'PICTOS' => ''
+			);
+		
 			if (!is_null($journeyResult->summary)) {
 				$markers['DETAILS_URL'] = $this->pObj->pi_linkTP_keepPIvars_url(
 					array(
