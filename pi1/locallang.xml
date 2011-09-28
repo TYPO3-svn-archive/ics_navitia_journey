@@ -44,7 +44,18 @@
 			<label index="direction">Direction</label>
 			<label index="details.backward">Backward journey</label>
 			<label index="details.previous">Previous journey</label>
-			<label index="details.next">Next journey</label>		
+			<label index="details.next">Next journey</label>
+			<label index="details.localize.stoparea">Localize stoparea on google map</label>
+			<label index="details.departure">From :</label>
+			<label index="details.arrival">To :</label>
+			<label index="details.linkConnection">Walk to stoppoint</label>
+			<label index="details.correspondence">Correspondence</label>
+			<label index="details.from.site">From site</label>
+			<label index="details.to.site">To site</label>
+			<label index="details.to.site.stoppoint">Walk to stoppoint</label>
+			<label index="details.to.address.stoppoint">Walk to stoppoint</label>
+			<label index="details.from.address">From address</label>
+			<label index="details.to.address">Rejoindre à pied l'adresse</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="menu.search">Recherche</label>
@@ -76,6 +87,7 @@
 			<label index="from">De</label>
 			<label index="to">À</label>
 			<label index="result_hour_start">Départs entre</label>
+			<label index="result_hour_arrival">Arrivées entre</label>
 			<label index="and">et</label>
 			<label index="day">jour</label>
 			<label index="hour">h</label>
@@ -86,6 +98,20 @@
 			<label index="details.backward">Itinéraire retour</label>
 			<label index="details.previous">Itinéraire précédent</label>
 			<label index="details.next">Itinéraire suivant</label>
+			<label index="details.localize.stoparea">Localiser l'arrêt sur une carte</label>
+			<label index="details.departure">Départ :</label>
+			<label index="details.arrival">Arrivée :</label>
+			<label index="details.linkConnection">Rejoindre à pied l'arrêt</label>
+			<label index="details.siteConnection">Site</label>
+			<label index="details.correspondence">Correspondance</label>
+			<label index="details.addressConnection.from">De l'adresse</label>
+			<label index="details.addressConnection.to">Rejoindre à pied l'adresse</label>
+			<label index="details.from.site">Du site</label>
+			<label index="details.to.site">Rejoindre à pied le site</label>
+			<label index="details.to.site.stoppoint">Rejoindre à pied l'arrêt</label>
+			<label index="details.to.address.stoppoint">Rejoindre à pied l'arrêt</label>
+			<label index="details.from.address">De l'adresse</label>
+			<label index="details.to.address">Rejoindre à pied l'adresse</label>
 		</languageKey>
 	</data>
 </T3locallang>

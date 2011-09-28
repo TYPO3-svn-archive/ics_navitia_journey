@@ -53,8 +53,8 @@ class tx_icsnavitiajourney_results {
 			'PREFERENCES' => htmlspecialchars($this->pObj->pi_getLL('preference')),
 			'MODE_TYPE' => htmlspecialchars($this->pObj->pi_getLL('preference.mode')),
 			'CRITERIA' => htmlspecialchars($this->pObj->pi_getLL('preference.criteria')),
-			'RESULT_HOURS_START' => htmlspecialchars($this->pObj->pi_getLL('result_hour_start')),
-			'AND' => htmlspecialchars($this->pObj->pi_getLL('and')),
+			'RESULT_HOURS_START' => '',
+			'AND' => '',
 			'FIRST_HOUR' => '',
 			'LAST_HOUR' => '',
 			'START_HOUR' => '',
@@ -65,6 +65,7 @@ class tx_icsnavitiajourney_results {
 			'SELECTED_1' => '',
 			'ACTION_URL' => htmlspecialchars($this->pObj->pi_linkTP_keepPIvars_url()),
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
+			'NOTA' => ''
 		);
 		$params = t3lib_div::_GET($this->pObj->prefixId);
 		foreach ($params as $name => $value) {
@@ -84,6 +85,15 @@ class tx_icsnavitiajourney_results {
 		$template = $this->pObj->replaceCriteria($template);
 
 		if (!is_null($journeyPlan['JourneyResultList']->Get(0)->summary)) {
+		
+			if($this->pObj->piVars['isStartTime']) {
+				$markers['RESULT_HOURS_START'] = htmlspecialchars($this->pObj->pi_getLL('result_hour_start'));
+			}
+			else {
+				$markers['RESULT_HOURS_START'] = htmlspecialchars($this->pObj->pi_getLL('result_hour_arrival'));
+			}
+			
+			$markers['AND'] = htmlspecialchars($this->pObj->pi_getLL('and'));
 			$markers['FIRST_HOUR'] = $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i'); // TODO: Hour format as config.
 			$markers['LAST_HOUR'] = $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count()-1))->summary->departure->format('H:i');
 			
@@ -104,6 +114,10 @@ class tx_icsnavitiajourney_results {
 		
 		$template = $this->pObj->cObj->substituteSubpart($template, '###RESULTS_LIST###', $this->renderResults($template, $journeyPlan['JourneyResultList']));
 		
+		if($journeyPlan['JourneyResultList']->Get(0)->sections->Get(0)->nota->type) {
+			$markers['NOTA'] = $journeyPlan['JourneyResultList']->Get(0)->sections->Get(0)->nota->type; // TODO : Tableau associatif code erreur // phrase
+		}
+
 		$content = $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
 		return $content;
 	}
@@ -112,20 +126,30 @@ class tx_icsnavitiajourney_results {
 		$linePicto = t3lib_div::makeInstance('tx_icslinepicto_getlines');
 		$resultListTemplate = $this->pObj->cObj->getSubpart($template, '###RESULTS_LIST###');
 		$resultListContent = '';
-		foreach ($results->ToArray() as $journeyResult) {
-			$markers = array();
-			$markers['DETAILS_URL'] = $this->pObj->pi_linkTP_keepPIvars_url(
-				array(
-					'nbBefore' 	=> '0',
-					'nbAfter' 	=> '0',
-					'date' 		=> $journeyResult->summary->departure->format('d/m/Y'), 
-					'hour' 		=> $journeyResult->summary->departure->format('H:i')
-				)
-			);
+
+		$markers = array(
+			'DETAILS_URL' => '',
+			'START_HOUR' => '',
+			'ARRIVAL_HOUR' => '',
+			'DURATION' => '',
+			'PICTOS' => ''
+		);
 		
+		foreach ($results->ToArray() as $journeyResult) {
 			if (!is_null($journeyResult->summary)) {
+				$markers['DETAILS_URL'] = $this->pObj->pi_linkTP_keepPIvars_url(
+					array(
+						'nbBefore' 	=> '0',
+						'nbAfter' 	=> '0',
+						'date' 		=> $journeyResult->summary->departure->format('d/m/Y'), 
+						'hour' 		=> $journeyResult->summary->departure->format('H:i')
+					)
+				);
 				$markers['START_HOUR'] = $journeyResult->summary->departure->format('H:i');
 				$markers['ARRIVAL_HOUR'] = $journeyResult->summary->arrival->format('H:i');
+			}
+			elseif($results->Count() == 1) {
+				continue;
 			}
 			foreach ($journeyResult->sections->ToArray() as $section) {
 				$duration = '';
@@ -148,6 +172,7 @@ class tx_icsnavitiajourney_results {
 			
 			$resultListContent .= $this->pObj->cObj->substituteMarkerArray($resultListTemplate, $markers, '###|###');
 		}
+		
 		return $resultListContent;
 	}
 }

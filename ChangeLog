@@ -1,6 +1,13 @@
 2011-09-28 Pierrick Caillon <pierrick@in-cite.net>
 	* Changed key value used to tell the system the computation depends on another parameter.
-	  The new value is CASE instead of SUB: followed by the value path. The value path now goes in the key property.
+	  The new value is CASE instead of SUB: followed by the value path
+
+2011-09-27 Loïc Stephan <loic@in-cite.net>
+	* Remove some static texts.
+
+2011-09-26 Loïc Stephan <loic@in-cite.net>
+	* Details view is partially done (some section type are missing)
+	* Error handling
 
 2011-09-21 Pierrick Caillon <pierrick@in-cite.net>
 	* Review templates and code for search form and resuts page.

@@ -12,13 +12,13 @@ plugin.tx_icsnavitiajourney_pi1 {
 			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_details.html
 		}
 	}
+
 	icons {
 		AddressConnection = {$plugin.tx_icsnavitiajourney_pi1.icons.walk}
 		AddressConnection.onlyBounds = 1
 		SiteConnection < AddressConnection
 		StopAreaConnection < AddressConnection
-		VehicleJourneyConnection = CASE
-		VehicleJourneyConnection.key = vehicleJourney|route|line|modeType|externalCode
+		VehicleJourneyConnection = SUB:vehicleJourney|route|line|modeType|externalCode
 		VehicleJourneyConnection.Bus = {$plugin.tx_icsnavitiajourney_pi1.icons.bus}
 		VehicleJourneyConnection.Metro = {$plugin.tx_icsnavitiajourney_pi1.icons.metro}
 		LinkConnection < AddressConnection

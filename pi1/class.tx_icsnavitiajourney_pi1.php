@@ -107,7 +107,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 			}
 			else {
 				$planJourneyDetails = t3lib_div::makeInstance('tx_icsnavitiajourney_details', $this);
-				$content = $planJourneyDetails->getPlanJourneyDetails($planJourney, $params);	
+				$content = $planJourneyDetails->getPlanJourneyDetails($planJourney, $params);
 			}
 		}
 		else {
@@ -153,7 +153,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		else {
 			$this->nbAfter = 1;
 		}
-		
+		$this->includeLibJS();
 	}
 	
 	public function getHiddenFields() {
@@ -174,12 +174,12 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 	
 	public function replaceModes($template) {
 		$modes = $this->dataProvider->getModeTypeList();
-		
+
 		$modeTypeListTemplate = $this->cObj->getSubpart($template, '###MODE_TYPE_LIST###');
 		$modeTypeListContent = '';
 		$idx = 0;
 		foreach ($modes->ToArray() as $mode) {
-			if (empty($mode->externalCode))
+			if (empty($mode->externalCode) || $mode->externalCode == 'Indéfini')
 				continue;
 			$markers = array();
 			$markers['VALUE'] = $mode->externalCode;
@@ -216,6 +216,16 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		}
 		
 		return $this->cObj->substituteSubpart($template, '###CRITERIA_LIST###', $criteriaListContent);
+	}
+	
+	private function includeLibJS() {
+		if ($this->jsIncluded)
+			return;
+		$file = t3lib_div::resolveBackPath($GLOBALS['TSFE']->tmpl->getFileName('EXT:' . $this->extKey . '/res/js/localize.js'));
+		$file = t3lib_div::createVersionNumberedFilename($file);
+		$tag = '	<script src="' . htmlspecialchars($file) . '" type="text/javascript"></script>' . PHP_EOL;
+		$GLOBALS['TSFE']->additionalHeaderData['geoloc'] = $tag;
+		$this->jsIncluded = true;
 	}
 }
 
