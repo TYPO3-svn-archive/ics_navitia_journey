@@ -12,6 +12,8 @@
 			<label index="search.startAddress">Start address</label>
 			<label index="search.arrivalAddress">Arrival address</label>
 			<label index="search.myPosition">My position</label>
+			<label index="search.myPosition.zero">Address not found</label>
+			<label index="search.myPosition.error">Error occured</label>
 			<label index="search.name">Name</label>
 			<label index="search.city">City</label>
 			<label index="search.journeyDate">Journey date</label>
@@ -27,7 +29,7 @@
 			<label index="preference.criteria.4">Less waiting</label>
 			<label index="nosolution">No match.</label>
 			<label index="onesolution">One match found.</label>
-			<label index="moresolutions">Several match were found. Please, choose your desired one :</label>
+			<label index="moresolutions">Several match were found. Please, choose your desired one:</label>
 			<label index="entryPointType.address">Address</label>
 			<label index="entryPointType.stoparea">Stop area</label>
 			<label index="entryPointType.site">Site</label>
@@ -45,7 +47,7 @@
 			<label index="details.backward">Backward journey</label>
 			<label index="details.previous">Previous journey</label>
 			<label index="details.next">Next journey</label>
-			<label index="details.localize.stoparea">Localize stoparea on google map</label>
+			<label index="details.localize.stoparea">Localize stoparea on a map</label>
 			<label index="details.departure">From:</label>
 			<label index="details.arrival">To:</label>
 			<label index="details.linkConnection">Walk to stoppoint</label>
@@ -55,7 +57,7 @@
 			<label index="details.to.site.stoppoint">Walk to stoppoint</label>
 			<label index="details.to.address.stoppoint">Walk to stoppoint</label>
 			<label index="details.from.address">From address</label>
-			<label index="details.to.address">Rejoindre à pied l'adresse</label>
+			<label index="details.to.address">Walk to address</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="menu.search">Recherche</label>
@@ -64,6 +66,8 @@
 			<label index="search.startAddress">Lieu de départ</label>
 			<label index="search.arrivalAddress">Lieu d'arrivée</label>
 			<label index="search.myPosition">Ma position</label>
+			<label index="search.myPosition.zero">Adresse non trouvée</label>
+			<label index="search.myPosition.error">Une erreur est survenue</label>
 			<label index="search.name">Nom</label>
 			<label index="search.city">Commune</label>
 			<label index="search.journeyDate">Date du trajet</label>

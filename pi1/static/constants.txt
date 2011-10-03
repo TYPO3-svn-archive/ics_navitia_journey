@@ -4,4 +4,5 @@ plugin.tx_icsnavitiajourney_pi1 {
 		bus = EXT:ics_navitia_journey/res/icons/bus.png
 		metro = EXT:ics_navitia_journey/res/icons/metro.png
 	}
+	useGeolocation = 1
 }

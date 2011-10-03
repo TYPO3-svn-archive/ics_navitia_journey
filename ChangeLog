@@ -1,3 +1,6 @@
+2011-10-03 Pierrick Caillon <pierrick@in-cite.net>
+	* Added address geocoding from GPS location for start address.
+
 2011-09-28 Pierrick Caillon <pierrick@in-cite.net>
 	* Changed key value used to tell the system the computation depends on another parameter.
 	  The new value is CASE instead of SUB: followed by the value path. The value path now goes in the key property.

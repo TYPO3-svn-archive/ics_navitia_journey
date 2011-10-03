@@ -43,11 +43,6 @@ class tx_icsnavitiajourney_search {
 			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu.results')),
 			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu.details')),
 			'ACTION_URL' => htmlspecialchars($this->pObj->pi_getPageLink($GLOBALS['TSFE']->id)),
-			'START_ADDRESS' => htmlspecialchars($this->pObj->pi_getLL('search.startAddress')),
-			'ARRIVAL_ADDRESS' => htmlspecialchars($this->pObj->pi_getLL('search.arrivalAddress')),
-			'MY_POSITION_TEXT' => htmlspecialchars($this->pObj->pi_getLL('search.myPosition')),
-			'NAME' => htmlspecialchars($this->pObj->pi_getLL('search.name')),
-			'CITY' => htmlspecialchars($this->pObj->pi_getLL('search.city')),
 			'JOURNEY_DATE' => htmlspecialchars($this->pObj->pi_getLL('search.journeyDate')),
 			'START_AT' => htmlspecialchars($this->pObj->pi_getLL('startAt')),
 			'ARRIVAL_AT' => htmlspecialchars($this->pObj->pi_getLL('arrivalAt')),
@@ -55,10 +50,6 @@ class tx_icsnavitiajourney_search {
 			'MODE_TYPE' => htmlspecialchars($this->pObj->pi_getLL('preference.mode')),
 			'CRITERIA' => htmlspecialchars($this->pObj->pi_getLL('preference.criteria')),
 			'SUBMIT' => htmlspecialchars($this->pObj->pi_getLL('search.submit')),
-			'START_NAME_VALUE' => htmlspecialchars($this->pObj->piVars['startName']),
-			'ARRIVAL_NAME_VALUE' => htmlspecialchars($this->pObj->piVars['arrivalName']),
-			'START_CITY_VALUE' => htmlspecialchars($this->pObj->piVars['startCity']),
-			'ARRIVAL_CITY_VALUE' => htmlspecialchars($this->pObj->piVars['arrivalCity']),
 			'SELECTED_0' => '',
 			'SELECTED_1' => '',
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
@@ -66,11 +57,13 @@ class tx_icsnavitiajourney_search {
 		
 		$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' selected="selected"';
 		
+		$markers['START_FORM'] = $this->makeFormPart(true);
 		$template = $this->pObj->cObj->substituteSubpart(
 			$template, 
 			'###CONFIRM_SOLUTIONS_START###',
 			$this->makeSolutionPart($entryPointStart, true)
 		);
+		$markers['ARRIVAL_FORM'] = $this->makeFormPart(false);
 		$template = $this->pObj->cObj->substituteSubpart(
 			$template, 
 			'###CONFIRM_SOLUTIONS_ARRIVAL###',
@@ -85,6 +78,130 @@ class tx_icsnavitiajourney_search {
 
 		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
 		return $content;
+	}
+	
+	private function makeFormPart($isStart) {
+		$direction = ($isStart) ? 'start' : 'arrival';
+		$markers = array(
+			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
+			'NAME' => htmlspecialchars($this->pObj->pi_getLL('search.name')),
+			'CITY' => htmlspecialchars($this->pObj->pi_getLL('search.city')),
+			'direction' => $direction,
+		);
+		if ($isStart) {
+			$markers['TITLE'] = htmlspecialchars($this->pObj->pi_getLL('search.startAddress'));
+			$markers['NAME_VALUE'] = htmlspecialchars($this->pObj->piVars['startName']);
+			$markers['CITY_VALUE'] = htmlspecialchars($this->pObj->piVars['startCity']);
+		}
+		else {
+			$markers['TITLE'] = htmlspecialchars($this->pObj->pi_getLL('search.arrivalAddress'));
+			$markers['NAME_VALUE'] = htmlspecialchars($this->pObj->piVars['arrivalName']);
+			$markers['CITY_VALUE'] = htmlspecialchars($this->pObj->piVars['arrivalCity']);
+		}
+		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###LOCATION_FORM_PART###');
+		$noUserEntry = false;
+		if ($this->pObj->conf['useGeolocation'] && $isStart) {
+			if (!isset($this->pObj->conf['refreshDelay']))
+				$this->pObj->conf['refreshDelay'] = 120;
+			$geoloc = new tx_icslibgeoloc_GeoLocation();
+			if (isset($this->pObj->conf['errorCallback']));
+				$geoloc->error = $this->pObj->conf['errorCallback'];
+			$name = addslashes($this->pObj->prefixId . '_' . $direction . 'Name');
+			$city = addslashes($this->pObj->prefixId . '_' . $direction . 'City');
+			$z = $geoloc->ManualForm;
+			if ((($geoloc->Position === false) || (($this->pObj->conf['refreshDelay']) && ($geoloc->Update + $this->pObj->conf['refreshDelay'] < time()))) && 
+				(!$geoloc->IsDenied)) {
+				$geoloc->success = <<<EOJS
+function(position) {
+	var lat = position.coords.latitude;
+	var lng = position.coords.longitude;
+###POSITION###
+}
+EOJS;
+				$geoloc->maxAge = intval($this->pObj->conf['refreshDelay']);
+				$geoloc->requireGps = true;
+				$call = $geoloc->JsCall . '(); return false;';
+			}
+			else {
+				$lat = $geoloc->Position['latitude'];
+				$lng = $geoloc->Position['longitude'];
+				$call = <<<EOJS
+{
+	var lat = $lat;
+	var lng = $lng;
+###POSITION###
+}
+return false;
+EOJS;
+			}
+			$texts = json_encode(array(
+				'zero' => $this->pObj->pi_getLL('search.myPosition.zero'),
+				'error' => $this->pObj->pi_getLL('search.myPosition.error'),
+			));
+			$call = str_replace(
+				'###POSITION###',
+				<<<EOJS
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode({ 'location': new google.maps.LatLng(lat, lng) }, function(results, status) {
+		var lang = $texts;
+		var address = '';
+		var city = '';
+		switch (status) {
+			case google.maps.GeocoderStatus.OK:
+				var components = [];
+				for (var i = 0; i < results[0].address_components.length; i++) {
+					var el = results[0].address_components[i];
+					for (var j = 0; j < el.types.length; j++) {
+						switch (el.types[j])
+						{
+							case 'street_number':
+								components.push(el.long_name);
+								j = el.types.length;
+								break;
+							case 'route':
+								components.push(el.long_name);
+								j = el.types.length;
+								break;
+							case 'locality':
+								city = el.long_name;
+								j = el.types.length;
+								break;
+						}
+					}
+				}
+				address = components.join(' ');
+				break;
+			case google.maps.GeocoderStatus.ZERO_RESULTS:
+				address = lang.zero;
+				break;
+			default:
+				address = lang.error;
+				break;
+		}
+		document.getElementById('$name').value = address;
+		document.getElementById('$city').value = city;
+	});
+EOJS
+				,
+				$call
+			);
+			$positionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###POSITION_SELECT###');
+			$positionMarkers = array(
+				'POSITION_TEXT' => htmlspecialchars($this->pObj->pi_getLL('search.myPosition')),
+				'POSITION_URL' => '#',
+				'CLICK_EVENT' => htmlspecialchars($call),
+			);
+			$positionTemplate = $this->pObj->cObj->substituteMarkerArray($positionTemplate, $positionMarkers, '###|###');
+			$template = $this->pObj->cObj->substituteSubpart($template, '###POSITION###', $positionTemplate);
+		}
+		else
+			$template = $this->pObj->cObj->substituteSubpart($template, '###POSITION###', '');
+		if (!$noUserEntry) {
+			$content = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###LOCATION_FORM_USER_ENTRY###');
+		}
+		$template = $this->pObj->cObj->substituteMarker($template, '###FORM_PART_CONTENT###', $content);
+		$result = $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		return $result;
 	}
 	
 	private function makeSolutionPart($entryPoint, $isStart) {
@@ -127,7 +244,7 @@ class tx_icsnavitiajourney_search {
 					$index++;
 					$solutionItem .= $this->pObj->cObj->substituteMarkerArray($solutionsItemTemplate, $locMarkers, '###|###');
 				}
-				$moreSolutionsTemplate = $this->pObj->cObj->substituteSubPart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS###', $solutionItem);
+				$moreSolutionsTemplate = $this->pObj->cObj->substituteSubpart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS###', $solutionItem);
 				$content = $this->pObj->cObj->substituteMarkerArray($moreSolutionsTemplate, $markers, '###|###');
 			}
 		}

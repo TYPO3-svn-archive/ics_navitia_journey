@@ -18,7 +18,8 @@ plugin.tx_icsnavitiajourney_pi1 {
 		AddressConnection.onlyBounds = 1
 		SiteConnection < AddressConnection
 		StopAreaConnection < AddressConnection
-		VehicleJourneyConnection = SUB:vehicleJourney|route|line|modeType|externalCode
+		VehicleJourneyConnection = CASE
+		VehicleJourneyConnection.key = vehicleJourney|route|line|modeType|externalCode
 		VehicleJourneyConnection.Bus = {$plugin.tx_icsnavitiajourney_pi1.icons.bus}
 		VehicleJourneyConnection.Metro = {$plugin.tx_icsnavitiajourney_pi1.icons.metro}
 		LinkConnection < AddressConnection
@@ -31,4 +32,6 @@ plugin.tx_icsnavitiajourney_pi1 {
 		CabConnection =
 		ODTConnection =
 	}
+
+	useGeolocation = {$plugin.tx_icsnavitiajourney_pi1.useGeolocation}
 }

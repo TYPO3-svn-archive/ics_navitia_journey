@@ -30,25 +30,7 @@
 			<li>###DETAILS###</li>
 		</ul>
 		<div class="###PREFIXID###_searchForm">
-			<form action="###ACTION_URL###"  method="get">###HIDDEN_FIELDS###
-				<fieldset>
-					<p class="###PREFIXID###_startAddress">###START_ADDRESS###</p>
-					<p class="###PREFIXID###_myposition"><a href="###MY_POSITION_URL###">###MY_POSITION_TEXT###</a></p>
-					<div data-role="fieldcontain">
-						<input type="text" placeholder="###NAME###" name="###PREFIXID###[startName]" value="###START_NAME_VALUE###" id="###PREFIXID###_startName" />
-						<label for="###PREFIXID###_startName" style="display:none;">###NAME###</label>
-					</div>
-					<div data-role="fieldcontain">
-						<input type="text" placeholder="###CITY###" name="###PREFIXID###[startCity]" value="###START_CITY_VALUE###" id="###PREFIXID###_startCity" />
-						<label for="###PREFIXID###_startCity" style="display:none;">###CITY###</label>
-					</div>
-				</fieldset><!-- ###CONFIRM_SOLUTIONS_START### --><!-- ###CONFIRM_SOLUTIONS_START### -->
-				<fieldset>
-					<p class="###PREFIXID###_arrivalAddress">###ARRIVAL_ADDRESS###</p>
-					<p class="###PREFIXID###_myposition"><a href="###MY_POSITION_URL###">###MY_POSITION_TEXT###</a></p>
-					<input type="text" placeholder="###NAME###" name="###PREFIXID###[arrivalName]" value="###ARRIVAL_NAME_VALUE###" />
-					<input type="text" placeholder="###CITY###" name="###PREFIXID###[arrivalCity]" value="###ARRIVAL_CITY_VALUE###" />
-				</fieldset><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### --><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### -->
+			<form action="###ACTION_URL###"  method="get">###HIDDEN_FIELDS######START_FORM###<!-- ###CONFIRM_SOLUTIONS_START### --><!-- ###CONFIRM_SOLUTIONS_START### -->###ARRIVAL_FORM###<!-- ###CONFIRM_SOLUTIONS_ARRIVAL### --><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### -->
 				<fieldset class="###PREFIXID###_search">
 					<p class="###PREFIXID###_journeyDate">###JOURNEY_DATE###</p>
 					<div data-role="fieldcontain">
@@ -108,5 +90,22 @@
 					<p class="###PREFIXID###_confirmMoreSolutions">###NO_SOLUTION###</p>
 				</fieldset><!-- ###CONFIRM_NO_SOLUTION### end -->
 
+<!-- ###LOCATION_FORM_PART### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_###direction###Address">###TITLE###</p><!-- ###POSITION###--><!-- ###POSITION###-->###FORM_PART_CONTENT###
+				</fieldset><!-- ###LOCATION_FORM_PART### end -->
+
+<!-- ###POSITION_SELECT### begin -->
+					<p class="###PREFIXID###_###direction###Position"><a href="###POSITION_URL###" onclick="###CLICK_EVENT###">###POSITION_TEXT###</a></p><!-- ###POSITION_SELECT### end -->
+
+<!-- ###LOCATION_FORM_USER_ENTRY### begin -->
+					<div data-role="fieldcontain">
+						<label for="###PREFIXID###_###direction###Name" style="display:none;">###NAME###</label>
+						<input type="text" placeholder="###NAME###" name="###PREFIXID###[###direction###Name]" value="###NAME_VALUE###" id="###PREFIXID###_###direction###Name" />
+					</div>
+					<div data-role="fieldcontain">
+						<label for="###PREFIXID###_###direction###City" style="display:none;">###CITY###</label>
+						<input type="text" placeholder="###CITY###" name="###PREFIXID###[###direction###City]" value="###CITY_VALUE###" id="###PREFIXID###_###direction###City" />
+					</div><!-- ###LOCATION_FORM_USER_ENTRY### end -->
 </body>
 </html>
