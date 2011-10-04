@@ -1,3 +1,7 @@
+2011-10-04 Pierrick Caillon <pierrick@in-cite.net>
+	* Renamed icons files.
+	* Updated static constants for the new available icon.
+
 2011-10-03 Loïc Stephan <loic@in-cite.net>
 	* Graphical "More solutions"  + data-theme
 	* Added icons on results

@@ -3,6 +3,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 		walk = EXT:ics_navitia_journey/res/icons/walk.png
 		bus = EXT:ics_navitia_journey/res/icons/bus.png
 		metro = EXT:ics_navitia_journey/res/icons/metro.png
+		bicycle = EXT:ics_navitia_journey/res/icons/bicycle.png
 	}
 	useGeolocation = 1
 }
