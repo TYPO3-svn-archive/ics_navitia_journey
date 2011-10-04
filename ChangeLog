@@ -1,3 +1,10 @@
+2011-10-03 Loïc Stephan <loic@in-cite.net>
+	* Graphical "More solutions"  + data-theme
+	* Added icons on results
+	* New icons with transparency
+	* Added Best solution
+	* Improved integraton (template)
+
 2011-10-03 Pierrick Caillon <pierrick@in-cite.net>
 	* Added address geocoding from GPS location for start address.
 

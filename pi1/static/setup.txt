@@ -12,7 +12,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_details.html
 		}
 	}
-
+	
 	icons {
 		AddressConnection = {$plugin.tx_icsnavitiajourney_pi1.icons.walk}
 		AddressConnection.onlyBounds = 1
@@ -32,6 +32,198 @@ plugin.tx_icsnavitiajourney_pi1 {
 		CabConnection =
 		ODTConnection =
 	}
-
+	
 	useGeolocation = {$plugin.tx_icsnavitiajourney_pi1.useGeolocation}
+	
+	_CSS_DEFAULT_STYLE (
+		.tx-icsnavitiajourney-pi1 {
+			color:#4c4c4c;
+		}
+	
+		ul.tx_icsnavitiajourney_pi1_state {
+			clear:both;
+			float:left;
+			width:100%;
+			margin:0 0 0.5em 0;
+			padding:10px 0 0 5px;
+			background-color:#333;
+			
+		}
+	
+		ul.tx_icsnavitiajourney_pi1_state li {
+			float:left;
+			list-style:none;
+			color:#FFF;
+			padding:3px 8px 5px 8px;
+		}
+
+		ul.tx_icsnavitiajourney_pi1_state li.current {
+			color:#4c4c4c;
+			background-color:#FFF;
+		}
+		
+		div.tx_icsnavitiajourney_pi1_arrivalInfo p,
+		div.tx_icsnavitiajourney_pi1_arrivalInput,
+		div.tx_icsnavitiajourney_pi1_startInfo p,
+		div.tx_icsnavitiajourney_pi1_startInput {
+			float:left;
+			width:45%;
+		}
+		
+		div.tx_icsnavitiajourney_pi1_arrivalInfo p:First-Child,
+		div.tx_icsnavitiajourney_pi1_arrivalInput.inputLeft,
+		div.tx_icsnavitiajourney_pi1_startInfo p:First-Child,
+		div.tx_icsnavitiajourney_pi1_startInput.inputLeft{
+			margin-right:0.85em;
+		}
+		
+		div.tx_icsnavitiajourney_pi1_arrivalInfo p,
+		div.tx_icsnavitiajourney_pi1_startInfo p {
+			margin:1em 0 0 0.35em;
+		}
+		
+		div.tx_icsnavitiajourney_pi1_arrivalInput,
+		div.tx_icsnavitiajourney_pi1_startInput {
+			clear:none;
+		}
+		
+		p.tx_icsnavitiajourney_pi1_arrivalAddress,
+		p.tx_icsnavitiajourney_pi1_startAddress {
+			font-weight:bold;
+		}
+		
+		.tx_icsnavitiajourney_pi1_from,
+		.tx_icsnavitiajourney_pi1_to {
+			font-weight:bold;
+		}
+		
+		.tx_icsnavitiajourney_pi1_resultForm {
+			clear:both;
+			float:left;
+			width:100%;
+		}
+		
+		.tx_icsnavitiajourney_pi1_journeyRecap {
+			border-bottom:1px solid #00a0c2;
+		}
+		
+		
+		.tx_icsnavitiajourney_pi1_pointId_found {
+			font-weight:bold;
+			margin-top:0;
+		}
+
+		.tx_icsnavitiajourney_pi1_confirmOneSolution {
+			margin-bottom:0em;
+		}
+		
+		.tx_icsnavitiajourney_pi1_resultHours {
+			font-weight:bold;
+		}
+		
+		.tx_icsnavitiajourney_pi1_pictos {
+			float:left;
+			margin:0.5em 0 0 0.75em;
+		}
+		
+		.tx_icsnavitiajourney_pi1_pictos img {
+			margin-right:10px;
+		}
+		
+		.tx_icsnavitiajourney_pi1_startHour {
+			float:left;
+			font-weight:bold;
+		}
+		
+		.tx_icsnavitiajourney_pi1_arrivalHour {
+			float:right;
+			font-weight:bold;
+		}
+		
+		.tx_icsnavitiajourney_pi1_listViewLink {
+			text-align:center;
+		}
+		
+		.ui-btn.ui-btn-up-d a.ui-link-inherit.tx_icsnavitiajourney_pi1_listViewLink,
+		.ui-btn.ui-btn-hover-d a.ui-link-inherit.tx_icsnavitiajourney_pi1_listViewLink {
+			padding:0.2em 0;
+		}
+		
+		.tx_icsnavitiajourney_pi1_resultsList li p.ui-li-desc {
+			text-align:center;
+			font-size:14px;
+			margin-top:0;
+		}
+		
+		.tx_icsnavitiajourney_pi1_resultsList li.tx_icsnavitiajourney_pi1_best {
+			border:2px solid #00a0c2;
+		}
+		
+		.tx_icsnavitiajourney_pi1_resultsList li p.tx_icsnavitiajourney_pi1_scheduleInfo {
+			margin-bottom:1em;
+		}
+		
+		.tx_icsnavitiajourney_pi1_detailsForm {
+			clear:both;
+		}
+		
+		ul.tx_icsnavitiajourney_pi1_steps li.ui-bar-b {
+			background-color:#7c7c7c;
+			color:#FFF;
+		}
+		
+		.tx_icsnavitiajourney_pi1_arrivalHourSection {
+			float:right;
+		}
+		
+		span.icon {
+			margin-left:0.75em;
+		}
+		
+		li.tx_icsnavitiajourney_pi1_section.ui-li {
+			min-height:50px;
+			padding:0.7em 5px 0.7em 15px;
+		}
+		
+		li.tx_icsnavitiajourney_pi1_section.ui-li .colg {
+			float:left;
+			width:20%;
+			min-height:75px;
+			margin-right:4px;
+		}
+		
+		li.tx_icsnavitiajourney_pi1_section.ui-li .cold {
+			float:left;
+			width:77%;
+			margin-top:0.5em;
+		}
+		
+		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_from,
+		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_to,
+		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_linkConnection {
+		    display: block;
+		    font-size: 12px;
+		    font-weight: normal;
+		    margin: -0.5em 0 0.6em;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		}
+		
+		table.tx_icsnavitiajourney_pi1_listview_dividertable {
+			margin:0;
+		}
+		
+		#page table.tx_icsnavitiajourney_pi1_listview_dividertable td {
+			background:transparent;
+			border:none;
+			color:#FFF;
+			vertical-align:top;
+		}
+		
+		.tx_icsnavitiajourney_pi1_direction_icon {
+			text-align:center;
+		}
+	)
+	
 }

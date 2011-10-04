@@ -29,11 +29,22 @@
  
 class tx_icsnavitiajourney_details {
 
+	var $aPicto = array(
+		'bus' => 'bus.png',
+		'métro' => 'metro.png',
+		'walk' => 'walk.png',
+	);
+
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
 	}
+	
+	private function getSettings() {
+		//var_dump($this->pObj->conf);
+	}
 
 	function getPlanJourneyDetails($journeyPlan, $params) {
+		$this->getSettings();
 		
 		$templatePart = $this->pObj->templates['details'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_SEARCH_DETAILS###');
@@ -58,7 +69,8 @@ class tx_icsnavitiajourney_details {
 					'entryPointStart' 		=> $this->pObj->piVars['entryPointArrival'],
 					'entryPointArrival' 	=> $this->pObj->piVars['entryPointStart'],
 				)
-			)
+			),
+			'PLAN' => $this->pObj->pi_getLL('details.localize.stoparea')
 		);
 		
 		//var_dump(intval($this->pObj->piVars['hour']));
@@ -100,10 +112,27 @@ class tx_icsnavitiajourney_details {
 			$markers['DIRECTION'] = '';
 			$markers['DIRECTION_LABEL'] = '';
 			$markers['START_HOUR'] = $section->departure->dateTime->format('H:i');
-			$markers['STEP_JOURNEY_INFOS'] = $section->departure->{lcfirst($section->departure->type)}->city->name . ' -  ' . $section->departure->{lcfirst($section->departure->type)}->name;
+			$markers['ARRIVAL_HOUR'] = $section->arrival->dateTime->format('H:i');
+			//$markers['STEP_JOURNEY_INFOS'] = $section->departure->{lcfirst($section->departure->type)}->city->name . ' -  ' . $section->departure->{lcfirst($section->departure->type)}->name;
 			$markers['PICTO'] = $linePicto->getlinepicto($section->vehicleJourney->route->line->externalCode, 'Navitia');
-
-			if(!$indexS) {
+			
+			$confImg = array();
+			switch($section->type) {
+				case 'VehicleJourneyConnection' :
+					$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto[strtolower($section->vehicleJourney->route->line->modeType->externalCode)];
+					break;
+				default :
+					if(!$index || ($index && $aPicto[$index-1] != 'walk')) {
+						$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto['walk'];
+					}
+				break;
+			}
+			
+			if(!empty($confImg['file'])) {
+				$markers['PICTO_TYPE'] = $this->pObj->cObj->IMAGE($confImg);
+			}
+			
+			/*if(!$indexS) {
 				$markers['SECTION_INFO'] = $this->pObj->pi_getLL('details.departure');
 			}
 			elseif($indexS == $journeyResult->sections->Count()-1) {
@@ -111,7 +140,7 @@ class tx_icsnavitiajourney_details {
 			}
 			else {
 				$markers['SECTION_INFO'] = '';
-			}
+			}*/
 			
 			if(empty($markers['PICTO']) && !is_null($section->vehicleJourney->route->line)) {
 				$markers['PICTO'] = 'Ligne ' . $section->vehicleJourney->route->line->code;// temporaire pendant qu'on a pas les pictos dans la bdd.
@@ -120,9 +149,10 @@ class tx_icsnavitiajourney_details {
 			$markers['LINE_NAME'] = $section->vehicleJourney->route->line->name;
 			
 			$duration = '';
-			
+			$viewPlanTemplate = $this->pObj->cObj->getSubpart($detailsTemplate, '###VIEW_PLAN###');
 			switch($section->type) {
 				case 'WalkConnection': 
+					$viewPlan = $this->pObj->cObj->substituteMarkerArray($viewPlanTemplate, $markers, '###|###');
 					//$sectionType = 'Liaison à pied sur l\'ensemble de l\'itinéraire';
 					break;
 				case 'VehicleJourneyConnection':
@@ -136,6 +166,7 @@ class tx_icsnavitiajourney_details {
 						$markers['DIRECTION_LABEL'] = $this->pObj->pi_getLL('direction');
 						$vehicleJourneyConnectionTemplate = $this->pObj->cObj->getSubpart($detailsTemplate, '###VEHICLE_JOURNEY_CONNECTION###');
 						$vehicleJourneyConnection = $this->pObj->cObj->substituteMarkerArray($vehicleJourneyConnectionTemplate, $markers, '###|###');
+						$viewPlan = '';
 					}
 					break;
 					
@@ -157,6 +188,7 @@ class tx_icsnavitiajourney_details {
 					
 					$siteConnectionTemplate = $this->pObj->cObj->getSubpart($detailsTemplate, '###SITE_CONNECTION###');
 					$siteConnection = $this->pObj->cObj->substituteMarkerArray($siteConnectionTemplate, $markers, '###|###');
+					$viewPlan = $this->pObj->cObj->substituteMarkerArray($viewPlanTemplate, $markers, '###|###');
 					break;
 				case 'AddressConnection':
 					$markers['FROM'] = $this->pObj->pi_getLL('from');
@@ -175,6 +207,8 @@ class tx_icsnavitiajourney_details {
 					
 					$addressConnectionTemplate = $this->pObj->cObj->getSubpart($detailsTemplate, '###ADDRESS_CONNECTION###');
 					$addressConnection = $this->pObj->cObj->substituteMarkerArray($addressConnectionTemplate, $markers, '###|###');
+					
+					$viewPlan = $this->pObj->cObj->substituteMarkerArray($viewPlanTemplate, $markers, '###|###');
 					break;
 				case 'ProlongationConnection': 
 					//$sectionType = 'Prolongement de service ou Haut le pied : temps d\'attente dans le bus (généralement sur un terminus en boucle, sur une pour réguler les horaires)';
@@ -187,13 +221,22 @@ class tx_icsnavitiajourney_details {
 						$markers['SECTION_INFO'] = $this->pObj->pi_getLL('details.linkConnection');
 					}
 					else {
-						$markers['SECTION_INFO'] = 'Changement';
-						$markers['STEP_JOURNEY_INFOS'] = '';
+						//$markers['SECTION_INFO'] = 'Changement';
+						$markers['DIRECTION'] = $this->pObj->pi_getLL('details.correspondence');
+						//$markers['STEP_JOURNEY_INFOS'] = '';
 					}
+					
+					$markers['FROM'] = $this->pObj->pi_getLL('from');
+					$markers['TO'] = $this->pObj->pi_getLL('to');
+					
+					$markers['STOP_START'] = $section->departure->{lcfirst($section->departure->type)}->name .  ' (' . $section->departure->{lcfirst($section->departure->type)}->city->name . ' ) ';
+					$markers['STOP_ARRIVAL'] = $section->arrival->{lcfirst($section->arrival->type)}->name .  ' (' . $section->arrival->{lcfirst($section->arrival->type)}->city->name . ') ';
+					
 					$markers['CORRESPONDENCE'] = $this->pObj->pi_getLL('details.correspondence');
 
 					$stopPointConnectionTemplate = $this->pObj->cObj->getSubpart($detailsTemplate, '###STOP_POINT_CONNECTION###');
 					$stopPointConnection = $this->pObj->cObj->substituteMarkerArray($stopPointConnectionTemplate, $markers, '###|###');
+					$viewPlan = $this->pObj->cObj->substituteMarkerArray($viewPlanTemplate, $markers, '###|###');
 					break;
 				case 'LinkConnection' : 
 					//$aLinkConnection[] = $indexS;
@@ -230,10 +273,10 @@ class tx_icsnavitiajourney_details {
 			}
 			
 			$markers['STEP_DURATION'] = $duration;
-			$markers['PLAN'] = $this->pObj->pi_getLL('details.localize.stoparea');
 			
 			$detailsTemplateSection = $this->pObj->cObj->substituteSubpart($detailsTemplate, '###VEHICLE_JOURNEY_CONNECTION###', $vehicleJourneyConnection);
 			$detailsTemplateSection = $this->pObj->cObj->substituteSubpart($detailsTemplateSection, '###STOP_POINT_CONNECTION###', $stopPointConnection);
+			$detailsTemplateSection = $this->pObj->cObj->substituteSubpart($detailsTemplateSection, '###VIEW_PLAN###', $viewPlan);
 			$detailsTemplateSection = $this->pObj->cObj->substituteSubpart($detailsTemplateSection, '###SITE_CONNECTION###', $siteConnection);
 			$detailsTemplateSection = $this->pObj->cObj->substituteSubpart($detailsTemplateSection, '###LINK_CONNECTION###', $linkConnection);
 			$detailsTemplateSection = $this->pObj->cObj->substituteSubpart($detailsTemplateSection, '###ADDRESS_CONNECTION###', $addressConnection);

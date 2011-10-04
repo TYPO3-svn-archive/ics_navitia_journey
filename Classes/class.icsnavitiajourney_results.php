@@ -29,6 +29,12 @@
  
 class tx_icsnavitiajourney_results {
 
+	var $aPicto = array(
+		'bus' => 'bus.png',
+		'métro' => 'metro.png',
+		'walk' => 'walk.png',
+	);
+
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
 	}
@@ -65,7 +71,8 @@ class tx_icsnavitiajourney_results {
 			'SELECTED_1' => '',
 			'ACTION_URL' => htmlspecialchars($this->pObj->pi_linkTP_keepPIvars_url()),
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
-			'NOTA' => ''
+			'NOTA' => '',
+			'DATE'=> $this->pObj->pi_getLL('results.date'),
 		);
 		$params = t3lib_div::_GET($this->pObj->prefixId);
 		foreach ($params as $name => $value) {
@@ -129,12 +136,17 @@ class tx_icsnavitiajourney_results {
 		
 		foreach ($results->ToArray() as $journeyResult) {
 			$markers = array(
-				'DETAILS_URL' => '',
-				'START_HOUR' => '',
-				'ARRIVAL_HOUR' => '',
-				'DURATION' => '',
-				'PICTOS' => ''
+				'DETAILS_URL'		=> '',
+				'START_HOUR'		=>'',
+				'ARRIVAL_HOUR'		 => '',
+				'DURATION'			 => '',
+				'PICTOS'			 => '',
+				'BEST'				 => '',
 			);
+		
+			if($journeyResult->best) {
+				$markers['BEST'] = $this->pObj->prefixId . '_best';
+			}
 		
 			if (!is_null($journeyResult->summary)) {
 				$markers['DETAILS_URL'] = $this->pObj->pi_linkTP_keepPIvars_url(
@@ -151,7 +163,11 @@ class tx_icsnavitiajourney_results {
 			elseif($results->Count() == 1) {
 				continue;
 			}
+
+			$aPicto = array();
+			$index = 0;
 			foreach ($journeyResult->sections->ToArray() as $section) {
+			
 				$duration = '';
 				
 				if($journeyResult->summary->duration->day) {
@@ -167,12 +183,29 @@ class tx_icsnavitiajourney_results {
 				}
 				
 				$markers['DURATION'] = $duration;
-				$markers['PICTOS'] = $linePicto->getlinepicto($section->vehicleJourney->route->line->externalCode, 'Navitia');
+				
+				$confImg = array();
+				switch($section->type) {
+					case 'VehicleJourneyConnection' :
+						$aPicto[] = strtolower($section->vehicleJourney->route->line->modeType->externalCode);
+						$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto[strtolower($section->vehicleJourney->route->line->modeType->externalCode)];
+						break;
+					default :
+						$aPicto[] = 'walk';
+						if(!$index || ($index && $aPicto[$index-1] != 'walk')) {
+							$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto['walk'];
+						}
+					break;
+				}
+				
+				if(!empty($confImg['file'])) {
+					$markers['PICTOS'] .= $this->pObj->cObj->IMAGE($confImg);
+				}
+				$index++;
 			}
-			
 			$resultListContent .= $this->pObj->cObj->substituteMarkerArray($resultListTemplate, $markers, '###|###');
 		}
-		
+		//var_dump($aPicto);
 		return $resultListContent;
 	}
 }
