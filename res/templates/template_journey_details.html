@@ -32,28 +32,36 @@
 		<div class="###PREFIXID###_detailsForm">
 			<ul class="###PREFIXID###_steps" data-role="listview" data-inset="true">
 				<!-- ###CONNECTIONS_LIST### begin -->
-					<li data-role="list-divider" role="heading" style="background-color:#95BCF2;">
-							<span class="hour">###START_HOUR###</span>
-							<span class="sectionInfo">###SECTION_INFO###</span>
-							<span class="journey">###STEP_JOURNEY_INFOS###</span>
+					<li data-role="list-divider" role="heading" data-theme="b">
+						<table class="###PREFIXID###_listview_dividertable">
+							<tbody>
+								<tr>
+									<td class="###PREFIXID###_startHourSection">###START_HOUR###</td>
+									<td class="###PREFIXID###_pictoSeparator">###PICTO_SEPARATOR###</td>
+									<td class="###PREFIXID###_direction_icon">###PICTO### ###DIRECTION###</td>
+									<td class="###PREFIXID###_startHourSection">###PICTO_SEPARATOR###</td>
+									<td class="###PREFIXID###_arrivalHourSection">###ARRIVAL_HOUR###</td>
+								</tr>
+							</tbody>
+						</table>
 					</li>
-					<li>
-						<div class="colg" style="float:left;width:75px;min-height:75px;">
+					<li class="###PREFIXID###_section">
+						<div class="colg">
 							<div class="###PREFIXID###_picto">
-								###PICTO###
+								###PICTO_TYPE###
 							</div>
 							<!--<div class="###PREFIXID###_lineName">
 								###LINE_NAME###
 							</div>-->
 							<div class="###PREFIXID###_duration">
-								<div>###STEP_DURATION###</div>
+								###STEP_DURATION###
 							</div>
 						</div>
 						<div class="cold">
 							<!-- ###VEHICLE_JOURNEY_CONNECTION### begin -->
-								<div class="###PREFIXID###_direction">
+								<!--<div class="###PREFIXID###_direction">
 									###DIRECTION_LABEL### : ###DIRECTION###
-								</div>
+								</div>-->
 								<div class="###PREFIXID###_from">
 									###FROM### : ###STOP_START###
 								</div>
@@ -64,7 +72,12 @@
 							
 							<!-- ###STOP_POINT_CONNECTION### begin -->
 								<div class="###PREFIXID###_stopPointConnection">
-									###CORRESPONDENCE###
+									<div class="###PREFIXID###_from">
+										###FROM### : ###STOP_START###
+									</div>
+									<div class="###PREFIXID###_to">
+										###TO### : ###STOP_ARRIVAL###
+									</div>
 								</div>
 							<!-- ###STOP_POINT_CONNECTION### end -->
 							
@@ -92,15 +105,22 @@
 								</div>
 							<!-- ###LINK_CONNECTION### end -->
 						</div>
+						<div style="clear:both;"></div>
 					</li>
 					<li>
-						<a href="###PLAN_URL###" class="###PREFIXID###_planLink">###PLAN###</a>
+						<!-- ###VIEW_PLAN### begin -->
+							<div data-role="collapsible">
+							   <h3>###PLAN###</h3>
+							   <p><img src="typo3conf/ext/ics_navitia_journey/res/icons/exemple_google_map.png" /></p>
+							</div>
+							<!--<a href="###PLAN_URL###" class="###PREFIXID###_planLink">###PLAN###</a>-->
+						<!-- ###VIEW_PLAN### end -->
 					</li>
 				<!-- ###CONNECTIONS_LIST### begin -->
 			</ul>
-			<a href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
-			<a href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
-			<a href="###BACKWARD_JOURNEY_LINK###" class="###PREFIXID###_backwardLink">###BACKWARD_JOURNEY###</a>
+			<a data-role="button" data-inline="true" href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
+			<a data-role="button" data-inline="true" href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
+			<a data-role="button" data-inline="true" href="###BACKWARD_JOURNEY_LINK###" class="###PREFIXID###_backwardLink">###BACKWARD_JOURNEY###</a>
 		</div>
 	</div>
 <!-- ###TEMPLATE_JOURNEY_SEARCH_DETAILS### end -->

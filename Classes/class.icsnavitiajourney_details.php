@@ -110,6 +110,7 @@ class tx_icsnavitiajourney_details {
 			$siteConnection = '';
 			
 			$markers['DIRECTION'] = '';
+			$markers['PICTO_SEPARATOR'] = '';
 			$markers['DIRECTION_LABEL'] = '';
 			$markers['START_HOUR'] = $section->departure->dateTime->format('H:i');
 			$markers['ARRIVAL_HOUR'] = $section->arrival->dateTime->format('H:i');
@@ -166,6 +167,9 @@ class tx_icsnavitiajourney_details {
 						$markers['DIRECTION_LABEL'] = $this->pObj->pi_getLL('direction');
 						$vehicleJourneyConnectionTemplate = $this->pObj->cObj->getSubpart($detailsTemplate, '###VEHICLE_JOURNEY_CONNECTION###');
 						$vehicleJourneyConnection = $this->pObj->cObj->substituteMarkerArray($vehicleJourneyConnectionTemplate, $markers, '###|###');
+						$confFleche = array();
+						$confFleche['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/fleche.png';
+						$markers['PICTO_SEPARATOR'] = $this->pObj->cObj->IMAGE($confFleche);
 						$viewPlan = '';
 					}
 					break;

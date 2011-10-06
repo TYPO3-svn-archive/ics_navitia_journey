@@ -1,3 +1,8 @@
+2011-10-06 Loïc Stephan <loic@in-cite.net>
+	* Added arrow in details view
+	* Added jQuery mobile element on next/previous/backward links
+	* Improved Details view template 
+
 2011-10-04 Pierrick Caillon <pierrick@in-cite.net>
 	* Renamed icons files.
 	* Updated static constants for the new available icon.
