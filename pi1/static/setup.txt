@@ -172,6 +172,10 @@ plugin.tx_icsnavitiajourney_pi1 {
 			color:#FFF;
 		}
 		
+		.tx-icsnavitiajourney-pi1 .tx_icsnavitiajourney_pi1_detailsForm ul.tx_icsnavitiajourney_pi1_steps.ui-listview  {
+			margin-top:1em;
+		}
+		
 		.tx_icsnavitiajourney_pi1_arrivalHourSection {
 			float:right;
 		}
@@ -198,6 +202,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 			margin-top:0.5em;
 		}
 		
+		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_direction,
 		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_from,
 		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_to,
 		li.tx_icsnavitiajourney_pi1_section.ui-li .cold .tx_icsnavitiajourney_pi1_linkConnection {
@@ -223,6 +228,10 @@ plugin.tx_icsnavitiajourney_pi1 {
 		
 		.tx_icsnavitiajourney_pi1_direction_icon {
 			text-align:center;
+		}
+		
+		.tx_icsnavitiajourney_pi1_label {
+			font-weight:bold;
 		}
 	)
 	

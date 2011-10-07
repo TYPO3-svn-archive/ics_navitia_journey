@@ -60,6 +60,12 @@ class tx_icsnavitiajourney_details {
 			'PREVIOUS_JOURNEY' => $this->pObj->pi_getLL('results.previous'),
 			'NEXT_JOURNEY' => $this->pObj->pi_getLL('results.next'),
 			'BACKWARD_JOURNEY' => $this->pObj->pi_getLL('details.backward'),
+			'FROM_RECAP' => $this->pObj->pi_getLL('from'),
+			'TO_RECAP' => $this->pObj->pi_getLL('to'),
+			'STOP_START_RECAP' => htmlspecialchars($params['startName']),
+			'CITY_START_RECAP' => htmlspecialchars($params['startCity']),
+			'STOP_ARRIVAL_RECAP' => htmlspecialchars($params['arrivalName']),
+			'CITY_ARRIVAL_RECAP' => htmlspecialchars($params['arrivalCity']),
 			'BACKWARD_JOURNEY_LINK' => $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
 					'startName' 			=> $this->pObj->piVars['arrivalName'],

@@ -1,3 +1,7 @@
+2011-10-07 Loïc Stephan <loic@in-cite.net>
+	* Added user recap in details view
+	* Added css / template for details view
+
 2011-10-06 Loïc Stephan <loic@in-cite.net>
 	* Added arrow in details view
 	* Added jQuery mobile element on next/previous/backward links

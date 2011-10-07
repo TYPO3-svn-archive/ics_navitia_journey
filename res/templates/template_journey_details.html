@@ -30,6 +30,10 @@
 			<li class="current">###DETAILS###</li>
 		</ul>
 		<div class="###PREFIXID###_detailsForm">
+			<div class="###PREFIXID###_journeyRecap">
+				<p class="###PREFIXID###_startInfo"><span class="###PREFIXID###_from">###FROM_RECAP###</span> : ###CITY_START_RECAP### - ###STOP_START_RECAP###</p>
+				<p class="###PREFIXID###_arrivalInfo"><span class="###PREFIXID###_to">###TO_RECAP###</span> : ###CITY_ARRIVAL_RECAP### - ###STOP_ARRIVAL_RECAP###</p>
+			</div>
 			<ul class="###PREFIXID###_steps" data-role="listview" data-inset="true">
 				<!-- ###CONNECTIONS_LIST### begin -->
 					<li data-role="list-divider" role="heading" data-theme="b">
@@ -38,7 +42,7 @@
 								<tr>
 									<td class="###PREFIXID###_startHourSection">###START_HOUR###</td>
 									<td class="###PREFIXID###_pictoSeparator">###PICTO_SEPARATOR###</td>
-									<td class="###PREFIXID###_direction_icon">###PICTO### ###DIRECTION###</td>
+									<td class="###PREFIXID###_direction_icon">###PICTO###</td>
 									<td class="###PREFIXID###_startHourSection">###PICTO_SEPARATOR###</td>
 									<td class="###PREFIXID###_arrivalHourSection">###ARRIVAL_HOUR###</td>
 								</tr>
@@ -59,43 +63,44 @@
 						</div>
 						<div class="cold">
 							<!-- ###VEHICLE_JOURNEY_CONNECTION### begin -->
-								<!--<div class="###PREFIXID###_direction">
-									###DIRECTION_LABEL### : ###DIRECTION###
-								</div>-->
+								<div class="###PREFIXID###_direction">
+									<span class="###PREFIXID###_label">###DIRECTION_LABEL### :</span> ###DIRECTION###
+								</div>
+								
 								<div class="###PREFIXID###_from">
-									###FROM### : ###STOP_START###
+									<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
 								</div>
 								<div class="###PREFIXID###_to">
-									###TO### : ###STOP_ARRIVAL###
+									<span class="###PREFIXID###_label">###TO### :</span> ###STOP_ARRIVAL###
 								</div>
 							<!-- ###VEHICLE_JOURNEY_CONNECTION### end -->
 							
 							<!-- ###STOP_POINT_CONNECTION### begin -->
 								<div class="###PREFIXID###_stopPointConnection">
 									<div class="###PREFIXID###_from">
-										###FROM### : ###STOP_START###
+										<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
 									</div>
 									<div class="###PREFIXID###_to">
-										###TO### : ###STOP_ARRIVAL###
+										<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
 									</div>
 								</div>
 							<!-- ###STOP_POINT_CONNECTION### end -->
 							
 							<!-- ###ADDRESS_CONNECTION### begin -->
 								<div class="###PREFIXID###_from">
-									###FROM### ###STOP_START###
+									<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
 								</div>
 								<div class="###PREFIXID###_to">
-									###TO### ###STOP_ARRIVAL###
+									<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
 								</div>
 							<!-- ###ADDRESS_CONNECTION### end -->
 							
 							<!-- ###SITE_CONNECTION### begin -->
 								<div class="###PREFIXID###_from">
-									###FROM### ###STOP_START###
+									<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
 								</div>
 								<div class="###PREFIXID###_to">
-									###TO### ###STOP_ARRIVAL###
+									<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
 								</div>
 							<!-- ###SITE_CONNECTION### end -->
 							
