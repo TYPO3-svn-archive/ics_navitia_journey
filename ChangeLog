@@ -1,3 +1,8 @@
+2011-10-07 Pierrick Caillon <pierrick@in-cite.net>
+	* Reworked details view template and display code for flexibility.
+	* Added static map image source with settings.
+	* Added setting for search view arrival geolocation link.
+
 2011-10-07 Loïc Stephan <loic@in-cite.net>
 	* Added user recap in details view
 	* Added css / template for details view

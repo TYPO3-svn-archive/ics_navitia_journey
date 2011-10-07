@@ -34,6 +34,16 @@ plugin.tx_icsnavitiajourney_pi1 {
 	}
 	
 	useGeolocation = {$plugin.tx_icsnavitiajourney_pi1.useGeolocation}
+	arrivalGeolocation = {$plugin.tx_icsnavitiajourney_pi1.arrivalGeolocation}
+	
+	details {
+		map {
+			zoom = {$plugin.tx_icsnavitiajourney_pi1.map.zoom}
+			size = {$plugin.tx_icsnavitiajourney_pi1.map.width}x{$plugin.tx_icsnavitiajourney_pi1.map.height}
+			format = {$plugin.tx_icsnavitiajourney_pi1.map.format}
+			maptype = {$plugin.tx_icsnavitiajourney_pi1.map.maptype}
+		}
+	}
 	
 	_CSS_DEFAULT_STYLE (
 		.tx-icsnavitiajourney-pi1 {

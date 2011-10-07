@@ -7,9 +7,25 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tt_content.list_type_pi1">Journey</label>
+			<label index="constants.useGeolocation">Use geolocation: Activate &quot;My position&quot; links.</label>
+			<label index="constants.arrivalGeolocation">Arrival geolocation: Activate &quot;My position&quot; link for arrival.</label>
+			<label index="constants.map.zoom">Map zoom</label>
+			<label index="constants.map.width">Map image width: In pixel</label>
+			<label index="constants.map.height">Map image height: In pixel</label>
+			<label index="constants.map.format">Map image format</label>
+			<label index="constants.map.maptype">Map type</label>
+			<label index="constantscat.staticmap">Static map</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module d'itinéraire</label>
+			<label index="constants.useGeolocation">Utiliser la géolocalisation: Activer les liens « Ma position ».</label>
+			<label index="constants.arrivalGeolocation">Géolocalisation pour l'arrivée: Activer le lien « Ma position » pour l'arrivée.</label>
+			<label index="constants.map.zoom">Zoom de la carte</label>
+			<label index="constants.map.width">Largeur de l'image de la carte: En pixel</label>
+			<label index="constants.map.height">Hauteur de l'image de la carte: En pixel</label>
+			<label index="constants.map.format">Format de l'image de la carte</label>
+			<label index="constants.map.maptype">Type de carte</label>
+			<label index="constantscat.staticmap">Carte statique</label>
 		</languageKey>
 	</data>
 </T3locallang>

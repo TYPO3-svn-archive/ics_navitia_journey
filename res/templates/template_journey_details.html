@@ -34,94 +34,36 @@
 				<p class="###PREFIXID###_startInfo"><span class="###PREFIXID###_from">###FROM_RECAP###</span> : ###CITY_START_RECAP### - ###STOP_START_RECAP###</p>
 				<p class="###PREFIXID###_arrivalInfo"><span class="###PREFIXID###_to">###TO_RECAP###</span> : ###CITY_ARRIVAL_RECAP### - ###STOP_ARRIVAL_RECAP###</p>
 			</div>
-			<ul class="###PREFIXID###_steps" data-role="listview" data-inset="true">
-				<!-- ###CONNECTIONS_LIST### begin -->
-					<li data-role="list-divider" role="heading" data-theme="b">
-						<table class="###PREFIXID###_listview_dividertable">
-							<tbody>
-								<tr>
-									<td class="###PREFIXID###_startHourSection">###START_HOUR###</td>
-									<td class="###PREFIXID###_pictoSeparator">###PICTO_SEPARATOR###</td>
-									<td class="###PREFIXID###_direction_icon">###PICTO###</td>
-									<td class="###PREFIXID###_startHourSection">###PICTO_SEPARATOR###</td>
-									<td class="###PREFIXID###_arrivalHourSection">###ARRIVAL_HOUR###</td>
-								</tr>
-							</tbody>
-						</table>
-					</li>
-					<li class="###PREFIXID###_section">
-						<div class="colg">
-							<div class="###PREFIXID###_picto">
-								###PICTO_TYPE###
-							</div>
-							<!--<div class="###PREFIXID###_lineName">
-								###LINE_NAME###
-							</div>-->
-							<div class="###PREFIXID###_duration">
-								###STEP_DURATION###
-							</div>
+			<ul class="###PREFIXID###_steps" data-role="listview" data-inset="true"><!-- ###CONNECTIONS_LIST### begin -->
+				<li data-role="list-divider" role="heading" data-theme="b">
+					<table class="###PREFIXID###_listview_dividertable">
+						<tbody>
+							<tr>
+								<td class="###PREFIXID###_startHourSection">###START_HOUR###</td>
+								<td class="###PREFIXID###_pictoSeparator">###PICTO_SEPARATOR###</td>
+								<td class="###PREFIXID###_direction_icon">###PICTO###</td>
+								<td class="###PREFIXID###_startHourSection">###PICTO_SEPARATOR###</td>
+								<td class="###PREFIXID###_arrivalHourSection">###ARRIVAL_HOUR###</td>
+							</tr>
+						</tbody>
+					</table>
+				</li>
+				<li class="###PREFIXID###_section">
+					<div class="colg">
+						<div class="###PREFIXID###_picto">
+							###PICTO_TYPE###
 						</div>
-						<div class="cold">
-							<!-- ###VEHICLE_JOURNEY_CONNECTION### begin -->
-								<div class="###PREFIXID###_direction">
-									<span class="###PREFIXID###_label">###DIRECTION_LABEL### :</span> ###DIRECTION###
-								</div>
-								
-								<div class="###PREFIXID###_from">
-									<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
-								</div>
-								<div class="###PREFIXID###_to">
-									<span class="###PREFIXID###_label">###TO### :</span> ###STOP_ARRIVAL###
-								</div>
-							<!-- ###VEHICLE_JOURNEY_CONNECTION### end -->
-							
-							<!-- ###STOP_POINT_CONNECTION### begin -->
-								<div class="###PREFIXID###_stopPointConnection">
-									<div class="###PREFIXID###_from">
-										<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
-									</div>
-									<div class="###PREFIXID###_to">
-										<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
-									</div>
-								</div>
-							<!-- ###STOP_POINT_CONNECTION### end -->
-							
-							<!-- ###ADDRESS_CONNECTION### begin -->
-								<div class="###PREFIXID###_from">
-									<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
-								</div>
-								<div class="###PREFIXID###_to">
-									<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
-								</div>
-							<!-- ###ADDRESS_CONNECTION### end -->
-							
-							<!-- ###SITE_CONNECTION### begin -->
-								<div class="###PREFIXID###_from">
-									<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
-								</div>
-								<div class="###PREFIXID###_to">
-									<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
-								</div>
-							<!-- ###SITE_CONNECTION### end -->
-							
-							<!-- ###LINK_CONNECTION### begin -->
-								<div class="###PREFIXID###_linkConnection">
-									###LINK_CONNECTION_INFO###
-								</div>
-							<!-- ###LINK_CONNECTION### end -->
+						<!--<div class="###PREFIXID###_lineName">
+							###LINE_NAME###
+						</div>-->
+						<div class="###PREFIXID###_duration">
+							###STEP_DURATION###
 						</div>
-						<div style="clear:both;"></div>
-					</li>
-					<li>
-						<!-- ###VIEW_PLAN### begin -->
-							<div data-role="collapsible">
-							   <h3>###PLAN###</h3>
-							   <p><img src="typo3conf/ext/ics_navitia_journey/res/icons/exemple_google_map.png" /></p>
-							</div>
-							<!--<a href="###PLAN_URL###" class="###PREFIXID###_planLink">###PLAN###</a>-->
-						<!-- ###VIEW_PLAN### end -->
-					</li>
-				<!-- ###CONNECTIONS_LIST### begin -->
+					</div>
+					<div class="cold">###CONNECTION###
+					</div>
+					<div style="clear: both;"></div>
+				</li>###MAP###<!-- ###CONNECTIONS_LIST### begin -->
 			</ul>
 			<a data-role="button" data-inline="true" href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
 			<a data-role="button" data-inline="true" href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
@@ -129,6 +71,58 @@
 		</div>
 	</div>
 <!-- ###TEMPLATE_JOURNEY_SEARCH_DETAILS### end -->
+
+<!-- ###TEMPLATE_VEHICLE_JOURNEY_CONNECTION### begin -->
+						<div class="###PREFIXID###_direction">
+							<span class="###PREFIXID###_label">###DIRECTION_LABEL### :</span> ###DIRECTION###
+						</div>
+
+						<div class="###PREFIXID###_from">
+							<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+						</div>
+						<div class="###PREFIXID###_to">
+							<span class="###PREFIXID###_label">###TO### :</span> ###STOP_ARRIVAL###
+						</div><!-- ###TEMPLATE_VEHICLE_JOURNEY_CONNECTION### end -->
+						
+<!-- ###TEMPLATE_STOP_POINT_CONNECTION### begin -->
+						<div class="###PREFIXID###_stopPointConnection">
+							<div class="###PREFIXID###_from">
+								<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+							</div>
+							<div class="###PREFIXID###_to">
+								<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
+							</div>
+						</div><!-- ###TEMPLATE_STOP_POINT_CONNECTION### end -->
+					
+<!-- ###TEMPLATE_ADDRESS_CONNECTION### begin -->
+						<div class="###PREFIXID###_from">
+							<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+						</div>
+						<div class="###PREFIXID###_to">
+							<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
+						</div><!-- ###TEMPLATE_ADDRESS_CONNECTION### end -->
+					
+<!-- ###TEMPLATE_SITE_CONNECTION### begin -->
+						<div class="###PREFIXID###_from">
+							<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+						</div>
+						<div class="###PREFIXID###_to">
+							<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
+						</div><!-- ###TEMPLATE_SITE_CONNECTION### end -->
+					
+<!-- ###TEMPLATE_LINK_CONNECTION### begin -->
+						<div class="###PREFIXID###_linkConnection">
+							###LINK_CONNECTION_INFO###
+						</div><!-- ###TEMPLATE_LINK_CONNECTION### end -->
+
+<!-- ###TEMPLATE_VIEW_MAP### begin -->
+				<li>
+					<div data-role="collapsible">
+					   <h3>###TITLE###</h3>
+					   <p><img src="###STATIC_MAP###" /></p>
+					</div>
+					<!--<a href="###MAP_URL###" class="###PREFIXID###_MapLink">###TITLE###</a>-->
+				</li><!-- ###TEMPLATE_VIEW_MAP### end -->
 
 </body>
 </html>

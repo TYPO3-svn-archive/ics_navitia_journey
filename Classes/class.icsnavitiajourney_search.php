@@ -100,7 +100,7 @@ class tx_icsnavitiajourney_search {
 		}
 		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###LOCATION_FORM_PART###');
 		$noUserEntry = false;
-		if ($this->pObj->conf['useGeolocation'] && $isStart) {
+		if ($this->pObj->conf['useGeolocation'] && ($this->pObj->conf['arrivalGeolocation'] || $isStart)) {
 			if (!isset($this->pObj->conf['refreshDelay']))
 				$this->pObj->conf['refreshDelay'] = 120;
 			$geoloc = new tx_icslibgeoloc_GeoLocation();

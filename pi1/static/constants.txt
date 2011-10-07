@@ -1,3 +1,5 @@
+# customsubcategory=staticmap=LLL:EXT:ics_navitia_journey/locallang_db.xml:constantscat.staticmap
+
 plugin.tx_icsnavitiajourney_pi1 {
 	icons {
 		walk = EXT:ics_navitia_journey/res/icons/walk.png
@@ -5,5 +7,20 @@ plugin.tx_icsnavitiajourney_pi1 {
 		metro = EXT:ics_navitia_journey/res/icons/metro.png
 		bicycle = EXT:ics_navitia_journey/res/icons/bicycle.png
 	}
+	# cat=plugin.icsnavitiajourney/enable/a; type=boolean; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.useGeolocation
 	useGeolocation = 1
+	# cat=plugin.icsnavitiajourney/enable/b; type=boolean; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.arrivalGeolocation
+	arrivalGeolocation = 0
+	map {
+		# cat=plugin.icsnavitiajourney/staticmap/b; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.zoom
+		zoom = 16
+		# cat=plugin.icsnavitiajourney/staticmap/c; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.width
+		width = 300
+		# cat=plugin.icsnavitiajourney/staticmap/d; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.height
+		height = 300
+		# cat=plugin.icsnavitiajourney/staticmap/e; type=options[png,gif,jpg]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.format
+		format = jpg
+		# cat=plugin.icsnavitiajourney/staticmap/f; type=options[roadmap,satellite,hybrid,terrain]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.maptype
+		maptype = roadmap
+	}
 }
