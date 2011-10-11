@@ -1,5 +1,10 @@
 2011-10-11 Loïc Stephan <loic@in-cite.net>
 	* Added collapsed div on preference block in result view
+	* Added missing labels.
+	* Fixed isStartTime bug.
+	* Added/changed methods and variables visibility.
+	* Added search link in results and details view.
+	* Added back button on result view
 
 2011-10-07 Pierrick Caillon <pierrick@in-cite.net>
 	* Reworked details view template and display code for flexibility.

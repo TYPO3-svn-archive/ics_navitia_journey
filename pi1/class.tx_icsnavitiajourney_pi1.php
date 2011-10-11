@@ -54,7 +54,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
 	 */
-	function main($content, $conf) {
+	public function main($content, $conf) {
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
@@ -118,7 +118,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		return $this->pi_wrapInBaseClass($content);
 	}
 	
-	function init() {
+	private function init() {
 		$this->login = $this->conf['login'];
 		$this->url = $this->conf['url'];
 		

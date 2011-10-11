@@ -29,7 +29,7 @@
  
 class tx_icsnavitiajourney_results {
 
-	var $aPicto = array(
+	private $aPicto = array(
 		'bus' => 'bus.png',
 		'métro' => 'metro.png',
 		'walk' => 'walk.png',
@@ -39,7 +39,7 @@ class tx_icsnavitiajourney_results {
 		$this->pObj = $pObj;
 	}
 
-	function getPlanJourneyResults($journeyPlan, $callParams) {
+	public function getPlanJourneyResults($journeyPlan, $callParams) {
 		$templatePart = $this->pObj->templates['results'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_RESULTS###');
 		
@@ -48,6 +48,7 @@ class tx_icsnavitiajourney_results {
 			'FROM' => htmlspecialchars($this->pObj->pi_getLL('from')),
 			'TO' => htmlspecialchars($this->pObj->pi_getLL('to')),
 			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu.search')),
+			'SEARCH_LINK' => $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id),
 			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu.results')),
 			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu.details')),
 			'STOP_START' => htmlspecialchars($callParams['startName']),
@@ -73,6 +74,7 @@ class tx_icsnavitiajourney_results {
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
 			'NOTA' => '',
 			'DATE'=> $this->pObj->pi_getLL('results.date'),
+			'SUBMIT' => $this->pObj->pi_getLL('results.submit'),
 		);
 		$params = t3lib_div::_GET($this->pObj->prefixId);
 		foreach ($params as $name => $value) {
@@ -83,7 +85,12 @@ class tx_icsnavitiajourney_results {
 			$markers['HIDDEN_FIELDS'] .= '<input type="hidden" name="' . htmlspecialchars($this->pObj->prefixId) . '[' . htmlspecialchars($name) . ']" value="' . htmlspecialchars($value) . '" />';
 		}
 		
-		$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' selected="selected"';
+		if(isset($this->pObj->piVars['isStartTime'])) {
+			$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' checked';
+		}
+		else {
+			$markers['SELECTED_1'] = ' checked';
+		}
 		
 		$markers['DATE_SEL'] = $this->pObj->piVars['date'];
 		$markers['HOUR_SEL'] = $this->pObj->piVars['hour'];
@@ -184,8 +191,9 @@ class tx_icsnavitiajourney_results {
 				
 				$markers['DURATION'] = $duration;
 				
+
 				$confImg = array();
-				switch($section->type) {
+				/*switch($section->type) {
 					case 'VehicleJourneyConnection' :
 						$aPicto[] = strtolower($section->vehicleJourney->route->line->modeType->externalCode);
 						$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto[strtolower($section->vehicleJourney->route->line->modeType->externalCode)];
@@ -196,7 +204,29 @@ class tx_icsnavitiajourney_results {
 							$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto['walk'];
 						}
 					break;
-				}
+				}*/
+				
+					if($this->pObj->conf['icons.'][$section->type] != 'CASE') {
+						$confImg['file'] = $this->pObj->conf['icons.'][$section->type];
+					}
+					else {
+						$aKey = explode('|', $this->pObj->conf['icons.'][$section->type . '.']['key']);
+						$keys = array_flip($aKey);
+						
+						$sectionObj = $section;
+						
+						/*for($i=0;$i<count($aKey);$i++) {
+							var_dump($section->$aKey[$i]);
+							$sectionObj = $this->getObject($section, );
+						}*/
+						
+						/*foreach($aKey as $sectionValue) {
+						
+						}*/
+						
+						//var_dump($sectionObj); // only bound à faire
+						//$section->
+					}
 				
 				if(!empty($confImg['file'])) {
 					$markers['PICTOS'] .= $this->pObj->cObj->IMAGE($confImg);
@@ -208,6 +238,11 @@ class tx_icsnavitiajourney_results {
 		//var_dump($aPicto);
 		return $resultListContent;
 	}
+	
+	function getObject($object) {
+		return $object;
+	}
+	
 }
 
 if (!function_exists('lcfirst')) {

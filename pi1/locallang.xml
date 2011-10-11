@@ -43,6 +43,8 @@
 			<label index="minute">min</label>
 			<label index="results.previous">Previous journeys</label>
 			<label index="results.next">Next journeys</label>
+			<label index="results.date">Travel date</label>
+			<label index="search.submit">Valid</label>
 			<label index="direction">Direction</label>
 			<label index="details.backward">Backward journey</label>
 			<label index="details.previous">Previous journey</label>
@@ -98,6 +100,8 @@
 			<label index="minute">min</label>
 			<label index="results.previous">Itinéraires précédent</label>
 			<label index="results.next">Itinéraires suivant</label>
+			<label index="results.date">Date du trajet</label>
+			<label index="results.submit">Valider</label>
 			<label index="direction">Direction</label>
 			<label index="details.backward">Itinéraire retour</label>
 			<label index="details.previous">Itinéraire précédent</label>

@@ -44,7 +44,7 @@ class tx_icsnavitiajourney_details {
 		//var_dump($this->pObj->conf);
 	}
 
-	function getPlanJourneyDetails($journeyPlan, $params) {
+	public function getPlanJourneyDetails($journeyPlan, $params) {
 		$this->getSettings();
 		
 		$templatePart = $this->pObj->templates['details'];
@@ -53,6 +53,7 @@ class tx_icsnavitiajourney_details {
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 			'SEARCH' => $this->pObj->pi_getLL('menu.search'),
+			'SEARCH_LINK' => $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id),
 			'RESULTS' => $this->pObj->pi_getLL('menu.results'),
 			'DETAILS' => $this->pObj->pi_getLL('menu.details'),
 			'ACTION_URL' => $this->pObj->pi_linkTP_keepPIvars_url(),

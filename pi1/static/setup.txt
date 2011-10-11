@@ -52,10 +52,10 @@ plugin.tx_icsnavitiajourney_pi1 {
 	
 		ul.tx_icsnavitiajourney_pi1_state {
 			clear:both;
-			float:left;
+			/*float:left;*/
 			width:100%;
 			margin:0 0 0.5em 0;
-			padding:10px 0 0 5px;
+			padding:10px 0 0 0px;
 			background-color:#333;
 			
 		}
@@ -70,6 +70,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 		ul.tx_icsnavitiajourney_pi1_state li.current {
 			color:#4c4c4c;
 			background-color:#FFF;
+			margin-left:5px;
 		}
 		
 		div.tx_icsnavitiajourney_pi1_arrivalInfo p,
@@ -229,7 +230,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 			margin:0;
 		}
 		
-		#page table.tx_icsnavitiajourney_pi1_listview_dividertable td {
+		#conteneur table.tx_icsnavitiajourney_pi1_listview_dividertable td {
 			background:transparent;
 			border:none;
 			color:#FFF;
@@ -242,6 +243,50 @@ plugin.tx_icsnavitiajourney_pi1 {
 		
 		.tx_icsnavitiajourney_pi1_label {
 			font-weight:bold;
+		}
+		
+		.tx_icsnavitiajourney_pi1_options .ui-collapsible-contain {
+			clear:both;
+		}
+		
+		.tx-icsnavitiajourney-pi1 .ui-btn.ui-btn-up-d.ui-radio-on,
+		.tx-icsnavitiajourney-pi1 .ui-btn.ui-btn-hover-d.ui-radio-on {
+		    background: -moz-linear-gradient(center top , #85BAE4, #5393C5) repeat scroll 0 0 #4596CE;
+			background: -webkit-gradient(linear,left top,left bottom,color-stop(0,#85BAE4),color-stop(1,#5393C5));
+			-ms-filter:"progid:DXImageTransform.Microsoft.gradient(startColorStr='#85BAE4', EndColorStr='#5393C5')
+		    border: 1px solid #155678;
+		    color: #FFFFFF;
+		    cursor: pointer;
+		    font-weight: bold;
+		    outline: 0 none;
+		    text-decoration: none;
+		    text-shadow: 0 -1px 1px #145072;
+			
+		}
+		
+		.tx_icsnavitiajourney_pi1_typeDate label {
+			width:68px;
+		}
+		
+		.tx-icsnavitiajourney-pi1 .ui-controlgroup-horizontal .ui-radio {
+			display:block;
+		}
+		
+		.tx_icsnavitiajourney_pi1_typeDate {
+			float:left;
+			width:95px;
+		}
+		
+		.tx_icsnavitiajourney_pi1_date {
+			float:left;
+			width:500px;
+		}
+		
+		.tx-icsnavitiajourney-pi1 .tx_icsnavitiajourney_pi1_state a.tx_icsnavitiajourney_pi1_searchLink {
+			color:#FFF;
+			font-weight:normal;
+			text-decoration:none;
+			cursor:pointer;
 		}
 	)
 	

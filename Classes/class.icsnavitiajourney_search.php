@@ -33,7 +33,7 @@ class tx_icsnavitiajourney_search {
 		$this->pObj = $pObj;
 	}
 
-	function getSearchForm($dataProvider = null, $entryPointStart = null, $entryPointArrival = null) {
+	public function getSearchForm($dataProvider = null, $entryPointStart = null, $entryPointArrival = null) {
 		$templatePart = $this->pObj->templates['search'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_SEARCH###');
 		
@@ -55,7 +55,12 @@ class tx_icsnavitiajourney_search {
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
 		);
 		
-		$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' selected="selected"';
+		if(isset($this->pObj->piVars['isStartTime'])) {
+			$markers['SELECTED_' . $this->pObj->piVars['isStartTime']] = ' checked';
+		}
+		else {
+			$markers['SELECTED_1'] = ' checked';
+		}
 		
 		$markers['START_FORM'] = $this->makeFormPart(true);
 		$template = $this->pObj->cObj->substituteSubpart(
