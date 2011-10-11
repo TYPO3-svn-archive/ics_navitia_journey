@@ -1,3 +1,6 @@
+2011-10-11 Loïc Stephan <loic@in-cite.net>
+	* Added collapsed div on preference block in result view
+
 2011-10-07 Pierrick Caillon <pierrick@in-cite.net>
 	* Reworked details view template and display code for flexibility.
 	* Added static map image source with settings.

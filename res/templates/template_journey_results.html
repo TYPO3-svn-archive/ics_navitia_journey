@@ -28,24 +28,54 @@
 			<li>###SEARCH###</li>
 			<li class="current">###RESULTS###</li>
 			<li>###DETAILS###</li>
+			<div style="clear:both;"></div>
 		</ul>
 		<div class="###PREFIXID###_resultForm">
+			<div class="###PREFIXID###_journeyRecap">
+				<p class="###PREFIXID###_startInfo"><span class="###PREFIXID###_from">###FROM###</span> : ###CITY_START### - ###STOP_START###</p>
+				<p class="###PREFIXID###_arrivalInfo"><span class="###PREFIXID###_to">###TO###</span> : ###CITY_ARRIVAL### - ###STOP_ARRIVAL###</p>
+			</div>
+			<p class="###PREFIXID###_resultHours">###RESULT_HOURS_START### ###FIRST_HOUR### ###AND### ###LAST_HOUR###</p>
+			<ul class="###PREFIXID###_resultsList ui-listview"  data-role="listview" data-theme="d">
+				<!-- ###RESULTS_LIST### begin -->
+				<li class="###BEST###">
+					<a href="###DETAILS_URL###" class="###PREFIXID###_listViewLink">
+						<p class="###PREFIXID###_scheduleInfo">
+							<span class="###PREFIXID###_startHour">###START_HOUR###</span>
+							<span class="###PREFIXID###_arrivalHour">###ARRIVAL_HOUR###</span>
+							<span class="###PREFIXID###_duration">###DURATION###</span>
+						</p>
+						<p class="###PREFIXID###_pictos">###PICTOS###</p>
+					</a>
+				</li>
+				<!-- ###RESULTS_LIST### end -->
+			</ul>
+			<p class="###PREFIXID###_nota">###NOTA###</p>
+			<a href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
+			<a href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
+			
 			<form action="###ACTION_URL###" method="post">###HIDDEN_FIELDS###
-				<fieldset class="###PREFIXID###_recap">
-					<p class="###PREFIXID###_startInfo">###FROM### : ###CITY_START### - ###STOP_START###</p>
-					<p class="###PREFIXID###_arrivalInfo">###TO### : ###CITY_ARRIVAL### - ###STOP_ARRIVAL###</p>
-					<div data-role="fieldcontain">	
-						<select name="###PREFIXID###[isStartTime]" data-role="slider">
-							<option value="1"###SELECTED_1###>###START_TO###</option>
-							<option value="0"###SELECTED_0###>###ARRIVAL_TO###</option> 
-						</select>
-					</div>
-					<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
-					<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
-				</fieldset>
 				<fieldset class="###PREFIXID###_options">
 					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
+						<div data-role="collapsible">
+							<h3>###DATE###</h3>
+							<div data-role="fieldcontain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<div class="###PREFIXID###_typeDate">
+										<input type="radio" ###SELECTED_1### name="###PREFIXID###[isStartTime]" id="radio-view-a" value="1" data-theme="d" />
+										<label for="radio-view-a">###START_TO###</label>
+								
+										<input type="radio" ###SELECTED_0### name="###PREFIXID###[isStartTime]" id="radio-view-b" value="0" data-theme="d" />
+										<label for="radio-view-b">###ARRIVAL_TO###</label>
+									</div>
+									<div class="###PREFIXID###_date">
+										<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
+										<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+									</div>
+								</fieldset>
+							</div>
+						</div>
 						<div data-role="collapsible">
 							<h3>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
 							<div data-role="fieldcontain">
@@ -62,20 +92,10 @@
 						</div>
 					</div>
 				</fieldset>
+				<fieldset>
+					<input type="submit" value="###SUBMIT###" />
+				</fieldset>
 			</form>
-			<p class="###PREFIXID###_resultHours">###RESULT_HOURS_START### ###FIRST_HOUR### ###AND### ###LAST_HOUR###</p>
-			<ul class="###PREFIXID###_resultsList ui-listview"  data-role="listview"><!-- ###RESULTS_LIST### begin -->
-				<li>
-					<a href="###DETAILS_URL###">
-						###START_HOUR###
-						###PICTOS###
-						###ARRIVAL_HOUR###
-						<span class="###PREFIXID###_duration">###DURATION###</span>
-					</a>
-				</li><!-- ###RESULTS_LIST### end -->
-			</ul>
-			<a href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
-			<a href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
 		</div>
 	</div>
 <!-- ###TEMPLATE_JOURNEY_RESULTS### end -->
