@@ -1,3 +1,12 @@
+2011-10-13 Loïc Stephan <loic@in-cite.net>
+	* Added data-icon="false" on results list view.
+	* Added submit button on search view.
+	* Refactored search template.
+	* Removed dot in locallang (overriding in TS).
+	* Fixed section type properties name (dot addted).
+	* Added TS configuration for icons.
+	* Added TS configuration for section type bound.
+	
 2011-10-11 Loïc Stephan <loic@in-cite.net>
 	* Added collapsed div on preference block in result view
 	* Added missing labels.

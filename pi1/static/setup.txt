@@ -16,15 +16,15 @@ plugin.tx_icsnavitiajourney_pi1 {
 	icons {
 		AddressConnection = {$plugin.tx_icsnavitiajourney_pi1.icons.walk}
 		AddressConnection.onlyBounds = 1
-		SiteConnection < AddressConnection
-		StopAreaConnection < AddressConnection
+		SiteConnection < .AddressConnection
+		StopAreaConnection < .AddressConnection
 		VehicleJourneyConnection = CASE
 		VehicleJourneyConnection.key = vehicleJourney|route|line|modeType|externalCode
 		VehicleJourneyConnection.Bus = {$plugin.tx_icsnavitiajourney_pi1.icons.bus}
 		VehicleJourneyConnection.Metro = {$plugin.tx_icsnavitiajourney_pi1.icons.metro}
-		LinkConnection < AddressConnection
-		StopPointConnection < AddressConnection
-		WalkConnection < AddressConnection
+		LinkConnection < .AddressConnection
+		StopPointConnection < .AddressConnection
+		WalkConnection < .AddressConnection
 		ProlongationConnection =
 		PersonnalCarConnection =
 		Undefined =
@@ -188,7 +188,8 @@ plugin.tx_icsnavitiajourney_pi1 {
 		}
 		
 		.tx_icsnavitiajourney_pi1_arrivalHourSection {
-			float:right;
+			/*float:right;*/
+			text-align:right;
 		}
 		
 		span.icon {
@@ -228,6 +229,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 		
 		table.tx_icsnavitiajourney_pi1_listview_dividertable {
 			margin:0;
+			width:100%;
 		}
 		
 		#conteneur table.tx_icsnavitiajourney_pi1_listview_dividertable td {

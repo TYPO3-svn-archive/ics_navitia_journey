@@ -28,42 +28,54 @@
 			<li class="current">###SEARCH###</li>
 			<li>###RESULTS###</li>
 			<li>###DETAILS###</li>
+			<div style="clear:both;"></div>
 		</ul>
 		<div class="###PREFIXID###_searchForm">
 			<form action="###ACTION_URL###"  method="get">###HIDDEN_FIELDS######START_FORM###<!-- ###CONFIRM_SOLUTIONS_START### --><!-- ###CONFIRM_SOLUTIONS_START### -->###ARRIVAL_FORM###<!-- ###CONFIRM_SOLUTIONS_ARRIVAL### --><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### -->
-				<fieldset class="###PREFIXID###_search">
-					<p class="###PREFIXID###_journeyDate">###JOURNEY_DATE###</p>
-					<div data-role="fieldcontain">
-						<select name="###PREFIXID###[isStartTime]" data-role="slider">
-							<option value="1"###SELECTED_1###>###START_AT###</option>
-							<option value="0"###SELECTED_0###>###ARRIVAL_AT###</option> 
-						</select>
-					</div>
-					<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
-					<input value="###TIME_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+				<fieldset>
+					<input type="submit" value="###SUBMIT###" />
 				</fieldset>
-				<fieldset class="###PREFIXID###_options">
 					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
+					
+						<div data-role="collapsible">
+							<h3>###JOURNEY_DATE###</h3>
+							<div data-role="fieldcontain">
+								<fieldset data-role="controlgroup" data-type="horizontal">
+									<div class="###PREFIXID###_typeDate">
+										<input type="radio" ###SELECTED_1### name="###PREFIXID###[isStartTime]" id="radio-view-a" value="1" data-theme="d" />
+										<label for="radio-view-a">###START_AT###</label>
+								
+										<input type="radio" ###SELECTED_0### name="###PREFIXID###[isStartTime]" id="radio-view-b" value="0" data-theme="d" />
+										<label for="radio-view-b">###ARRIVAL_AT###</label>
+									</div>
+									<div class="###PREFIXID###_date">
+										<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox"}'>
+										<input value="###TIME_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					
 						<div data-role="collapsible">
 							<h3>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
 							<div data-role="fieldcontain">
+								<fieldset class="###PREFIXID###_options">
 								<input id="###PREFIXID###_mode_list_###IDX###" type="checkbox" name="###PREFIXID###[mode][]" value="###VALUE###"###SELECTED### />
 								<label for="###PREFIXID###_mode_list_###IDX###">###NAME###</label>
+								</fieldset>
 							</div><!-- ###MODE_TYPE_LIST### end -->
 						</div>
 						<div data-role="collapsible" data-collapsed="true">
 							<h3>###CRITERIA###</h3>	<!-- ###CRITERIA_LIST### begin -->
 							<div data-role="fieldcontain">
+								<fieldset class="###PREFIXID###_options">
 								<input id="###PREFIXID###_criteria_list_###VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###VALUE###"###SELECTED### />
 								<label for="###PREFIXID###_criteria_list_###VALUE###">###NAME###</label>
+								</fieldset>
 							</div><!-- ###CRITERIA_LIST### end -->
 						</div>
 					</div>
-				</fieldset>
-				<fieldset>
-					<input type="submit" value="###SUBMIT###" />
-				</fieldset>
 			</form>
 		</div>
 	</div>

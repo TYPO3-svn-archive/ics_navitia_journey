@@ -30,11 +30,11 @@
 class tx_icsnavitiajourney_details {
 	private $pObj;
 
-	var $aPicto = array(
+	/*var $aPicto = array(
 		'bus' => 'bus.png',
 		'métro' => 'metro.png',
 		'walk' => 'walk.png',
-	);
+	);*/
 
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
@@ -52,16 +52,16 @@ class tx_icsnavitiajourney_details {
 		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
-			'SEARCH' => $this->pObj->pi_getLL('menu.search'),
+			'SEARCH' => $this->pObj->pi_getLL('menu_search'),
 			'SEARCH_LINK' => $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id),
-			'RESULTS' => $this->pObj->pi_getLL('menu.results'),
-			'DETAILS' => $this->pObj->pi_getLL('menu.details'),
+			'RESULTS' => $this->pObj->pi_getLL('menu_results'),
+			'DETAILS' => $this->pObj->pi_getLL('menu_details'),
 			'ACTION_URL' => $this->pObj->pi_linkTP_keepPIvars_url(),
 			// 'FROM' => $this->pObj->pi_getLL('from'),
 			// 'TO' => $this->pObj->pi_getLL('to'),
-			'PREVIOUS_JOURNEY' => $this->pObj->pi_getLL('results.previous'),
-			'NEXT_JOURNEY' => $this->pObj->pi_getLL('results.next'),
-			'BACKWARD_JOURNEY' => $this->pObj->pi_getLL('details.backward'),
+			'PREVIOUS_JOURNEY' => $this->pObj->pi_getLL('results_previous'),
+			'NEXT_JOURNEY' => $this->pObj->pi_getLL('results_next'),
+			'BACKWARD_JOURNEY' => $this->pObj->pi_getLL('details_backward'),
 			'BACKWARD_JOURNEY_LINK' => $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
 					'startName' 			=> $this->pObj->piVars['arrivalName'],
@@ -138,7 +138,7 @@ class tx_icsnavitiajourney_details {
 		$markers['MAP'] = '';
 		
 		$confImg = array();
-		switch ($section->type) {
+		/*switch ($section->type) {
 			case 'VehicleJourneyConnection' :
 				$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto[strtolower($section->vehicleJourney->route->line->modeType->externalCode)];
 				break;
@@ -147,6 +147,28 @@ class tx_icsnavitiajourney_details {
 					$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto['walk'];
 				}
 			break;
+		}*/
+		
+		if($this->pObj->conf['icons.'][$section->type] != 'CASE') {
+			if($useBound && $this->pObj->conf['icons.'][$section->type . '.']['onlyBounds']) {
+				if($index == 0 || ($index == $journeyResult->sections->Count()-1)) {
+					$confImg['file'] = $this->pObj->conf['icons.'][$section->type];
+				}
+				else {
+					$confImg['file'] = null;
+				}
+			}
+			else {
+				$confImg['file'] = $this->pObj->conf['icons.'][$section->type];
+			}
+		}
+		else {
+			$aKey = explode('|', $this->pObj->conf['icons.'][$section->type . '.']['key']);
+			$sectionObj = $section;
+			for($i=0;$i<count($aKey);$i++) {
+				$sectionObj = $this->getObject($sectionObj, $aKey[$i]);
+			}
+			$confImg['file'] = $this->pObj->conf['icons.'][$section->type . '.'][iconv("UTF-8", "ASCII//TRANSLIT", $sectionObj)];
 		}
 		
 		if (!empty($confImg['file'])) {
@@ -223,12 +245,12 @@ class tx_icsnavitiajourney_details {
 		$content = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_SITE_CONNECTION###');
 		
 		$markers['FROM'] = $this->pObj->pi_getLL('from');
-		$markers['TO'] = $this->pObj->pi_getLL('details.to.site.stoppoint');
+		$markers['TO'] = $this->pObj->pi_getLL('details_to_site_stoppoint');
 		if ($section->departure->type == 'Site') {
-			$markers['FROM'] = $this->pObj->pi_getLL('details.from.site');
+			$markers['FROM'] = $this->pObj->pi_getLL('details_from_site');
 		}
 		elseif ($section->arrival->type == 'Site') {
-			$markers['TO'] = $this->pObj->pi_getLL('details.to.site');
+			$markers['TO'] = $this->pObj->pi_getLL('details_to_site');
 		}
 
 		$markers['STOP_START'] = $section->departure->{lcfirst($section->departure->type)}->name .  ' (' . $section->departure->{lcfirst($section->departure->type)}->city->name . ' ) ';
@@ -247,13 +269,13 @@ class tx_icsnavitiajourney_details {
 		$content = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_ADDRESS_CONNECTION###');
 		
 		$markers['FROM'] = $this->pObj->pi_getLL('from');
-		$markers['TO'] = $this->pObj->pi_getLL('details.to.address.stoppoint');
+		$markers['TO'] = $this->pObj->pi_getLL('details_to_address_stoppoint');
 		if ($section->departure->type == 'Address') {
-			$markers['FROM'] = $this->pObj->pi_getLL('details.from.address');
+			$markers['FROM'] = $this->pObj->pi_getLL('details_from_address');
 			//$markers['ADDRESS_CONNECTION_INFO'] = $this->pObj->pi_getLL('details.addressConnection.from') . ' '  . $section->departure->address->city->name . ' - ' . $section->departure->address->name;
 		}
 		else {
-			$markers['TO'] = $this->pObj->pi_getLL('details.to.address');
+			$markers['TO'] = $this->pObj->pi_getLL('details_to_address');
 			//$markers['ADDRESS_CONNECTION_INFO'] = $this->pObj->pi_getLL('details.addressConnection.to') . ' '  . $section->arrival->address->city->name . ' - ' . $section->arrival->address->name;
 		}
 		
@@ -280,11 +302,11 @@ class tx_icsnavitiajourney_details {
 		$content = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_STOP_POINT_CONNECTION###');
 		
 		if (is_array($aDuration[$indexS-1])) { // fusion des sections linkConnection et StopPointConnection. Les durées se cumulent.
-			$markers['SECTION_INFO'] = $this->pObj->pi_getLL('details.linkConnection');
+			$markers['SECTION_INFO'] = $this->pObj->pi_getLL('details_linkConnection');
 		}
 		else {
 			//$markers['SECTION_INFO'] = 'Changement';
-			$markers['DIRECTION'] = $this->pObj->pi_getLL('details.correspondence');
+			$markers['DIRECTION'] = $this->pObj->pi_getLL('details_correspondence');
 			//$markers['STEP_JOURNEY_INFOS'] = '';
 		}
 		
@@ -294,7 +316,7 @@ class tx_icsnavitiajourney_details {
 		$markers['STOP_START'] = $section->departure->{lcfirst($section->departure->type)}->name .  ' (' . $section->departure->{lcfirst($section->departure->type)}->city->name . ' ) ';
 		$markers['STOP_ARRIVAL'] = $section->arrival->{lcfirst($section->arrival->type)}->name .  ' (' . $section->arrival->{lcfirst($section->arrival->type)}->city->name . ') ';
 		
-		$markers['CORRESPONDENCE'] = $this->pObj->pi_getLL('details.correspondence');
+		$markers['CORRESPONDENCE'] = $this->pObj->pi_getLL('details_correspondence');
 		
 		$coords = $section->arrival->{lcfirst($section->arrival->type)}->coord;
 		if ($coords)
@@ -322,7 +344,7 @@ class tx_icsnavitiajourney_details {
 		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_VIEW_MAP###');
 		$baseConf = $this->pObj->conf['details.']['map.'];
 		$markers = array(
-			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details.localize.stoparea')),
+			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details_localize_stoparea')),
 			'STATIC_MAP' => 'http://maps.googleapis.com/maps/api/staticmap?' . t3lib_div::implodeArrayForUrl( // TODO: Use request scheme.
 				'',
 				array(
@@ -337,6 +359,10 @@ class tx_icsnavitiajourney_details {
 			),
 		);
 		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+	}
+	
+	function getObject($object, $key) {
+		return $object->$key;
 	}
 }
 

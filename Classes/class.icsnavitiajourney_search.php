@@ -39,17 +39,17 @@ class tx_icsnavitiajourney_search {
 		
 		$markers = array(
 			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
-			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu.search')),
-			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu.results')),
-			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu.details')),
+			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu_search')),
+			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu_results')),
+			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu_details')),
 			'ACTION_URL' => htmlspecialchars($this->pObj->pi_getPageLink($GLOBALS['TSFE']->id)),
 			'JOURNEY_DATE' => htmlspecialchars($this->pObj->pi_getLL('search.journeyDate')),
 			'START_AT' => htmlspecialchars($this->pObj->pi_getLL('startAt')),
 			'ARRIVAL_AT' => htmlspecialchars($this->pObj->pi_getLL('arrivalAt')),
 			'PREFERENCES' => htmlspecialchars($this->pObj->pi_getLL('preference')),
-			'MODE_TYPE' => htmlspecialchars($this->pObj->pi_getLL('preference.mode')),
-			'CRITERIA' => htmlspecialchars($this->pObj->pi_getLL('preference.criteria')),
-			'SUBMIT' => htmlspecialchars($this->pObj->pi_getLL('search.submit')),
+			'MODE_TYPE' => htmlspecialchars($this->pObj->pi_getLL('preference_mode')),
+			'CRITERIA' => htmlspecialchars($this->pObj->pi_getLL('preference_criteria')),
+			'SUBMIT' => htmlspecialchars($this->pObj->pi_getLL('search_submit')),
 			'SELECTED_0' => '',
 			'SELECTED_1' => '',
 			'HIDDEN_FIELDS' => $this->pObj->getHiddenFields(),
@@ -89,17 +89,17 @@ class tx_icsnavitiajourney_search {
 		$direction = ($isStart) ? 'start' : 'arrival';
 		$markers = array(
 			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
-			'NAME' => htmlspecialchars($this->pObj->pi_getLL('search.name')),
-			'CITY' => htmlspecialchars($this->pObj->pi_getLL('search.city')),
+			'NAME' => htmlspecialchars($this->pObj->pi_getLL('search_name')),
+			'CITY' => htmlspecialchars($this->pObj->pi_getLL('search_city')),
 			'direction' => $direction,
 		);
 		if ($isStart) {
-			$markers['TITLE'] = htmlspecialchars($this->pObj->pi_getLL('search.startAddress'));
+			$markers['TITLE'] = htmlspecialchars($this->pObj->pi_getLL('search_startAddress'));
 			$markers['NAME_VALUE'] = htmlspecialchars($this->pObj->piVars['startName']);
 			$markers['CITY_VALUE'] = htmlspecialchars($this->pObj->piVars['startCity']);
 		}
 		else {
-			$markers['TITLE'] = htmlspecialchars($this->pObj->pi_getLL('search.arrivalAddress'));
+			$markers['TITLE'] = htmlspecialchars($this->pObj->pi_getLL('search_arrivalAddress'));
 			$markers['NAME_VALUE'] = htmlspecialchars($this->pObj->piVars['arrivalName']);
 			$markers['CITY_VALUE'] = htmlspecialchars($this->pObj->piVars['arrivalCity']);
 		}
@@ -140,8 +140,8 @@ return false;
 EOJS;
 			}
 			$texts = json_encode(array(
-				'zero' => $this->pObj->pi_getLL('search.myPosition.zero'),
-				'error' => $this->pObj->pi_getLL('search.myPosition.error'),
+				'zero' => $this->pObj->pi_getLL('search_myPosition.zero'),
+				'error' => $this->pObj->pi_getLL('search_myPosition.error'),
 			));
 			$call = str_replace(
 				'###POSITION###',
@@ -192,7 +192,7 @@ EOJS
 			);
 			$positionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###POSITION_SELECT###');
 			$positionMarkers = array(
-				'POSITION_TEXT' => htmlspecialchars($this->pObj->pi_getLL('search.myPosition')),
+				'POSITION_TEXT' => htmlspecialchars($this->pObj->pi_getLL('search_myPosition')),
 				'POSITION_URL' => '#',
 				'CLICK_EVENT' => htmlspecialchars($call),
 			);
@@ -245,7 +245,7 @@ EOJS
 					$locMarkers['CITY'] = $entryPoint->cityName;
 					$locMarkers['STOPPOINT'] = $stop->name;
 					$locMarkers['RECORDNUMBER'] = $index;
-					$locMarkers['ENTRYPOINT_TYPE'] = $this->pObj->pi_getLL('entryPointType.' . strtolower($entryPoint->type));
+					$locMarkers['ENTRYPOINT_TYPE'] = $this->pObj->pi_getLL('entryPointType_' . strtolower($entryPoint->type));
 					$index++;
 					$solutionItem .= $this->pObj->cObj->substituteMarkerArray($solutionsItemTemplate, $locMarkers, '###|###');
 				}
