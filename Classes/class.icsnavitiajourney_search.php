@@ -43,7 +43,7 @@ class tx_icsnavitiajourney_search {
 			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu_results')),
 			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu_details')),
 			'ACTION_URL' => htmlspecialchars($this->pObj->pi_getPageLink($GLOBALS['TSFE']->id)),
-			'JOURNEY_DATE' => htmlspecialchars($this->pObj->pi_getLL('search.journeyDate')),
+			'JOURNEY_DATE' => htmlspecialchars($this->pObj->pi_getLL('search_journeyDate')),
 			'START_AT' => htmlspecialchars($this->pObj->pi_getLL('startAt')),
 			'ARRIVAL_AT' => htmlspecialchars($this->pObj->pi_getLL('arrivalAt')),
 			'PREFERENCES' => htmlspecialchars($this->pObj->pi_getLL('preference')),
