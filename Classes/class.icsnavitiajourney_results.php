@@ -37,12 +37,21 @@ class tx_icsnavitiajourney_results {
 		$templatePart = $this->pObj->templates['results'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_RESULTS###');
 		
+		if(t3lib_extMgm::isLoaded('ics_header_dyn')) {
+			$headerDyn = t3lib_div::makeInstance('tx_icsheaderdyn_pi1');
+			$this->dataTheme = $headerDyn->getPageHeaderColor();
+		}
+		else {
+			$this->dataTheme = 'a';
+		}
+		
 		$markers = array(
 			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
 			'FROM' => htmlspecialchars($this->pObj->pi_getLL('from')),
 			'TO' => htmlspecialchars($this->pObj->pi_getLL('to')),
 			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu_search')),
 			'SEARCH_LINK' => $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id),
+			'DATA_THEME' => $this->dataTheme,
 			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu_results')),
 			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu_details')),
 			'STOP_START' => htmlspecialchars($callParams['startName']),
@@ -185,40 +194,8 @@ class tx_icsnavitiajourney_results {
 				$markers['DURATION'] = $duration;
 				
 				$confImg = array();
-				/*switch($section->type) {
-					case 'VehicleJourneyConnection' :
-						$aPicto[] = strtolower($section->vehicleJourney->route->line->modeType->externalCode);
-						$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto[strtolower($section->vehicleJourney->route->line->modeType->externalCode)];
-						break;
-					default :
-						$aPicto[] = 'walk';
-						if(!$index || ($index && $aPicto[$index-1] != 'walk')) {
-							$confImg['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/' . $this->aPicto['walk'];
-						}
-					break;
-				}*/
 				
-				if($this->pObj->conf['icons.'][$section->type] != 'CASE') {
-					if($useBound && $this->pObj->conf['icons.'][$section->type . '.']['onlyBounds']) {
-						if($index == 0 || ($index == $journeyResult->sections->Count()-1)) {
-							$confImg['file'] = $this->pObj->conf['icons.'][$section->type];
-						}
-						else {
-							$confImg['file'] = null;
-						}
-					}
-					else {
-						$confImg['file'] = $this->pObj->conf['icons.'][$section->type];
-					}
-				}
-				else {
-					$aKey = explode('|', $this->pObj->conf['icons.'][$section->type . '.']['key']);
-					$sectionObj = $section;
-					for($i=0;$i<count($aKey);$i++) {
-						$sectionObj = $this->getObject($sectionObj, $aKey[$i]);
-					}
-					$confImg['file'] = $this->pObj->conf['icons.'][$section->type . '.'][iconv("UTF-8", "ASCII//TRANSLIT", $sectionObj)];
-				}
+				$confImg['file'] = $this->getIcon($this->pObj->conf['icons.'], $section, $section->type, $useBound, ($index == 0) || ($index == intval($journeyResult->sections->Count() - 1)));
 				
 				if(!empty($confImg['file'])) {
 					$markers['PICTOS'] .= $this->pObj->cObj->IMAGE($confImg);
@@ -230,8 +207,32 @@ class tx_icsnavitiajourney_results {
 		return $resultListContent;
 	}
 	
-	function getObject($object, $key) {
-		return $object->$key;
+	function getIcon($conf, $section, $property,  $applyBoundFlag, $atBound) {
+		if($conf[$property] == 'CASE') {
+			$aKey = explode('|', $conf[$property . '.']['key']);
+			$key = $section;
+			for($i=0;$i<count($aKey);$i++) {
+				$key = $key->{$aKey[$i]};
+			}
+			$file = $this->getIcon($conf[$property . '.'], $section, $key, $applyBoundFlag, $atBound);
+		}
+		else {
+		
+			if(!$applyBoundFlag || ($applyBoundFlag && ($atBound || !$conf[$property . '.']['onlyBounds']))) {
+				$file = $conf[iconv("UTF-8", "ASCII//TRANSLIT", $property)];
+			}
+			else {
+				$file = null;
+			}
+		
+			/*if(!$applyBoundFlag || ($applyBoundFlag && ($atBound || (!$atBound && !$conf[$property . '.']['onlyBounds'])))) {
+				$file = $conf[iconv("UTF-8", "ASCII//TRANSLIT", $property)];
+			}
+			else {
+				$file = null;
+			}*/
+		}
+		return $file;
 	}
 }
 

@@ -196,7 +196,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		for ($i = 1; $i < 5; $i++)
 			$criterias[] = array(
 				'value' => $i,
-				'name' => $this->pi_getLL('preference.criteria_' . $i),
+				'name' => $this->pi_getLL('preference_criteria_' . $i),
 			);
 
 		$criteriaListTemplate = $this->cObj->getSubpart($template, '###CRITERIA_LIST###');

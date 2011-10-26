@@ -24,7 +24,7 @@
 
 <!-- ###TEMPLATE_JOURNEY_RESULTS### begin -->
 	<div class="###PREFIXID###_journeyResults">
-		<ul class="###PREFIXID###_state">
+		<ul class="###PREFIXID###_state ui-list-###DATA_THEME###">
 			<li><a href="###SEARCH_LINK###" class="###PREFIXID###_searchLink">###SEARCH###</a></li>
 			<li class="current">###RESULTS###</li>
 			<li>###DETAILS###</li>
@@ -51,15 +51,16 @@
 				<!-- ###RESULTS_LIST### end -->
 			</ul>
 			<p class="###PREFIXID###_nota">###NOTA###</p>
-			<a href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
-			<a href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
+			<a data-inline="true" data-role="button" data-theme="c" href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
+			<a data-inline="true" data-role="button" data-theme="c" href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
 			
-			<form action="###ACTION_URL###" method="post">###HIDDEN_FIELDS###
-				<fieldset class="###PREFIXID###_options">
+			<form action="###ACTION_URL###" method="post" class="###PREFIXID###_resultForm">###HIDDEN_FIELDS###
+				<fieldset class="###PREFIXID###_options ###PREFIXID###_preferencesBlock">
 					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
+					
 						<div data-role="collapsible">
-							<h3>###DATE###</h3>
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###DATE###</h3>
 							<div data-role="fieldcontain">
 								<fieldset data-role="controlgroup" data-type="horizontal">
 									<div class="###PREFIXID###_typeDate">
@@ -76,23 +77,28 @@
 								</fieldset>
 							</div>
 						</div>
+					
 						<div data-role="collapsible">
-							<h3>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
-							<div data-role="fieldcontain">
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
+							<div data-role="fieldcontain" class="###PREFIXID###_fieldContainOptions">
+								<fieldset class="###PREFIXID###_options">
 								<input id="###PREFIXID###_mode_list_###IDX###" type="checkbox" name="###PREFIXID###[mode][]" value="###VALUE###"###SELECTED### />
 								<label for="###PREFIXID###_mode_list_###IDX###">###NAME###</label>
+								</fieldset>
 							</div><!-- ###MODE_TYPE_LIST### end -->
 						</div>
 						<div data-role="collapsible" data-collapsed="true">
-							<h3>###CRITERIA###</h3><!-- ###CRITERIA_LIST### begin -->
-							<div data-role="fieldcontain">
-								<input id="###PREFIXID###_criteria_list_###VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###VALUE###"###SELECTED### />
-								<label for="###PREFIXID###_criteria_list_###VALUE###">###NAME###</label>
-							</div><!-- ###CRITERIA_LIST### end -->
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###CRITERIA###</h3>
+							<div data-role="fieldcontain" class="###PREFIXID###_fieldContainOptions">
+								<!-- ###CRITERIA_LIST### begin -->
+									<input id="###PREFIXID###_criteria_list_###VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###VALUE###" ###SELECTED### />
+									<label for="###PREFIXID###_criteria_list_###VALUE###">###NAME###</label>
+							<!-- ###CRITERIA_LIST### end -->
+							</div>
 						</div>
 					</div>
 				</fieldset>
-				<fieldset>
+				<fieldset class="###PREFIXID###_submitSearchForm">
 					<input type="submit" value="###SUBMIT###" />
 				</fieldset>
 			</form>

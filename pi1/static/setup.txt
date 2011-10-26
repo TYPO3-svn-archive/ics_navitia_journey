@@ -103,6 +103,16 @@ plugin.tx_icsnavitiajourney_pi1 {
 			font-weight:bold;
 		}
 		
+		p.tx_icsnavitiajourney_pi1_arrivalAddress,
+		p.tx_icsnavitiajourney_pi1_startAddress {
+			float:left;
+		}
+		
+		p.tx_icsnavitiajourney_pi1_arrivalPosition,
+		p.tx_icsnavitiajourney_pi1_startPosition {
+			float:right;
+		}
+		
 		.tx_icsnavitiajourney_pi1_from,
 		.tx_icsnavitiajourney_pi1_to {
 			font-weight:bold;
@@ -224,7 +234,8 @@ plugin.tx_icsnavitiajourney_pi1 {
 		    margin: -0.5em 0 0.6em;
 		    overflow: hidden;
 		    text-overflow: ellipsis;
-		    white-space: nowrap;
+		    /*white-space: nowrap;*/
+			white-space: normal;
 		}
 		
 		table.tx_icsnavitiajourney_pi1_listview_dividertable {
@@ -281,7 +292,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 		
 		.tx_icsnavitiajourney_pi1_date {
 			float:left;
-			width:500px;
+			width:125px;
 		}
 		
 		.tx-icsnavitiajourney-pi1 .tx_icsnavitiajourney_pi1_state a.tx_icsnavitiajourney_pi1_searchLink {
@@ -289,6 +300,11 @@ plugin.tx_icsnavitiajourney_pi1 {
 			font-weight:normal;
 			text-decoration:none;
 			cursor:pointer;
+		}
+		
+		input.ui-input-search#tx_icsnavitiajourney_pi1_startName,
+		input.ui-input-search#tx_icsnavitiajourney_pi1_startCity {
+			width:100%;
 		}
 	)
 	

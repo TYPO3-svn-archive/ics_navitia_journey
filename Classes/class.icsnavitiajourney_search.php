@@ -37,9 +37,18 @@ class tx_icsnavitiajourney_search {
 		$templatePart = $this->pObj->templates['search'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_SEARCH###');
 		
+		if(t3lib_extMgm::isLoaded('ics_header_dyn')) {
+			$headerDyn = t3lib_div::makeInstance('tx_icsheaderdyn_pi1');
+			$this->dataTheme = $headerDyn->getPageHeaderColor();
+		}
+		else {
+			$this->dataTheme = 'a';
+		}
+		
 		$markers = array(
 			'PREFIXID' => htmlspecialchars($this->pObj->prefixId),
 			'SEARCH' => htmlspecialchars($this->pObj->pi_getLL('menu_search')),
+			'DATA_THEME' => $this->dataTheme,
 			'RESULTS' => htmlspecialchars($this->pObj->pi_getLL('menu_results')),
 			'DETAILS' => htmlspecialchars($this->pObj->pi_getLL('menu_details')),
 			'ACTION_URL' => htmlspecialchars($this->pObj->pi_getPageLink($GLOBALS['TSFE']->id)),

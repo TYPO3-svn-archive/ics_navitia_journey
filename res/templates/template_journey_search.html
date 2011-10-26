@@ -24,7 +24,7 @@
 
 <!-- ###TEMPLATE_JOURNEY_SEARCH### begin -->
 	<div class="###PREFIXID###_journeySearch">
-		<ul class="###PREFIXID###_state">
+		<ul class="###PREFIXID###_state ui-list-###DATA_THEME###" data-theme="###DATA_THEME###" >
 			<li class="current">###SEARCH###</li>
 			<li>###RESULTS###</li>
 			<li>###DETAILS###</li>
@@ -32,14 +32,15 @@
 		</ul>
 		<div class="###PREFIXID###_searchForm">
 			<form action="###ACTION_URL###"  method="get">###HIDDEN_FIELDS######START_FORM###<!-- ###CONFIRM_SOLUTIONS_START### --><!-- ###CONFIRM_SOLUTIONS_START### -->###ARRIVAL_FORM###<!-- ###CONFIRM_SOLUTIONS_ARRIVAL### --><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### -->
-				<fieldset>
+				<fieldset class="###PREFIXID###_submitSearchForm">
 					<input type="submit" value="###SUBMIT###" />
 				</fieldset>
+				<fieldset class="###PREFIXID###_preferencesBlock">
 					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
 					
 						<div data-role="collapsible">
-							<h3>###JOURNEY_DATE###</h3>
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###JOURNEY_DATE###</h3>
 							<div data-role="fieldcontain">
 								<fieldset data-role="controlgroup" data-type="horizontal">
 									<div class="###PREFIXID###_typeDate">
@@ -58,8 +59,8 @@
 						</div>
 					
 						<div data-role="collapsible">
-							<h3>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
-							<div data-role="fieldcontain">
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###MODE_TYPE###</h3><!-- ###MODE_TYPE_LIST### begin -->
+							<div data-role="fieldcontain" class="###PREFIXID###_fieldContainOptions">
 								<fieldset class="###PREFIXID###_options">
 								<input id="###PREFIXID###_mode_list_###IDX###" type="checkbox" name="###PREFIXID###[mode][]" value="###VALUE###"###SELECTED### />
 								<label for="###PREFIXID###_mode_list_###IDX###">###NAME###</label>
@@ -67,22 +68,23 @@
 							</div><!-- ###MODE_TYPE_LIST### end -->
 						</div>
 						<div data-role="collapsible" data-collapsed="true">
-							<h3>###CRITERIA###</h3>	<!-- ###CRITERIA_LIST### begin -->
-							<div data-role="fieldcontain">
-								<fieldset class="###PREFIXID###_options">
-								<input id="###PREFIXID###_criteria_list_###VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###VALUE###"###SELECTED### />
-								<label for="###PREFIXID###_criteria_list_###VALUE###">###NAME###</label>
-								</fieldset>
-							</div><!-- ###CRITERIA_LIST### end -->
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###CRITERIA###</h3>
+							<div data-role="fieldcontain" class="###PREFIXID###_fieldContainOptions">
+								<!-- ###CRITERIA_LIST### begin -->
+									<input id="###PREFIXID###_criteria_list_###VALUE###" type="radio" name="###PREFIXID###[criteria]" value="###VALUE###" ###SELECTED### />
+									<label for="###PREFIXID###_criteria_list_###VALUE###">###NAME###</label>
+							<!-- ###CRITERIA_LIST### end -->
+							</div>
 						</div>
 					</div>
+				</fieldset>
 			</form>
 		</div>
 	</div>
 <!-- ###TEMPLATE_JOURNEY_SEARCH### end -->
 				
 <!-- ###CONFIRM_MORE_SOLUTIONS### begin -->
-				<fieldset>
+				<fieldset class="###PREFIXID###_moreSolutions">
 					<p class="###PREFIXID###_confirmMoreSolutions">###MORE_SOLUTIONS###</p><!-- ###LIST_MORE_SOLUTIONS### begin -->
 					<div data-role="fieldcontain">
 						<input id="###PREFIXID###_pointId###NAME_SUFFIX###_###RECORDNUMBER###" type="radio" name="###PREFIXID###[entryPoint###NAME_SUFFIX###]" value="###ENTRYPOINT###" />
@@ -111,11 +113,11 @@
 					<p class="###PREFIXID###_###direction###Position"><a href="###POSITION_URL###" onclick="###CLICK_EVENT###">###POSITION_TEXT###</a></p><!-- ###POSITION_SELECT### end -->
 
 <!-- ###LOCATION_FORM_USER_ENTRY### begin -->
-					<div data-role="fieldcontain">
+					<div data-role="fieldcontain" style="padding:0;">
 						<label for="###PREFIXID###_###direction###Name" style="display:none;">###NAME###</label>
 						<input type="text" placeholder="###NAME###" name="###PREFIXID###[###direction###Name]" value="###NAME_VALUE###" id="###PREFIXID###_###direction###Name" />
 					</div>
-					<div data-role="fieldcontain">
+					<div data-role="fieldcontain" style="padding:0;">
 						<label for="###PREFIXID###_###direction###City" style="display:none;">###CITY###</label>
 						<input type="text" placeholder="###CITY###" name="###PREFIXID###[###direction###City]" value="###CITY_VALUE###" id="###PREFIXID###_###direction###City" />
 					</div><!-- ###LOCATION_FORM_USER_ENTRY### end -->

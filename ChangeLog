@@ -1,3 +1,10 @@
+2011-10-26 Loïc Stephan <loic@in-cite.net>
+	* Improved template file for each views.
+	* Modified some labels.
+	* Added CSS in TS setup.
+	* Added link to ics_header_dyn extension in each classes view to get data-theme.
+	* Added getIcon function.
+
 2011-10-13 Loïc Stephan <loic@in-cite.net>
 	* Added data-icon="false" on results list view.
 	* Added submit button on search view.

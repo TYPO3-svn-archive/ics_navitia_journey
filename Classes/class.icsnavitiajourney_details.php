@@ -50,10 +50,19 @@ class tx_icsnavitiajourney_details {
 		$templatePart = $this->pObj->templates['details'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_SEARCH_DETAILS###');
 		
+		if(t3lib_extMgm::isLoaded('ics_header_dyn')) {
+			$headerDyn = t3lib_div::makeInstance('tx_icsheaderdyn_pi1');
+			$this->dataTheme = $headerDyn->getPageHeaderColor();
+		}
+		else {
+			$this->dataTheme = 'a';
+		}
+		
 		$markers = array(
 			'PREFIXID' => $this->pObj->prefixId,
 			'SEARCH' => $this->pObj->pi_getLL('menu_search'),
 			'SEARCH_LINK' => $this->pObj->pi_getPageLink($GLOBALS['TSFE']->id),
+			'DATA_THEME' => $this->dataTheme,
 			'RESULTS' => $this->pObj->pi_getLL('menu_results'),
 			'DETAILS' => $this->pObj->pi_getLL('menu_details'),
 			'ACTION_URL' => $this->pObj->pi_linkTP_keepPIvars_url(),
@@ -236,6 +245,8 @@ class tx_icsnavitiajourney_details {
 			$markers['DIRECTION_LABEL'] = $this->pObj->pi_getLL('direction');
 			$confFleche = array();
 			$confFleche['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/fleche.png';
+			$confFleche['file.']['height'] = '15px';
+			$confFleche['height'] = '18px';
 			$markers['PICTO_SEPARATOR'] = $this->pObj->cObj->IMAGE($confFleche);
 		}
 		return $content;
