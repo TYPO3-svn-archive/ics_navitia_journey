@@ -30,23 +30,11 @@
 class tx_icsnavitiajourney_details {
 	private $pObj;
 
-	/*var $aPicto = array(
-		'bus' => 'bus.png',
-		'métro' => 'metro.png',
-		'walk' => 'walk.png',
-	);*/
-
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
 	}
-	
-	private function getSettings() {
-		//var_dump($this->pObj->conf);
-	}
 
 	public function getPlanJourneyDetails($journeyPlan, $params) {
-		$this->getSettings();
-		
 		$templatePart = $this->pObj->templates['details'];
 		$template = $this->pObj->cObj->getSubpart($templatePart, '###TEMPLATE_JOURNEY_SEARCH_DETAILS###');
 		

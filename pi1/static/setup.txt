@@ -45,6 +45,11 @@ plugin.tx_icsnavitiajourney_pi1 {
 		}
 	}
 	
+	address_stdWrap = {field:type} - {field:range}
+	address_stdWrap {
+		insertData = 1
+	}
+	
 	_CSS_DEFAULT_STYLE (
 		.tx-icsnavitiajourney-pi1 {
 			color:#4c4c4c;

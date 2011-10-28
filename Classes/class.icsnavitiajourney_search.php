@@ -226,18 +226,18 @@ EOJS
 		if ($entryPoint != null) {
 			if ($entryPoint->Count() == 0) {
 				$noSolutionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###CONFIRM_NO_SOLUTION###');
-				$markers['NO_SOLUTION'] = $this->pObj->pi_getLL('nosolution');
+				$markers['NO_SOLUTION'] = htmlspecialchars($this->pObj->pi_getLL('nosolution'));
 				$content = $this->pObj->cObj->substituteMarkerArray($noSolutionTemplate, $markers, '###|###');
 			}
 			elseif ($entryPoint->Count() == 1) {
 				$entryPoint = $entryPoint->Get(0);
 				$oneSolutionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###CONFIRM_ONE_SOLUTION###');
 				
-				$markers['ONE_SOLUTION'] = $this->pObj->pi_getLL('onesolution');
-				$markers['CITY'] = $entryPoint->cityName;
+				$markers['ONE_SOLUTION'] = htmlspecialchars($this->pObj->pi_getLL('onesolution'));
+				$markers['CITY'] = htmlspecialchars($entryPoint->cityName);
 				
 				$stop = $entryPoint->{lcfirst($entryPoint->type)};
-				$markers['STOPPOINT'] = $stop->name;
+				$markers['STOPPOINT'] = htmlspecialchars($stop->name);
 				
 				$content = $this->pObj->cObj->substituteMarkerArray($oneSolutionTemplate, $markers, '###|###');
 			}
@@ -250,11 +250,24 @@ EOJS
 					$solutionsItemTemplate = $this->pObj->cObj->getSubpart($moreSolutionsTemplate, '###LIST_MORE_SOLUTIONS###');
 					$stop = $entryPoint->{lcfirst($entryPoint->type)};
 					$locMarkers = array();
-					$locMarkers['ENTRYPOINT'] = $index;
-					$locMarkers['CITY'] = $entryPoint->cityName;
-					$locMarkers['STOPPOINT'] = $stop->name;
-					$locMarkers['RECORDNUMBER'] = $index;
-					$locMarkers['ENTRYPOINT_TYPE'] = $this->pObj->pi_getLL('entryPointType_' . strtolower($entryPoint->type));
+					$locMarkers['ENTRYPOINT'] = htmlspecialchars($index);
+					$locMarkers['CITY'] = htmlspecialchars($entryPoint->cityName);
+					$locMarkers['STOPPOINT'] = htmlspecialchars($stop->name);
+					$locMarkers['RECORDNUMBER'] = htmlspecialchars($index);
+					$locMarkers['ENTRYPOINT_TYPE'] = htmlspecialchars($this->pObj->pi_getLL('entryPointType_' . strtolower($entryPoint->type)));
+					if ($entryPoint->type == 'Address') {
+						$data = array();
+						$data['type'] = $locMarkers['ENTRYPOINT_TYPE'];
+						if ($entryPoint->hangList->start) {
+							$data['range'] = htmlspecialchars(sprintf($this->pObj->pi_getLL('entryPointType_address_range'), $entryPoint->hangList->start, $entryPoint->hangList->end));
+						}
+						else {
+							$data['range'] = htmlspecialchars($this->pObj->pi_getLL('entryPointType_address_center'));
+						}
+						$locCObj = t3lib_div::makeInstance('tslib_cObj');
+						$locCObj->start($data);
+						$locMarkers['ENTRYPOINT_TYPE'] = $locCObj->stdWrap($this->pObj->conf['address_stdWrap'], $this->pObj->conf['address_stdWrap.']);
+					}
 					$index++;
 					$solutionItem .= $this->pObj->cObj->substituteMarkerArray($solutionsItemTemplate, $locMarkers, '###|###');
 				}

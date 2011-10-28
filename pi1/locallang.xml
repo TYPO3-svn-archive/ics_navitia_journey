@@ -31,6 +31,8 @@
 			<label index="onesolution">One match found.</label>
 			<label index="moresolutions">Several match were found. Please, choose your desired one:</label>
 			<label index="entryPointType_address">Address</label>
+			<label index="entryPointType_address_center">center</label>
+			<label index="entryPointType_address_range">%d-%d</label>
 			<label index="entryPointType_stoparea">Stop area</label>
 			<label index="entryPointType_site">Site</label>
 			<label index="entryPointType_city">City</label>
@@ -87,6 +89,8 @@
 			<label index="onesolution">Correspondance trouvée.</label>
 			<label index="moresolutions">Plusieurs correspondances ont été trouvées. Veuillez choisir dans la liste :</label>
 			<label index="entryPointType_address">Adresse</label>
+			<label index="entryPointType_address_center">centre</label>
+			<label index="entryPointType_address_range">%d-%d</label>
 			<label index="entryPointType_stoparea">Arrêt / Station</label>
 			<label index="entryPointType_site">Site</label>
 			<label index="entryPointType_city">Commune</label>

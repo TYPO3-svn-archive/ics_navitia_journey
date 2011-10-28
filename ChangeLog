@@ -1,3 +1,7 @@
+2011-10-26 Pierrick Caillon <pierrick@in-cite.net>
+	* Added street numbers on Address EntryPoint display.
+	* Cleanup in details class.
+
 2011-10-26 Loïc Stephan <loic@in-cite.net>
 	* Improved template file for each views.
 	* Modified some labels.
