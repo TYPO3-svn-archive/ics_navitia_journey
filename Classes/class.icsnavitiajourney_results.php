@@ -28,6 +28,7 @@
  */
  
 class tx_icsnavitiajourney_results {
+	private $pObj;
 
 	public function __construct($pObj) {
 		$this->pObj = $pObj;
@@ -195,7 +196,7 @@ class tx_icsnavitiajourney_results {
 				
 				$confImg = array();
 				
-				$confImg['file'] = $this->getIcon($this->pObj->conf['icons.'], $section, $section->type, $useBound, ($index == 0) || ($index == intval($journeyResult->sections->Count() - 1)));
+				$confImg['file'] = self::getIcon($this->pObj->conf['icons.'], $section, $section->type, $useBound, ($index == 0) || ($index == intval($journeyResult->sections->Count() - 1)));
 				
 				if(!empty($confImg['file'])) {
 					$markers['PICTOS'] .= $this->pObj->cObj->IMAGE($confImg);
@@ -207,14 +208,14 @@ class tx_icsnavitiajourney_results {
 		return $resultListContent;
 	}
 	
-	function getIcon($conf, $section, $property,  $applyBoundFlag, $atBound) {
+	public static function getIcon($conf, $section, $property,  $applyBoundFlag = false, $atBound = false) {
 		if($conf[$property] == 'CASE') {
 			$aKey = explode('|', $conf[$property . '.']['key']);
 			$key = $section;
 			for($i=0;$i<count($aKey);$i++) {
 				$key = $key->{$aKey[$i]};
 			}
-			$file = $this->getIcon($conf[$property . '.'], $section, $key, $applyBoundFlag, $atBound);
+			$file = self::getIcon($conf[$property . '.'], $section, $key, $applyBoundFlag, $atBound);
 		}
 		else {
 		
@@ -224,13 +225,6 @@ class tx_icsnavitiajourney_results {
 			else {
 				$file = null;
 			}
-		
-			/*if(!$applyBoundFlag || ($applyBoundFlag && ($atBound || (!$atBound && !$conf[$property . '.']['onlyBounds'])))) {
-				$file = $conf[iconv("UTF-8", "ASCII//TRANSLIT", $property)];
-			}
-			else {
-				$file = null;
-			}*/
 		}
 		return $file;
 	}

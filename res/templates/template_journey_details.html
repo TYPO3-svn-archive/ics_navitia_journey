@@ -54,9 +54,6 @@
 						<div class="###PREFIXID###_picto">
 							###PICTO_TYPE###
 						</div>
-						<!--<div class="###PREFIXID###_lineName">
-							###LINE_NAME###
-						</div>-->
 						<div class="###PREFIXID###_duration">
 							###STEP_DURATION###
 						</div>
@@ -79,42 +76,40 @@
 						</div>
 
 						<div class="###PREFIXID###_from">
-							<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+							<span class="###PREFIXID###_label">###FROM### :</span> ###START_NAME### (###START_CITY###)
 						</div>
 						<div class="###PREFIXID###_to">
-							<span class="###PREFIXID###_label">###TO### :</span> ###STOP_ARRIVAL###
+							<span class="###PREFIXID###_label">###TO### :</span> ###ARRIVAL_NAME### (###ARRIVAL_CITY###)
 						</div><!-- ###TEMPLATE_VEHICLE_JOURNEY_CONNECTION### end -->
 						
 <!-- ###TEMPLATE_STOP_POINT_CONNECTION### begin -->
-						<div class="###PREFIXID###_stopPointConnection">
-							<div class="###PREFIXID###_from">
-								<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
-							</div>
-							<div class="###PREFIXID###_to">
-								<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
-							</div>
+						<div class="###PREFIXID###_from">
+							<span class="###PREFIXID###_label">###FROM### :</span> ###START_NAME### (###START_CITY###)
+						</div>
+						<div class="###PREFIXID###_to">
+							<span class="###PREFIXID###_label">###TO### :</span> ###ARRIVAL_NAME### (###ARRIVAL_CITY###)
 						</div><!-- ###TEMPLATE_STOP_POINT_CONNECTION### end -->
+						
+<!-- ###TEMPLATE_STOP_POINT_CONNECTION_WAIT### begin -->
+						<div class="###PREFIXID###_to">
+							<span class="###PREFIXID###_label">###TO### :</span> ###ARRIVAL_NAME### (###ARRIVAL_CITY###)
+						</div><!-- ###TEMPLATE_STOP_POINT_CONNECTION_WAIT### end -->
 					
 <!-- ###TEMPLATE_ADDRESS_CONNECTION### begin -->
 						<div class="###PREFIXID###_from">
-							<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+							<span class="###PREFIXID###_label">###FROM### :</span> ###START_NAME### (###START_CITY###)
 						</div>
 						<div class="###PREFIXID###_to">
-							<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
+							<span class="###PREFIXID###_label">###TO### :</span> ###ARRIVAL_NAME### (###ARRIVAL_CITY###)
 						</div><!-- ###TEMPLATE_ADDRESS_CONNECTION### end -->
 					
 <!-- ###TEMPLATE_SITE_CONNECTION### begin -->
 						<div class="###PREFIXID###_from">
-							<span class="###PREFIXID###_label">###FROM### :</span> ###STOP_START###
+							<span class="###PREFIXID###_label">###FROM### :</span> ###START_NAME### (###START_CITY###)
 						</div>
 						<div class="###PREFIXID###_to">
-							<span class="###PREFIXID###_label">###TO###</span> ###STOP_ARRIVAL###
+							<span class="###PREFIXID###_label">###TO### :</span> ###ARRIVAL_NAME### (###ARRIVAL_CITY###)
 						</div><!-- ###TEMPLATE_SITE_CONNECTION### end -->
-					
-<!-- ###TEMPLATE_LINK_CONNECTION### begin -->
-						<div class="###PREFIXID###_linkConnection">
-							###LINK_CONNECTION_INFO###
-						</div><!-- ###TEMPLATE_LINK_CONNECTION### end -->
 
 <!-- ###TEMPLATE_VIEW_MAP### begin -->
 				<li class="###PREFIXID###_planLink ###PREFIXID###_preferencesBlock">
@@ -122,7 +117,6 @@
 					   <h3>###TITLE###</h3>
 					   <p><img src="###STATIC_MAP###" /></p>
 					</div>
-					<!--<a href="###MAP_URL###" class="###PREFIXID###_MapLink">###TITLE###</a>-->
 				</li><!-- ###TEMPLATE_VIEW_MAP### end -->
 
 </body>

@@ -107,7 +107,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 			}
 			else {
 				$planJourneyDetails = t3lib_div::makeInstance('tx_icsnavitiajourney_details', $this);
-				$content = $planJourneyDetails->getPlanJourneyDetails($planJourney, $params);
+				$content = $planJourneyDetails->getPlanJourneyDetails($this->dataProvider, $planJourney, $params);
 			}
 		}
 		else {

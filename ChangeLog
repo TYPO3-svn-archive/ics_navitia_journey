@@ -1,3 +1,7 @@
+2011-10-31 Pierrick Caillon <pierrick@in-cite.net>
+	* Updated map on detail to show walk route instead og stop point.
+	* Updated StopPointConnection to show wait and or walk together in case of a previous LinkConnection.
+
 2011-10-26 Pierrick Caillon <pierrick@in-cite.net>
 	* Added street numbers on Address EntryPoint display.
 	* Cleanup in details class.
@@ -14,7 +18,7 @@
 	* Added submit button on search view.
 	* Refactored search template.
 	* Removed dot in locallang (overriding in TS).
-	* Fixed section type properties name (dot addted).
+	* Fixed section type properties name (dot added).
 	* Added TS configuration for icons.
 	* Added TS configuration for section type bound.
 	

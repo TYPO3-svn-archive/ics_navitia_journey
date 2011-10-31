@@ -37,12 +37,20 @@
 			<label index="entryPointType_site">Site</label>
 			<label index="entryPointType_city">City</label>
 			<label index="from">From</label>
+			<label index="from_site">From site</label>
+			<label index="from_address">From address</label>
 			<label index="to">To</label>
+			<label index="to_site">To site</label>
+			<label index="to_address">Walk to address</label>
+			<label index="to_stoppoint">Walk to stoppoint</label>
+			<label index="to_stoppoint_wait">Walk to and wait at stoppoint</label>
+			<label index="wait_at">Wait at</label>
 			<label index="result_hour_start">Starts between</label>
+			<label index="result_hour_arrival">Arrives between</label>
 			<label index="and">and</label>
-			<label index="day">jour</label>
-			<label index="hour">h</label>
-			<label index="minute">min</label>
+			<label index="day">D</label>
+			<label index="hour">H</label>
+			<label index="minute">mn.</label>
 			<label index="results_previous">Previous journeys</label>
 			<label index="results_next">Next journeys</label>
 			<label index="results_date">Travel date</label>
@@ -51,17 +59,7 @@
 			<label index="details_backward">Backward journey</label>
 			<label index="details_previous">Previous journey</label>
 			<label index="details_next">Next journey</label>
-			<label index="details_localize_stoparea">Localize stoparea on a map</label>
-			<label index="details_departure">From:</label>
-			<label index="details_arrival">To:</label>
-			<label index="details_linkConnection">Walk to stoppoint</label>
-			<label index="details_correspondence">Correspondence</label>
-			<label index="details_from_site">From site</label>
-			<label index="details_to_site">To site</label>
-			<label index="details_to_site_stoppoint">Walk to stoppoint</label>
-			<label index="details_to_address_stoppoint">Walk to stoppoint</label>
-			<label index="details_from_address">From address</label>
-			<label index="details_to_address">Walk to address</label>
+			<label index="details_localize">Route on a map</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="menu_search">Recherche</label>
@@ -95,13 +93,20 @@
 			<label index="entryPointType_site">Site</label>
 			<label index="entryPointType_city">Commune</label>
 			<label index="from">De</label>
+			<label index="from_site">Du site</label>
+			<label index="from_address">De l'adresse</label>
 			<label index="to">À</label>
+			<label index="to_site">Rejoindre à pied le site</label>
+			<label index="to_address">Rejoindre à pied l'adresse</label>
+			<label index="to_stoppoint">Rejoindre à pied l'arrêt</label>
+			<label index="to_stoppoint_wait">Rejoindre à pied et attendre à l'arrêt</label>
+			<label index="wait_at">Attendre à</label>
 			<label index="result_hour_start">Départs entre</label>
 			<label index="result_hour_arrival">Arrivées entre</label>
 			<label index="and">et</label>
-			<label index="day">jour</label>
+			<label index="day">j.</label>
 			<label index="hour">h</label>
-			<label index="minute">min</label>
+			<label index="minute">mn.</label>
 			<label index="results_previous">précédent</label>
 			<label index="results_next">suivant</label>
 			<label index="results_date">Date du trajet</label>
@@ -110,20 +115,7 @@
 			<label index="details_backward">retour</label>
 			<label index="details_previous">précédent</label>
 			<label index="details_next">suivant</label>
-			<label index="details_localize_stoparea">Localiser l'arrêt sur une carte</label>
-			<label index="details_departure">Départ :</label>
-			<label index="details_arrival">Arrivée :</label>
-			<label index="details_linkConnection">Rejoindre à pied l'arrêt</label>
-			<label index="details_siteConnection">Site</label>
-			<label index="details_correspondence">Correspondance</label>
-			<label index="details_addressConnection_from">De l'adresse</label>
-			<label index="details_addressConnection_to">Rejoindre à pied l'adresse</label>
-			<label index="details_from_site">Du site</label>
-			<label index="details_to_site">Rejoindre à pied le site</label>
-			<label index="details_to_site_stoppoint">Rejoindre à pied l'arrêt</label>
-			<label index="details_to_address_stoppoint">Rejoindre à pied l'arrêt</label>
-			<label index="details_from_address">De l'adresse</label>
-			<label index="details_to_address">Rejoindre à pied l'adresse</label>
+			<label index="details_localize">Parcours sur une carte</label>
 		</languageKey>
 	</data>
 </T3locallang>
