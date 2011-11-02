@@ -142,6 +142,9 @@ class tx_icsnavitiajourney_details {
 		if (!empty($confImg['file'])) {
 			$markers['PICTO_TYPE'] = $this->pObj->cObj->IMAGE($confImg);
 		}
+		else {
+			$markers['PICTO_TYPE'] = $section->type;
+		}
 		
 		if (empty($markers['PICTO']) && !is_null($section->vehicleJourney->route->line)) {
 			$markers['PICTO'] = 'Ligne ' . $section->vehicleJourney->route->line->code;// temporaire pendant qu'on a pas les pictos dans la bdd.
@@ -304,10 +307,23 @@ class tx_icsnavitiajourney_details {
 	}
 	
 	private function renderMap(tx_icslibnavitia_Coord $departure, tx_icslibnavitia_Coord $arrival) {
-		if (($departure->lat == $arrival->lat) && ($departure->lng == $arrival->lng))
-			return '';
 		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_VIEW_MAP###');
 		$baseConf = $this->pObj->conf['details.']['map.'];
+		$parameters = array(
+			'zoom' => $baseConf['zoom'],
+			'size' => $baseConf['size'],
+			'format' => $baseConf['format'],
+			'maptype' => $baseConf['maptype'],
+			'sensor' => 'false',
+		);
+		if (($departure->lat == $arrival->lat) && ($departure->lng == $arrival->lng)) {
+			$parameters['center'] = $departure->lat . ',' . $departure->lng;
+			$parameters['markers'] = $departure->lat . ',' . $departure->lng;
+		}
+		else {
+			$parameters['markers'] = $departure->lat . ',' . $departure->lng . '|' . $arrival->lat . ',' . $arrival->lng;
+			$parameters['visible'] = $departure->lat . ',' . $departure->lng . '|' . $arrival->lat . ',' . $arrival->lng;
+		}
 		$segments = $this->dataProvider->getStreetNetwork($departure, $arrival);
 		$path = '';
 		if ($segments) {
@@ -332,21 +348,13 @@ class tx_icsnavitiajourney_details {
 			else {
 				$path = $departure->lat . ',' . $departure->lng . '|' . $arrival->lat . ',' . $arrival->lng;
 			}
+			$parameters['path'] = $path;
 		}
 		$markers = array(
 			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details_localize')),
 			'STATIC_MAP' => htmlspecialchars('http://maps.googleapis.com/maps/api/staticmap?' . t3lib_div::implodeArrayForUrl( // TODO: Use request scheme.
 				'',
-				array(
-					// 'center' => $coords->lat . ',' . $coords->lng,
-					'zoom' => $baseConf['zoom'],
-					'size' => $baseConf['size'],
-					'format' => $baseConf['format'],
-					'maptype' => $baseConf['maptype'],
-					'markers' => $departure->lat . ',' . $departure->lng . '|' . $arrival->lat . ',' . $arrival->lng,
-					'sensor' => 'false',
-					'path' => $path,
-				)
+				$parameters
 			)),
 		);
 		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');

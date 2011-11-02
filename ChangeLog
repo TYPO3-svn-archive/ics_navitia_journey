@@ -1,3 +1,6 @@
+2011-11-02 Pierrick Caillon <pierrick@in-cite.net>
+	* Updated map on details to show the location even if departure and arrival are same.
+
 2011-10-31 Pierrick Caillon <pierrick@in-cite.net>
 	* Updated map on detail to show walk route instead og stop point.
 	* Updated StopPointConnection to show wait and or walk together in case of a previous LinkConnection.
