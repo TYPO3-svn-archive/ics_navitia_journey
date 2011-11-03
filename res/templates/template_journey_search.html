@@ -36,7 +36,7 @@
 					<input type="submit" value="###SUBMIT###" />
 				</fieldset>
 				<fieldset class="###PREFIXID###_preferencesBlock">
-					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
+					<p class="###PREFIXID###_preferences ui-paragraph-###DATA_THEME###" data-theme="###DATA_THEME###">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
 					
 						<div data-role="collapsible">
@@ -44,10 +44,10 @@
 							<div data-role="fieldcontain">
 								<fieldset data-role="controlgroup" data-type="horizontal">
 									<div class="###PREFIXID###_typeDate">
-										<input type="radio" ###SELECTED_1### name="###PREFIXID###[isStartTime]" id="radio-view-a" value="1" data-theme="d" />
+										<input type="radio" ###SELECTED_1### name="###PREFIXID###[isStartTime]" id="radio-view-a" value="1" data-theme="###DATA_THEME###" />
 										<label for="radio-view-a">###START_AT###</label>
 								
-										<input type="radio" ###SELECTED_0### name="###PREFIXID###[isStartTime]" id="radio-view-b" value="0" data-theme="d" />
+										<input type="radio" ###SELECTED_0### name="###PREFIXID###[isStartTime]" id="radio-view-b" value="0" data-theme="###DATA_THEME###" />
 										<label for="radio-view-b">###ARRIVAL_AT###</label>
 									</div>
 									<div class="###PREFIXID###_date">
@@ -110,7 +110,7 @@
 				</fieldset><!-- ###LOCATION_FORM_PART### end -->
 
 <!-- ###POSITION_SELECT### begin -->
-					<p class="###PREFIXID###_###direction###Position"><a href="###POSITION_URL###" onclick="###CLICK_EVENT###">###POSITION_TEXT###</a></p><!-- ###POSITION_SELECT### end -->
+					<p class="###PREFIXID###_###direction###Position"><a data-iconpos="right" data-inline="true" data-role="button" data-theme="c" data-icon="position" href="###POSITION_URL###" onclick="###CLICK_EVENT###">###POSITION_TEXT###</a></p><!-- ###POSITION_SELECT### end -->
 
 <!-- ###LOCATION_FORM_USER_ENTRY### begin -->
 					<div data-role="fieldcontain" style="padding:0;">
