@@ -111,6 +111,15 @@ class tx_icsnavitiajourney_details {
 		foreach ($journeyResult->sections->ToArray() as $section) {
 			$detailsContent .= $this->renderSection($detailsTemplate, $section, $durations, $index++);
 		}
+		if ($this->previousSection) {
+			$previousSection = $this->previousSection;
+			$this->previousDuration = null;
+			$this->previousDeparture = null;
+			$this->previousSection = null;
+			$previousSection->type = 'ForcedLinkConnection';
+			$detailsContent .= $this->renderSection($detailsTemplate, $previousSection, $durations, $index - 1);
+			$previousSection->type = 'LinkConnection';
+		}
 
 		$template = $this->pObj->cObj->substituteSubpart($template, '###CONNECTIONS_LIST###', $detailsContent);
 		
@@ -123,7 +132,18 @@ class tx_icsnavitiajourney_details {
 			$durations[$index] = $section->duration;
 			$this->previousDuration = $durations[$index];
 			$this->previousDeparture = $section->departure;
+			$this->previousSection = $section;
 			return '';
+		}
+		$content = '';
+		if ($this->previousSection && ($section->type != 'StopPointConnection')) {
+			$previousSection = $this->previousSection;
+			$this->previousDuration = null;
+			$this->previousDeparture = null;
+			$this->previousSection = null;
+			$previousSection->type = 'ForcedLinkConnection';
+			$content .= $this->renderSection($template, $previousSection, $durations, $index - 1);
+			$previousSection->type = 'LinkConnection';
 		}
 
 		$markers = array();
@@ -160,16 +180,18 @@ class tx_icsnavitiajourney_details {
 			$connection = $this->$sectionMethod($section, $markers);
 			$this->previousDuration = null;
 			$this->previousDeparture = null;
+			$this->previousSection = null;
 		}
 		
 		$template = $this->pObj->cObj->substituteMarker($template, '###CONNECTION###', $connection);
-		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		$content .= $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		return $content;
 	}
 	
 	private function renderDuration($seconds) {
-		$minutes = (int)round($seconds / 60) % 60;
-		$hours = (int)round($seconds / 3600) % 24;
-		$days = (int)round($seconds / 86400);
+		$minutes = (int)floor($seconds / 60) % 60;
+		$hours = (int)floor($seconds / 3600) % 24;
+		$days = (int)floor($seconds / 86400);
 		$duration = array();
 		if ($days) {
 			$duration[] = $days . ' ' . $this->pObj->pi_getLL('day');
@@ -230,8 +252,8 @@ class tx_icsnavitiajourney_details {
 		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
-		$coordsDep = $section->departure->{lcfirst($section->departure->type)}->coord;
-		$coordsArr = $section->arrival->{lcfirst($section->arrival->type)}->coord;
+		$coordsDep = $this->getCoords($section->departure);
+		$coordsArr = $this->getCoords($section->arrival);
 		if ($coordsDep && $coordsArr)
 			$markers['MAP'] = $this->renderMap($coordsDep, $coordsArr);
 		return $content;
@@ -254,8 +276,26 @@ class tx_icsnavitiajourney_details {
 		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
-		$coordsDep = $section->departure->{lcfirst($section->departure->type)}->coord;
-		$coordsArr = $section->arrival->{lcfirst($section->arrival->type)}->coord;
+		$coordsDep = $this->getCoords($section->departure);
+		$coordsArr = $this->getCoords($section->arrival);
+		if ($coordsDep && $coordsArr)
+			$markers['MAP'] = $this->renderMap($coordsDep, $coordsArr);
+		return $content;
+	}
+	
+	private function renderPersonnalCarConnection(tx_icslibnavitia_Section $section, array & $markers) {
+		$content = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_PERSONNAL_CAR_CONNECTION###');
+		
+		$markers['FROM'] = htmlspecialchars($this->pObj->pi_getLL('from'));
+		$markers['TO'] = htmlspecialchars($this->pObj->pi_getLL('to'));
+		
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
+		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
+		
+		$coordsDep = $this->getCoords($section->departure);
+		$coordsArr = $this->getCoords($section->arrival);
 		if ($coordsDep && $coordsArr)
 			$markers['MAP'] = $this->renderMap($coordsDep, $coordsArr);
 		return $content;
@@ -269,6 +309,24 @@ class tx_icsnavitiajourney_details {
 	private function renderODTConnection(tx_icslibnavitia_Section $section, array & $markers) {
 		//$sectionType = 'Liaison en transport à la demande. Si les horaires sont estimés, lire la propriété EstimatedTime';
 		return '';
+	}
+	
+	private function renderForcedLinkConnection(tx_icslibnavitia_Section $section, array & $markers) {
+		$content = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_STOP_POINT_CONNECTION###');
+		
+		$markers['FROM'] = htmlspecialchars($this->pObj->pi_getLL('from'));
+		$markers['TO'] = htmlspecialchars($this->pObj->pi_getLL('to_stoppoint'));
+		
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
+		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
+		
+		$coordsDep = $this->getCoords($section->departure);
+		$coordsArr = $this->getCoords($section->arrival);
+		if ($coordsDep && $coordsArr)
+			$markers['MAP'] = $this->renderMap($coordsDep, $coordsArr);
+		return $content;
 	}
 	
 	private function renderStopPointConnection(tx_icslibnavitia_Section $section, array & $markers) {
@@ -294,8 +352,8 @@ class tx_icsnavitiajourney_details {
 		$markers['START_CITY'] = htmlspecialchars($departure->{lcfirst($departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
-		$coordsDep = $departure->{lcfirst($departure->type)}->coord;
-		$coordsArr = $section->arrival->{lcfirst($section->arrival->type)}->coord;
+		$coordsDep = $this->getCoords($departure);
+		$coordsArr = $this->getCoords($section->arrival);
 		if ($coordsDep && $coordsArr)
 			$markers['MAP'] = $this->renderMap($coordsDep, $coordsArr);
 		return $content;
@@ -310,13 +368,13 @@ class tx_icsnavitiajourney_details {
 		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_VIEW_MAP###');
 		$baseConf = $this->pObj->conf['details.']['map.'];
 		$parameters = array(
-			'zoom' => $baseConf['zoom'],
 			'size' => $baseConf['size'],
 			'format' => $baseConf['format'],
 			'maptype' => $baseConf['maptype'],
 			'sensor' => 'false',
 		);
 		if (($departure->lat == $arrival->lat) && ($departure->lng == $arrival->lng)) {
+			$parameters['zoom'] = $baseConf['zoom'];
 			$parameters['center'] = $departure->lat . ',' . $departure->lng;
 			$parameters['markers'] = $departure->lat . ',' . $departure->lng;
 		}
@@ -362,6 +420,12 @@ class tx_icsnavitiajourney_details {
 	
 	function getObject($object, $key) {
 		return $object->$key;
+	}
+	
+	function getCoords($entryPoint) {
+		if ($entryPoint->{lcfirst($entryPoint->type)}->coord)
+			return $entryPoint->{lcfirst($entryPoint->type)}->coord;
+		return $entryPoint->coord;
 	}
 }
 

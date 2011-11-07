@@ -22,7 +22,7 @@ plugin.tx_icsnavitiajourney_pi1 {
 		VehicleJourneyConnection.key = vehicleJourney|route|line|modeType|externalCode
 		VehicleJourneyConnection.Bus = {$plugin.tx_icsnavitiajourney_pi1.icons.bus}
 		VehicleJourneyConnection.Metro = {$plugin.tx_icsnavitiajourney_pi1.icons.metro}
-		LinkConnection < .AddressConnection
+		ForcedLinkConnection < .AddressConnection
 		StopPointConnection < .AddressConnection
 		WalkConnection < .AddressConnection
 		ProlongationConnection =

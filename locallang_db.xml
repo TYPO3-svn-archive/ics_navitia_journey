@@ -15,9 +15,12 @@
 			<label index="constants.map.format">Map image format</label>
 			<label index="constants.map.maptype">Map type</label>
 			<label index="constantscat.staticmap">Static map</label>
-			<label index="constants.url">NAViTiA API dll library URL</label>
-			<label index="constants.login">NAViTiA login for stats</label>
+			<label index="constants.url">NAViTiA API dll: URL to the NAViTiA library</label>
+			<label index="constants.login">NAViTiA login: ID for usage stats</label>
 			<label index="constantscat.templates">Templates files</label>
+			<label index="constants.templates.details">HTML template for details view</label>
+			<label index="constants.templates.search">HTML template for search view</label>
+			<label index="constants.templates.results">HTML template for result view</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module d'itinéraire</label>
@@ -29,12 +32,12 @@
 			<label index="constants.map.format">Format de l'image de la carte</label>
 			<label index="constants.map.maptype">Type de carte</label>
 			<label index="constantscat.staticmap">Carte statique</label>
-			<label index="constants.url">URL de la bibliothèque dll de NAViTiA</label>
-			<label index="constants.login">Identifiant NAViTiA pour les stats</label>
-			<label index="constantscat.templates">Fichiers templates</label>
-			<label index="constants.templates.details">Fichier template de la vue détails</label>
-			<label index="constants.templates.search">Fichier template de la vue recherche</label>
-			<label index="constants.templates.results">Fichier template de la vue des résultats</label>
+			<label index="constants.url">Dll de l'API NAViTiA: URL vers la bibliothèque NAViTiA</label>
+			<label index="constants.login">Identifiant NAViTiA: Identificateur pour les statistiques d'usage</label>
+			<label index="constantscat.templates">Fichiers modèles</label>
+			<label index="constants.templates.details">Modèle HTML de la vue détails</label>
+			<label index="constants.templates.search">Modèle HTML de la vue recherche</label>
+			<label index="constants.templates.results">Modèle HTML de la vue des résultats</label>
 		</languageKey>
 	</data>
 </T3locallang>
