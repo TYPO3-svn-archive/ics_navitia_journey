@@ -1,26 +1,57 @@
 # customsubcategory=staticmap=LLL:EXT:ics_navitia_journey/locallang_db.xml:constantscat.staticmap
+# customsubcategory=templates=LLL:EXT:ics_navitia_journey/locallang_db.xml:constantscat.templates
 
 plugin.tx_icsnavitiajourney_pi1 {
+	# cat=plugin.icsnavitiajourney//a; type=text; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.url
+	navitiaUrl = 
+	
+	# cat=plugin.icsnavitiajourney//b; type=text; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.login
+	statLogin = 
+
 	icons {
 		walk = EXT:ics_navitia_journey/res/icons/walk.png
 		bus = EXT:ics_navitia_journey/res/icons/bus.png
 		metro = EXT:ics_navitia_journey/res/icons/metro.png
+		coach = EXT:ics_navitia_journey/res/icons/coach.png
+		car = EXT:ics_navitia_journey/res/icons/car.png
 		bicycle = EXT:ics_navitia_journey/res/icons/bicycle.png
+		tramway = EXT:ics_navitia_journey/res/icons/tram.png
+		train = EXT:ics_navitia_journey/res/icons/train.png
+		localTrain = EXT:ics_navitia_journey/res/icons/localtrain.png
 	}
-	# cat=plugin.icsnavitiajourney/enable/a; type=boolean; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.useGeolocation
+	defaultIcon = EXT:ics_navitia_journey/res/icons/default.png
+	
+	# cat=plugin.icsnavitiajourney/enable/c; type=boolean; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.useGeolocation
 	useGeolocation = 1
-	# cat=plugin.icsnavitiajourney/enable/b; type=boolean; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.arrivalGeolocation
+	# cat=plugin.icsnavitiajourney/enable/d; type=boolean; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.arrivalGeolocation
 	arrivalGeolocation = 0
 	map {
-		# cat=plugin.icsnavitiajourney/staticmap/b; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.zoom
+		# cat=plugin.icsnavitiajourney/staticmap/e; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.zoom
 		zoom = 16
-		# cat=plugin.icsnavitiajourney/staticmap/c; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.width
+		# cat=plugin.icsnavitiajourney/staticmap/f; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.width
 		width = 300
-		# cat=plugin.icsnavitiajourney/staticmap/d; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.height
+		# cat=plugin.icsnavitiajourney/staticmap/g; type=int+; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.height
 		height = 300
-		# cat=plugin.icsnavitiajourney/staticmap/e; type=options[png,gif,jpg]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.format
+		# cat=plugin.icsnavitiajourney/staticmap/h; type=options[png,gif,jpg]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.format
 		format = jpg
-		# cat=plugin.icsnavitiajourney/staticmap/f; type=options[roadmap,satellite,hybrid,terrain]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.maptype
+		# cat=plugin.icsnavitiajourney/staticmap/i; type=options[roadmap,satellite,hybrid,terrain]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.map.maptype
 		maptype = roadmap
 	}
+	
+	view {
+		search {
+			# cat=plugin.icsnavitiajourney/templates/j; type=text; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.templates.search
+			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_search.html
+		}
+		results {
+			# cat=plugin.icsnavitiajourney/templates/k; type=text; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.templates.results
+			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_results.html
+		}
+		details {
+			# cat=plugin.icsnavitiajourney/templates/l; type=text; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.templates.details
+			templateFile = EXT:ics_navitia_journey/res/templates/template_journey_details.html
+		}
+
+	}
+	
 }
