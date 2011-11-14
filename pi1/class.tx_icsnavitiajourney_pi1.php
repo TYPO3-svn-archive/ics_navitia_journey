@@ -67,7 +67,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		if (!$entryPointArrival && (!empty($this->piVars['arrivalName']) || !empty($this->piVars['arrivalCity'])))
 			$entryPointArrival = $this->dataProvider->getEntryPointListByNameAndCity($this->piVars['arrivalName'], $this->piVars['arrivalCity']);
 
-		if (is_numeric($this->piVars['entryPointStart']) && is_numeric($this->piVars['entryPointArrival'])) {
+		if (is_numeric($this->piVars['entryPointStart']) && is_numeric($this->piVars['entryPointArrival']) && $entryPointStart->Count() && $entryPointArrival->Count()) {
 			$entryPointFinalStart = $entryPointStart->Get(intval($this->piVars['entryPointStart']));
 			$entryPointFinalArrival = $entryPointArrival->Get(intval($this->piVars['entryPointArrival']));
 			

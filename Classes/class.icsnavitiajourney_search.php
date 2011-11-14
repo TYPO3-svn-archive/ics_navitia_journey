@@ -84,8 +84,15 @@ class tx_icsnavitiajourney_search {
 			$this->makeSolutionPart($entryPointArrival, false)
 		);
 		
-		$markers['DATE_SEL'] = htmlspecialchars(date('d/m/Y'));
-		$markers['TIME_SEL'] = htmlspecialchars(date('H:i'));
+		if(!isset($this->pObj->piVars['date'])) {
+			$markers['DATE_SEL'] = htmlspecialchars(date('d/m/Y'));
+			$markers['TIME_SEL'] = htmlspecialchars(date('H:i'));
+		}
+		else {
+			$markers['DATE_SEL'] = $this->pObj->piVars['date'];
+			$markers['TIME_SEL'] = $this->pObj->piVars['hour'];
+		}
+		
 
 		$template = $this->pObj->replaceModes($template);
 		$template = $this->pObj->replaceCriteria($template);
