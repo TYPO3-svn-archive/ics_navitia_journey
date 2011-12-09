@@ -120,6 +120,13 @@ class tx_icsnavitiajourney_details {
 			$detailsContent .= $this->renderSection($detailsTemplate, $previousSection, $durations, $index - 1);
 			$previousSection->type = 'LinkConnection';
 		}
+		
+		if ($journeyResult->sections->Get(0)->type == 'VehicleJourneyConnection') {
+			$detailsContent = $this->renderDepartureMap($this->getCoords($journeyResult->sections->Get(0)->departure)) . $detailsContent;
+		}
+		if ($journeyResult->sections->Get($journeyResult->sections->Count() - 1)->type == 'VehicleJourneyConnection') {
+			$detailsContent .= $this->renderArrivalMap($this->getCoords($journeyResult->sections->Get($journeyResult->sections->Count() - 1)->arrival));
+		}
 
 		$template = $this->pObj->cObj->substituteSubpart($template, '###CONNECTIONS_LIST###', $detailsContent);
 		
@@ -227,7 +234,7 @@ class tx_icsnavitiajourney_details {
 			$markers['DIRECTION'] = htmlspecialchars($section->vehicleJourney->route->line->forward->name);
 			$markers['DIRECTION_LABEL'] = htmlspecialchars($this->pObj->pi_getLL('direction'));
 			$confFleche = array();
-			$confFleche['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/fleche.png';
+			$confFleche['file'] = t3lib_extMgm::siteRelPath($this->pObj->extKey) . 'res/icons/arrow.png';
 			$confFleche['file.']['height'] = '15px';
 			$confFleche['height'] = '18px';
 			$markers['PICTO_SEPARATOR'] = $this->pObj->cObj->IMAGE($confFleche);
@@ -366,6 +373,44 @@ class tx_icsnavitiajourney_details {
 	
 	private function renderMap(tx_icslibnavitia_Coord $departure, tx_icslibnavitia_Coord $arrival) {
 		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_VIEW_MAP###');
+		$parameters = $this->getMapParameters($departure, $arrival);
+		$markers = array(
+			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details_localize')),
+			'STATIC_MAP' => htmlspecialchars('http://maps.googleapis.com/maps/api/staticmap?' . t3lib_div::implodeArrayForUrl( // TODO: Use request scheme.
+				'',
+				$parameters
+			)),
+		);
+		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+	}
+	
+	private function renderDepartureMap(tx_icslibnavitia_Coord $departure) {
+		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_VIEW_MAP###');
+		$parameters = $this->getMapParameters($departure, $departure);
+		$markers = array(
+			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details_localize_departure')),
+			'STATIC_MAP' => htmlspecialchars('http://maps.googleapis.com/maps/api/staticmap?' . t3lib_div::implodeArrayForUrl( // TODO: Use request scheme.
+				'',
+				$parameters
+			)),
+		);
+		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+	}
+	
+	private function renderArrivalMap(tx_icslibnavitia_Coord $arrival) {
+		$template = $this->pObj->cObj->getSubpart($this->pObj->templates['details'], '###TEMPLATE_VIEW_MAP###');
+		$parameters = $this->getMapParameters($arrival, $arrival);
+		$markers = array(
+			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details_localize_arrival')),
+			'STATIC_MAP' => htmlspecialchars('http://maps.googleapis.com/maps/api/staticmap?' . t3lib_div::implodeArrayForUrl( // TODO: Use request scheme.
+				'',
+				$parameters
+			)),
+		);
+		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+	}
+	
+	private function getMapParameters(tx_icslibnavitia_Coord $departure, tx_icslibnavitia_Coord $arrival) {
 		$baseConf = $this->pObj->conf['details.']['map.'];
 		$parameters = array(
 			'size' => $baseConf['size'],
@@ -381,8 +426,8 @@ class tx_icsnavitiajourney_details {
 		else {
 			$parameters['markers'] = $departure->lat . ',' . $departure->lng . '|' . $arrival->lat . ',' . $arrival->lng;
 			$parameters['visible'] = $departure->lat . ',' . $departure->lng . '|' . $arrival->lat . ',' . $arrival->lng;
+			$segments = $this->dataProvider->getStreetNetwork($departure, $arrival);
 		}
-		$segments = $this->dataProvider->getStreetNetwork($departure, $arrival);
 		$path = '';
 		if ($segments) {
 			$pathElements = array();
@@ -408,14 +453,7 @@ class tx_icsnavitiajourney_details {
 			}
 			$parameters['path'] = $path;
 		}
-		$markers = array(
-			'TITLE' => htmlspecialchars($this->pObj->pi_getLL('details_localize')),
-			'STATIC_MAP' => htmlspecialchars('http://maps.googleapis.com/maps/api/staticmap?' . t3lib_div::implodeArrayForUrl( // TODO: Use request scheme.
-				'',
-				$parameters
-			)),
-		);
-		return $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');
+		return $parameters;
 	}
 	
 	function getObject($object, $key) {

@@ -1,10 +1,14 @@
+2011-12-09 Pierrick Caillon <pierrick@in-cite.net>
+	* Removed unused icons.
+	* Added departure and arrival map when first and last sections are VehiculeJourneyConnection, respectively.
+
 2011-11-14 Loïc Stephan <loic@in-cite.net>
-	 * Added dateformat in search and results templates.
-	 * Added icons.
-	 * Improved condition in pi1.
-	 * Added some constants.
-	 * Better CSS.
-	 * Fixed bug date in search view.
+	* Added dateformat in search and results templates.
+	* Added icons.
+	* Improved condition in pi1.
+	* Added some constants.
+	* Better CSS.
+	* Fixed bug date in search view.
 
 2011-11-07 Pierrick Caillon <pierrick@in-cite.net>
 	* Improved translations.

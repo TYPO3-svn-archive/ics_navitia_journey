@@ -60,6 +60,8 @@
 			<label index="details_previous">Previous journey</label>
 			<label index="details_next">Next journey</label>
 			<label index="details_localize">Route on a map</label>
+			<label index="details_localize_departure">Departure on a map</label>
+			<label index="details_localize_arrival">Arrival on a map</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="menu_search">Recherche</label>
@@ -116,6 +118,8 @@
 			<label index="details_previous">précédent</label>
 			<label index="details_next">suivant</label>
 			<label index="details_localize">Parcours sur une carte</label>
+			<label index="details_localize_departure">Départ sur une carte</label>
+			<label index="details_localize_arrival">Arrivée sur une carte</label>
 		</languageKey>
 	</data>
 </T3locallang>
