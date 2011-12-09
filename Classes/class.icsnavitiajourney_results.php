@@ -113,19 +113,21 @@ class tx_icsnavitiajourney_results {
 			
 			$markers['AND'] = htmlspecialchars($this->pObj->pi_getLL('and'));
 			$markers['FIRST_HOUR'] = $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i'); // TODO: Hour format as config.
-			$markers['LAST_HOUR'] = $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count()-1))->summary->departure->format('H:i');
+			$markers['LAST_HOUR'] = $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count() - 1))->summary->departure->format('H:i');
 			
 			$markers['PREVIOUS_JOURNEY_LINK'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
-					'date' 		=> $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('d/m/Y'),  // TODO: Use Call.
-					'hour' 		=> $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i')
+					'date' => $journeyPlan['JourneyResultList']->Get(0)->summary->call->before->dateTime->format('d/m/Y'), 
+					'hour' => $journeyPlan['JourneyResultList']->Get(0)->summary->call->before->dateTime->format('H:i'),
+					'isStartTime' => ($journeyPlan['JourneyResultList']->Get(0)->summary->call->before->sens > 0) ? 1 : 0,
 				)
 			);
 			
 			$markers['NEXT_JOURNEY_LINK'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
-					'date' 		=> $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count()-1)->summary->departure->format('d/m/Y'),  // TODO: Use Call.
-					'hour' 		=> $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count()-1)->summary->departure->format('H:i')
+					'date' => $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count() - 1)->summary->call->after->dateTime->format('d/m/Y'), 
+					'hour' => $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count() - 1)->summary->call->after->dateTime->format('H:i'),
+					'isStartTime' => ($journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count() - 1)->summary->call->after->sens > 0) ? 1 : 0,
 				)
 			);
 		}

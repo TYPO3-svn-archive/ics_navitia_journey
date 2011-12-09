@@ -1,6 +1,7 @@
 2011-12-09 Pierrick Caillon <pierrick@in-cite.net>
 	* Removed unused icons.
 	* Added departure and arrival map when first and last sections are VehiculeJourneyConnection, respectively.
+	* Bug fix: Previous and Next journey did not use the "Sens" parameter provided by NAViTiA.
 
 2011-11-14 Loïc Stephan <loic@in-cite.net>
 	* Added dateformat in search and results templates.

@@ -93,6 +93,7 @@ class tx_icsnavitiajourney_details {
 			array(
 				'date' => $journeyResult->summary->call->before->dateTime->format('d/m/Y'), 
 				'hour' => $journeyResult->summary->call->before->dateTime->format('H:i'),
+				'isStartTime' => ($journeyResult->summary->call->before->sens > 0) ? 1 : 0,
 			)
 		);
 		
@@ -100,6 +101,7 @@ class tx_icsnavitiajourney_details {
 			array(
 				'date' => $journeyResult->summary->call->after->dateTime->format('d/m/Y'), 
 				'hour' => $journeyResult->summary->call->after->dateTime->format('H:i'),
+				'isStartTime' => ($journeyResult->summary->call->after->sens > 0) ? 1 : 0,
 			)
 		);
 		
