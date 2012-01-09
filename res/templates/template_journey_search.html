@@ -22,57 +22,37 @@
 <body style="background-color:#333;">
 
 
-<!-- ###TEMPLATE_JOURNEY_RESULTS### begin -->
-	<div class="###PREFIXID###_journeyResults">
-		<ul class="###PREFIXID###_state ui-list-###DATA_THEME###">
-			<li><a href="###SEARCH_LINK###" class="###PREFIXID###_searchLink">###SEARCH###</a></li>
-			<li class="current">###RESULTS###</li>
+<!-- ###TEMPLATE_JOURNEY_SEARCH### begin -->
+	<div class="###PREFIXID###_journeySearch">
+		<ul class="###PREFIXID###_state ui-list-###DATA_THEME###" data-theme="###DATA_THEME###" >
+			<li class="current">###SEARCH###</li>
+			<li>###RESULTS###</li>
 			<li>###DETAILS###</li>
 			<div style="clear:both;"></div>
 		</ul>
-		<div class="###PREFIXID###_resultForm">
-			<div class="###PREFIXID###_journeyRecap">
-				<p class="###PREFIXID###_startInfo"><span class="###PREFIXID###_from">###FROM###</span> : ###CITY_START### - ###STOP_START###</p>
-				<p class="###PREFIXID###_arrivalInfo"><span class="###PREFIXID###_to">###TO###</span> : ###CITY_ARRIVAL### - ###STOP_ARRIVAL###</p>
-			</div>
-			<p class="###PREFIXID###_resultHours">###RESULT_HOURS_START### ###FIRST_HOUR### ###AND### ###LAST_HOUR###</p>
-			<ul class="###PREFIXID###_resultsList ui-listview"  data-role="listview" data-theme="d">
-				<!-- ###RESULTS_LIST### begin -->
-				<li class="###BEST###" data-icon="false">
-					<a href="###DETAILS_URL###" class="###PREFIXID###_listViewLink">
-						<p class="###PREFIXID###_scheduleInfo">
-							<span class="###PREFIXID###_startHour">###START_HOUR###</span>
-							<span class="###PREFIXID###_arrivalHour">###ARRIVAL_HOUR###</span>
-							<span class="###PREFIXID###_duration">###DURATION###</span>
-						</p>
-						<p class="###PREFIXID###_pictos">###PICTOS###</p>
-					</a>
-				</li>
-				<!-- ###RESULTS_LIST### end -->
-			</ul>
-			<p class="###PREFIXID###_nota">###NOTA###</p>
-			<a data-inline="true" data-role="button" data-theme="c" href="###PREVIOUS_JOURNEY_LINK###" class="###PREFIXID###_previousLink">###PREVIOUS_JOURNEY###</a>
-			<a data-inline="true" data-role="button" data-theme="c" href="###NEXT_JOURNEY_LINK###" class="###PREFIXID###_nextLink">###NEXT_JOURNEY###</a>
-			
-			<form action="###ACTION_URL###" method="post" class="###PREFIXID###_resultForm">###HIDDEN_FIELDS###
-				<fieldset class="###PREFIXID###_options ###PREFIXID###_preferencesBlock">
-					<p class="###PREFIXID###_preferences">###PREFERENCES###</p>
+		<div class="###PREFIXID###_searchForm">
+			<form action="###ACTION_URL###"  method="get">###HIDDEN_FIELDS######START_FORM###<!-- ###CONFIRM_SOLUTIONS_START### --><!-- ###CONFIRM_SOLUTIONS_START### -->###ARRIVAL_FORM###<!-- ###CONFIRM_SOLUTIONS_ARRIVAL### --><!-- ###CONFIRM_SOLUTIONS_ARRIVAL### -->
+				<fieldset class="###PREFIXID###_submitSearchForm">
+					<input type="submit" value="###SUBMIT###" />
+				</fieldset>
+				<fieldset class="###PREFIXID###_preferencesBlock">
+					<p class="###PREFIXID###_preferences ui-paragraph-###DATA_THEME###" data-theme="###DATA_THEME###">###PREFERENCES###</p>
 					<div data-role="collapsible-set">
 					
 						<div data-role="collapsible">
-							<h3><span class="###PREFIXID###_collapsedBlock"></span>###DATE###</h3>
+							<h3><span class="###PREFIXID###_collapsedBlock"></span>###JOURNEY_DATE###</h3>
 							<div data-role="fieldcontain">
 								<fieldset data-role="controlgroup" data-type="horizontal">
 									<div class="###PREFIXID###_typeDate">
 										<input type="radio" ###SELECTED_1### name="###PREFIXID###[isStartTime]" id="radio-view-a" value="1" data-theme="###DATA_THEME###" />
-										<label for="radio-view-a">###START_TO###</label>
+										<label for="radio-view-a">###START_AT###</label>
 								
 										<input type="radio" ###SELECTED_0### name="###PREFIXID###[isStartTime]" id="radio-view-b" value="0" data-theme="###DATA_THEME###" />
-										<label for="radio-view-b">###ARRIVAL_TO###</label>
+										<label for="radio-view-b">###ARRIVAL_AT###</label>
 									</div>
 									<div class="###PREFIXID###_date">
 										<input value="###DATE_SEL###" name="###PREFIXID###[date]" type="date" data-role="datebox" data-options='{"mode": "calbox", "dateFormat": "dd/mm/YYYY"}'>
-										<input value="###HOUR_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
+										<input value="###TIME_SEL###" name="###PREFIXID###[hour]" type="date" data-role="datebox" data-options='{"mode": "timebox"}'>
 									</div>
 								</fieldset>
 							</div>
@@ -98,13 +78,48 @@
 						</div>
 					</div>
 				</fieldset>
-				<fieldset class="###PREFIXID###_submitSearchForm">
-					<input type="submit" value="###SUBMIT###" />
-				</fieldset>
 			</form>
 		</div>
 	</div>
-<!-- ###TEMPLATE_JOURNEY_RESULTS### end -->
+<!-- ###TEMPLATE_JOURNEY_SEARCH### end -->
+				
+<!-- ###CONFIRM_MORE_SOLUTIONS### begin -->
+				<fieldset class="###PREFIXID###_moreSolutions">
+					<p class="###PREFIXID###_confirmMoreSolutions">###MORE_SOLUTIONS###</p><!-- ###LIST_MORE_SOLUTIONS### begin -->
+					<div data-role="fieldcontain">
+						<input id="###PREFIXID###_pointId###NAME_SUFFIX###_###RECORDNUMBER###" type="radio" name="###PREFIXID###[entryPoint###NAME_SUFFIX###]" value="###ENTRYPOINT###" />
+						<label for="###PREFIXID###_pointId###NAME_SUFFIX###_###RECORDNUMBER###">###ENTRYPOINT_TYPE### - ###CITY### - ###STOPPOINT###</label>
+					</div><!-- ###LIST_MORE_SOLUTIONS### end -->
+				</fieldset><!-- ###CONFIRM_MORE_SOLUTIONS### end -->
+				
+<!-- ###CONFIRM_ONE_SOLUTION### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_confirmOneSolution">###ONE_SOLUTION###</p>
+					<p class="###PREFIXID###_pointId_found">###CITY### - ###STOPPOINT###</label>
+					<input type="hidden" name="###PREFIXID###[entryPoint###NAME_SUFFIX###]" value="0" />
+				</fieldset><!-- ###CONFIRM_ONE_SOLUTION### end -->
+				
+<!-- ###CONFIRM_NO_SOLUTION### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_confirmMoreSolutions">###NO_SOLUTION###</p>
+				</fieldset><!-- ###CONFIRM_NO_SOLUTION### end -->
 
+<!-- ###LOCATION_FORM_PART### begin -->
+				<fieldset>
+					<p class="###PREFIXID###_###direction###Address">###TITLE###</p><!-- ###POSITION###--><!-- ###POSITION###-->###FORM_PART_CONTENT###
+				</fieldset><!-- ###LOCATION_FORM_PART### end -->
+
+<!-- ###POSITION_SELECT### begin -->
+					<p class="###PREFIXID###_###direction###Position"><a data-iconpos="right" data-inline="true" data-role="button" data-theme="c" data-icon="position" href="###POSITION_URL###" onclick="###CLICK_EVENT###">###POSITION_TEXT###</a></p><!-- ###POSITION_SELECT### end -->
+
+<!-- ###LOCATION_FORM_USER_ENTRY### begin -->
+					<div data-role="fieldcontain" style="padding:0;">
+						<label for="###PREFIXID###_###direction###Name" style="display:none;">###NAME###</label>
+						<input type="text" placeholder="###NAME###" name="###PREFIXID###[###direction###Name]" value="###NAME_VALUE###" id="###PREFIXID###_###direction###Name" />
+					</div>
+					<div data-role="fieldcontain" style="padding:0;">
+						<label for="###PREFIXID###_###direction###City" style="display:none;">###CITY###</label>
+						<input type="text" placeholder="###CITY###" name="###PREFIXID###[###direction###City]" value="###CITY_VALUE###" id="###PREFIXID###_###direction###City" />
+					</div><!-- ###LOCATION_FORM_USER_ENTRY### end -->
 </body>
 </html>

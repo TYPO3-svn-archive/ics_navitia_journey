@@ -75,12 +75,12 @@
 			<label index="search_name">Nom</label>
 			<label index="search_city">Commune</label>
 			<label index="search_journeyDate">Date du trajet</label>
-			<label index="startAt">Partir à</label>
+			<label index="startAt">Partir le</label>
 			<label index="arrivalAt">Arriver à</label>
 			<label index="search_submit">Valider</label>
-			<label index="preference">Préférences</label>
+			<label index="preference">Mes préférences</label>
 			<label index="preference_mode">Mode de transport</label>
-			<label index="preference_criteria">Priorité</label>
+			<label index="preference_criteria">Mes priorités</label>
 			<label index="preference_criteria_1">Arriver au plus tôt</label>
 			<label index="preference_criteria_2">Le moins de correspondance</label>
 			<label index="preference_criteria_3">Le moins de marche à pied</label>
@@ -120,6 +120,18 @@
 			<label index="details_localize">Parcours sur une carte</label>
 			<label index="details_localize_departure">Départ sur une carte</label>
 			<label index="details_localize_arrival">Arrivée sur une carte</label>
+			<label index="nota.plan_no_solution">L'itinéraire n'est pas possible en transport en commun avec les paramètres sélectionnés.</label>
+			<label index="nota.plan_date_out_of_bounds">La date de recherche est hors de la période de validité des données.</label>
+			<label index="nota.plan_departure_destination_too_close">Les points de départ et de destination sont trop proches pour lancer un calcul d'itinéraire.</label>
+			<label index="nota.plan_no_solution_limited_interchange">L'itinéraire n'est pas possible en transport en commun.</label>
+			<label index="nota.plan_no_departurecode">Zone d'arrêt de départ inconnue.</label>
+			<label index="nota.plan_no_arrivalcode">Zone d'arrêt d'arrivée inconnue.</label>
+			<label index="nota.plan_no_dep_and_dest_code">Zones d'arrêt de départ et d'arrivée inconnues.</label>
+			<label index="nota.plan_connection_problem">Un problème technique est survenu, veuillez essayer ultérieurement.</label>
+			<label index="nota.plan_reader_error">Un problème technique est survenu, veuillez essayer ultérieurement.</label>
+			<label index="nota.plan_no_departure_stoppoint">Aucun point d'arrêt de départ n'a été trouvé. Veuillez effectuer une nouvelle recherche.</label>
+			<label index="nota.plan_no_destination_stoppoint">Aucun point d'arrêt d'arrivée n'a été trouvé. Veuillez effectuer une nouvelle recherche.</label>
+			<label index="nota.plan_no_dep_and_dest_stoppoint">Aucun point d'arrêt de départ et d'arrivée n'ont été trouvés. Veuillez effectuer une nouvelle recherche.</label>
 		</languageKey>
 	</data>
 </T3locallang>

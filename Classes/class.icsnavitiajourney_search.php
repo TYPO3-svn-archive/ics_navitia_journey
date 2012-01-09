@@ -241,10 +241,12 @@ EOJS
 				$oneSolutionTemplate = $this->pObj->cObj->getSubpart($this->pObj->templates['search'], '###CONFIRM_ONE_SOLUTION###');
 				
 				$markers['ONE_SOLUTION'] = htmlspecialchars($this->pObj->pi_getLL('onesolution'));
+				
 				$markers['CITY'] = htmlspecialchars($entryPoint->cityName);
 				
 				$stop = $entryPoint->{lcfirst($entryPoint->type)};
-				$markers['STOPPOINT'] = htmlspecialchars($stop->name);
+
+				$markers['STOPPOINT'] = htmlspecialchars($entryPoint->address->type->name) .' ' . htmlspecialchars($stop->name);
 				
 				$content = $this->pObj->cObj->substituteMarkerArray($oneSolutionTemplate, $markers, '###|###');
 			}
@@ -259,7 +261,7 @@ EOJS
 					$locMarkers = array();
 					$locMarkers['ENTRYPOINT'] = htmlspecialchars($index);
 					$locMarkers['CITY'] = htmlspecialchars($entryPoint->cityName);
-					$locMarkers['STOPPOINT'] = htmlspecialchars($stop->name);
+					$locMarkers['STOPPOINT'] = htmlspecialchars($entryPoint->address->type->name) .' ' . htmlspecialchars($stop->name);
 					$locMarkers['RECORDNUMBER'] = htmlspecialchars($index);
 					$locMarkers['ENTRYPOINT_TYPE'] = htmlspecialchars($this->pObj->pi_getLL('entryPointType_' . strtolower($entryPoint->type)));
 					if ($entryPoint->type == 'Address') {

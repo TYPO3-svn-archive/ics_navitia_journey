@@ -1,3 +1,10 @@
+2012-01-09 Loïc Stephan <loic@in-cite.net>
+	* Fixed wrong search template file.
+	* Improved and added some locallang entries.
+	* Added AddressTypeName in search and details classes.
+	* Added message when error occured.
+	* Added modeTypeName before LineName in details class.
+
 2012-01-06 Pierrick Caillon <pierrick@in-cite.net>
 	* Added ModeType filter in plugin settings.
 

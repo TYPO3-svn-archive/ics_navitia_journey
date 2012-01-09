@@ -135,7 +135,7 @@ class tx_icsnavitiajourney_results {
 		$template = $this->pObj->cObj->substituteSubpart($template, '###RESULTS_LIST###', $this->renderResults($template, $journeyPlan['JourneyResultList'], $useBound));
 		
 		if($journeyPlan['JourneyResultList']->Get(0)->sections->Get(0)->nota->type) {
-			$markers['NOTA'] = $journeyPlan['JourneyResultList']->Get(0)->sections->Get(0)->nota->type; // TODO : Tableau associatif code erreur // phrase
+			$markers['NOTA'] = $this->pObj->pi_getLL('nota.' . $journeyPlan['JourneyResultList']->Get(0)->sections->Get(0)->nota->type); // TODO : Tableau associatif code erreur // phrase
 		}
 
 		$content = $this->pObj->cObj->substituteMarkerArray($template, $markers, '###|###');

@@ -176,7 +176,8 @@ class tx_icsnavitiajourney_details {
 		}
 		
 		if (empty($markers['PICTO']) && !is_null($section->vehicleJourney->route->line)) {
-			$markers['PICTO'] = 'Ligne ' . $section->vehicleJourney->route->line->code;// temporaire pendant qu'on a pas les pictos dans la bdd.
+			
+			$markers['PICTO'] = $section->vehicleJourney->route->line->modeType->name . ' ' . $section->vehicleJourney->route->line->code;// temporaire pendant qu'on a pas les pictos dans la bdd.
 		}
 		
 		$markers['LINE_NAME'] = $section->vehicleJourney->route->line->name;
@@ -256,8 +257,8 @@ class tx_icsnavitiajourney_details {
 			$markers['TO'] = htmlspecialchars($this->pObj->pi_getLL('to_site'));
 		}
 
-		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
-		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->type->name) . ' ' . htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->type->name) . ' ' . htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
 		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
@@ -280,8 +281,8 @@ class tx_icsnavitiajourney_details {
 			$markers['TO'] = htmlspecialchars($this->pObj->pi_getLL('to_address'));
 		}
 		
-		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
-		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->type->name) . ' ' . htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->type->name) . ' ' . htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
 		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
@@ -298,8 +299,8 @@ class tx_icsnavitiajourney_details {
 		$markers['FROM'] = htmlspecialchars($this->pObj->pi_getLL('from'));
 		$markers['TO'] = htmlspecialchars($this->pObj->pi_getLL('to'));
 		
-		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
-		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->type->name) . ' ' . htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->type->name) . ' ' . htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
 		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
@@ -326,8 +327,8 @@ class tx_icsnavitiajourney_details {
 		$markers['FROM'] = htmlspecialchars($this->pObj->pi_getLL('from'));
 		$markers['TO'] = htmlspecialchars($this->pObj->pi_getLL('to_stoppoint'));
 		
-		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
-		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->type->name) . ' ' . htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->type->name) . ' ' . htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
 		$markers['START_CITY'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
@@ -356,8 +357,8 @@ class tx_icsnavitiajourney_details {
 		$departure = $section->departure;
 		if ($this->previousDeparture)
 			$departure = $this->previousDeparture;
-		$markers['START_NAME'] = htmlspecialchars($departure->{lcfirst($departure->type)}->name);
-		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
+		$markers['START_NAME'] = htmlspecialchars($section->departure->{lcfirst($section->departure->type)}->type->name) . ' ' . htmlspecialchars($departure->{lcfirst($departure->type)}->name);
+		$markers['ARRIVAL_NAME'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->type->name) . ' ' . htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->name);
 		$markers['START_CITY'] = htmlspecialchars($departure->{lcfirst($departure->type)}->city->name);
 		$markers['ARRIVAL_CITY'] = htmlspecialchars($section->arrival->{lcfirst($section->arrival->type)}->city->name);
 		
