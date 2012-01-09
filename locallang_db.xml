@@ -21,6 +21,7 @@
 			<label index="constants.templates.details">HTML template for details view</label>
 			<label index="constants.templates.search">HTML template for search view</label>
 			<label index="constants.templates.results">HTML template for result view</label>
+			<label index="constants.modes">Restrict to these mode types: Select nothing for all.</label>
 		</languageKey>
 		<languageKey index="fr" type="array">
 			<label index="tt_content.list_type_pi1">Module d'itinéraire</label>
@@ -38,6 +39,7 @@
 			<label index="constants.templates.details">Modèle HTML de la vue détails</label>
 			<label index="constants.templates.search">Modèle HTML de la vue recherche</label>
 			<label index="constants.templates.results">Modèle HTML de la vue des résultats</label>
+			<label index="constants.modes">Restreindre à ces types de mode: Ne rien sélectionner pour tous.</label>
 		</languageKey>
 	</data>
 </T3locallang>

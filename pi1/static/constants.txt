@@ -54,4 +54,8 @@ plugin.tx_icsnavitiajourney_pi1 {
 
 	}
 	
+	# cat=plugin.icsnavitiajourney/others/a; type=user[tx_icslibnavitia_ConstantEditorControls->selectModeTypeControl]; label=LLL:EXT:ics_navitia_journey/locallang_db.xml:constants.modes
+	# url=plugin.tx_icsnavitiajourney_pi1.navitiaUrl; login=plugin.tx_icsnavitiajourney_pi1.statLogin; size=-1
+	modes = 
+	
 }

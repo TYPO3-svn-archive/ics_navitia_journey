@@ -1,6 +1,7 @@
 plugin.tx_icsnavitiajourney_pi1 {
 	url = {$plugin.tx_icsnavitiajourney_pi1.navitiaUrl}
 	login = {$plugin.tx_icsnavitiajourney_pi1.statLogin}
+	modes = {$plugin.tx_icsnavitiajourney_pi1.modes}
 	view {
 		search {
 			templateFile = {$plugin.tx_icsnavitiajourney_pi1.view.search.templateFile}

@@ -43,6 +43,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 	
 	private $login;
 	private $url;
+	private $modes;
 	private $dataProvider;
 	var $pictoLine;
 	var $templates;
@@ -121,6 +122,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 	private function init() {
 		$this->login = $this->conf['login'];
 		$this->url = $this->conf['url'];
+		$this->modes = $this->conf['modes'];
 		
 		$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_APIService', $this->url, $this->login);
 		$this->pictoLine = t3lib_div::makeInstance('tx_icslinepicto_getlines');
@@ -172,8 +174,19 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		return $hidden;
 	}
 	
+	public function getModeTypeList() {
+		$modeTypeList = null;
+		if (!empty($this->modes)) {
+			$modes = explode(',', $this->modes);
+			$modeTypeList = $this->dataProvider->getModeTypesByCodes($modes);
+		}
+		return $modeTypeList;
+	}
+	
 	public function replaceModes($template) {
-		$modes = $this->dataProvider->getModeTypeList();
+		$modes = $this->getModeTypeList();
+		if ($modes == null)
+			$modes = $this->dataProvider->getModeTypeList();
 
 		$modeTypeListTemplate = $this->cObj->getSubpart($template, '###MODE_TYPE_LIST###');
 		$modeTypeListContent = '';
