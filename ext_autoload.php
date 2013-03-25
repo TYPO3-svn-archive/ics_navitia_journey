@@ -5,9 +5,9 @@
 $extensionPath = t3lib_extMgm::extPath('ics_navitia_journey');
 $extensionClassesPath = t3lib_extMgm::extPath('ics_navitia_journey') . 'Classes/';
 return array(
-	'tx_icsnavitiajourney_details' => $extensionClassesPath . 'class.icsnavitiajourney_details.php',
-	'tx_icsnavitiajourney_results' => $extensionClassesPath . 'class.icsnavitiajourney_results.php',
-	'tx_icsnavitiajourney_search' => $extensionClassesPath . 'class.icsnavitiajourney_search.php',
+	'tx_icsnavitiajourney_details' => $extensionClassesPath . 'class.tx_icsnavitiajourney_details.php',
+	'tx_icsnavitiajourney_results' => $extensionClassesPath . 'class.tx_icsnavitiajourney_results.php',
+	'tx_icsnavitiajourney_search' => $extensionClassesPath . 'class.tx_icsnavitiajourney_search.php',
 	'tx_icsnavitiajourney_pi1' => $extensionPath . 'pi1/class.tx_icsnavitiajourney_pi1.php',
 );
 ?>

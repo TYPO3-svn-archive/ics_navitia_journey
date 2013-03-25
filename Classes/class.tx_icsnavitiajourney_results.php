@@ -143,7 +143,7 @@ class tx_icsnavitiajourney_results {
 	}
 	
 	private function renderResults($template, tx_icslibnavitia_INodeList $results, $useBound = true) {
-		$linePicto = t3lib_div::makeInstance('tx_icslinepicto_getlines');
+		$linePicto = $this->pObj->pictoLine;
 		$resultListTemplate = $this->pObj->cObj->getSubpart($template, '###RESULTS_LIST###');
 		$resultListContent = '';
 		

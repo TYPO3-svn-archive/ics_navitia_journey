@@ -125,7 +125,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 		$this->modes = $this->conf['modes'];
 		
 		$this->dataProvider = t3lib_div::makeInstance('tx_icslibnavitia_APIService', $this->url, $this->login);
-		$this->pictoLine = t3lib_div::makeInstance('tx_icslinepicto_getlines');
+		$this->pictoLine = (t3lib_extMgm::isLoaded(ics_linepicto)) ? t3lib_div::makeInstance('tx_icslinepicto_getlines') : null;
 		$templateflex_file = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 'configuration');
 		$this->templates = array(
 			'search' => $this->cObj->fileResource($templateflex_file?'uploads/tx_icsnavitiajourney/' . $templateflex_file:$this->conf['view.']['search.']['templateFile']),

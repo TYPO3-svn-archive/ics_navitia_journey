@@ -1,3 +1,8 @@
+2013-03-25 Pierrick Caillon <pierrick.caillon@plan-net.fr>
+	* Added TYPO3 version dependency.
+	* Renamed class files to match expected names.
+	* Fix: Resolved optional dependencies error.
+
 2012-01-09 Loïc Stephan <loic@in-cite.net>
 	* Fixed wrong search template file.
 	* Improved and added some locallang entries.

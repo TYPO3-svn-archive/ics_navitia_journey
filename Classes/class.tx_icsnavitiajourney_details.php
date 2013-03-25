@@ -105,7 +105,7 @@ class tx_icsnavitiajourney_details {
 			)
 		);
 		
-		$this->linePicto = t3lib_div::makeInstance('tx_icslinepicto_getlines');
+		$this->linePicto = $this->pObj->pictoLine;
 		$durations = array();
 		$detailsContent = '';
 		
@@ -161,7 +161,7 @@ class tx_icsnavitiajourney_details {
 		$markers['DIRECTION_LABEL'] = '';
 		$markers['START_HOUR'] = $section->departure->dateTime->format('H:i');
 		$markers['ARRIVAL_HOUR'] = $section->arrival->dateTime->format('H:i');
-		$markers['PICTO'] = $this->linePicto->getlinepicto($section->vehicleJourney->route->line->externalCode, 'Navitia');
+		$markers['PICTO'] = ($this->linePicto != null) ? $this->linePicto->getlinepicto($section->vehicleJourney->route->line->externalCode, 'Navitia') : '';
 		$markers['MAP'] = '';
 		$markers['STEP_DURATION'] = htmlspecialchars($this->renderDuration($section->duration->totalSeconds + (($this->previousDuration) ? ($this->previousDuration->totalSeconds) : 0)));
 		
