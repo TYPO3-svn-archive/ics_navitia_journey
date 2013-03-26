@@ -1,3 +1,6 @@
+2013-03-26 Pierrick Caillon <pierrick.caillon@plan-net.fr>
+	* Fix: Removed default CSS.
+
 2013-03-25 Pierrick Caillon <pierrick.caillon@plan-net.fr>
 	* Added TYPO3 version dependency.
 	* Renamed class files to match expected names.
