@@ -83,7 +83,7 @@ class tx_icsnavitiajourney_pi1 extends tslib_pibase {
 			);
 			
 			$aDate = explode('/', $this->piVars['date']);
-			$aTime = explode(':', $this->piVars['hour']);
+			$aTime = explode('h', $this->piVars['hour']);
 			
 			$date = new DateTime;
 			$date->setDate($aDate[2], $aDate[1], $aDate[0]);

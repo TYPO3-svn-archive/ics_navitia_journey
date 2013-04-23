@@ -112,22 +112,25 @@ class tx_icsnavitiajourney_results {
 			}
 			
 			$markers['AND'] = htmlspecialchars($this->pObj->pi_getLL('and'));
-			$markers['FIRST_HOUR'] = $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i'); // TODO: Hour format as config.
-			$markers['LAST_HOUR'] = $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count() - 1))->summary->departure->format('H:i');
+			$markers['FIRST_HOUR'] = str_replace(':','h', $journeyPlan['JourneyResultList']->Get(0)->summary->departure->format('H:i')); // TODO: Hour format as config.
+			$markers['LAST_HOUR'] = str_replace(':','h', $journeyPlan['JourneyResultList']->Get(intval($journeyPlan['JourneyResultList']->Count() - 1))->summary->departure->format('H:i'));
 			
+			$item = $journeyPlan['JourneyResultList']->Get(0);
 			$markers['PREVIOUS_JOURNEY_LINK'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
-					'date' => $journeyPlan['JourneyResultList']->Get(0)->summary->call->before->dateTime->format('d/m/Y'), 
-					'hour' => $journeyPlan['JourneyResultList']->Get(0)->summary->call->before->dateTime->format('H:i'),
-					'isStartTime' => ($journeyPlan['JourneyResultList']->Get(0)->summary->call->before->sens > 0) ? 1 : 0,
+					'date' => $item->summary->call->before->dateTime->format('d/m/Y'), 
+					'hour' => str_replace(':','h', $item->summary->call->before->dateTime->format('H:i')),
+					'isStartTime' => ($item->summary->call->before->sens > 0) ? 1 : 0,
 				)
 			);
 			
+			$cnt = $journeyPlan['JourneyResultList']->Count();
+			$item = $journeyPlan['JourneyResultList']->Get($cnt - 1);
 			$markers['NEXT_JOURNEY_LINK'] = $this->pObj->pi_linkTP_keepPIvars_url(
 				array(
-					'date' => $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count() - 1)->summary->call->after->dateTime->format('d/m/Y'), 
-					'hour' => $journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count() - 1)->summary->call->after->dateTime->format('H:i'),
-					'isStartTime' => ($journeyPlan['JourneyResultList']->Get($journeyPlan['JourneyResultList']->Count() - 1)->summary->call->after->sens > 0) ? 1 : 0,
+					'date' => $item->summary->call->after->dateTime->format('d/m/Y'), 
+					'hour' => str_replace(':','h', $item->summary->call->after->dateTime->format('H:i')),
+					'isStartTime' => ($item->summary->call->after->sens > 0) ? 1 : 0,
 				)
 			);
 		}
@@ -143,7 +146,7 @@ class tx_icsnavitiajourney_results {
 	}
 	
 	private function renderResults($template, tx_icslibnavitia_INodeList $results, $useBound = true) {
-		$linePicto = $this->pObj->pictoLine;
+		$linePicto = t3lib_div::makeInstance('tx_icslinepicto_getlines');
 		$resultListTemplate = $this->pObj->cObj->getSubpart($template, '###RESULTS_LIST###');
 		$resultListContent = '';
 		
@@ -167,11 +170,11 @@ class tx_icsnavitiajourney_results {
 						'nbBefore' 	=> '0',
 						'nbAfter' 	=> '0',
 						'date' 		=> $journeyResult->summary->departure->format('d/m/Y'), 
-						'hour' 		=> $journeyResult->summary->departure->format('H:i')
+						'hour' 		=> str_replace(':','h', $journeyResult->summary->departure->format('H:i'))
 					)
 				);
-				$markers['START_HOUR'] = $journeyResult->summary->departure->format('H:i');
-				$markers['ARRIVAL_HOUR'] = $journeyResult->summary->arrival->format('H:i');
+				$markers['START_HOUR'] = str_replace(':','h', $journeyResult->summary->departure->format('H:i'));
+				$markers['ARRIVAL_HOUR'] = str_replace(':','h', $journeyResult->summary->arrival->format('H:i'));
 			}
 			elseif($results->Count() == 1) {
 				continue;
@@ -220,7 +223,7 @@ class tx_icsnavitiajourney_results {
 			$file = self::getIcon($conf[$property . '.'], $section, $key, $applyBoundFlag, $atBound);
 		}
 		else {
-		
+
 			if(!$applyBoundFlag || ($applyBoundFlag && ($atBound || !$conf[$property . '.']['onlyBounds']))) {
 				$file = $conf[iconv("UTF-8", "ASCII//TRANSLIT", $property)];
 			}

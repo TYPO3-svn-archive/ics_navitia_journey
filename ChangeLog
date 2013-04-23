@@ -1,3 +1,7 @@
+2013-04-23 Tsi Yang <tsi.yang@plan-net.fr>
+	* Fix: Treatment hours, replace ":" with "h".
+	* Fix: Procedure for displaying trips.
+
 2013-03-26 Pierrick Caillon <pierrick.caillon@plan-net.fr>
 	* Fix: Removed default CSS.
 
